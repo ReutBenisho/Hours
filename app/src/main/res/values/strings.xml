@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hours</string>
+    <string name="btn_txt_register">הירשם</string>
+    <string name="lbl_txt_register">הרשמה</string>
+    <string name="btn_txt_sign_in">התחבר</string>
+    <string name="lbl_txt_sign_in">התחברות</string>
 </resources>
