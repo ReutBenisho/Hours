@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.util.Locale;
-
 public class ExitTimeActivity extends AppCompatActivity {
 
     private Button mBtnArrivalTime;
@@ -21,7 +19,7 @@ public class ExitTimeActivity extends AppCompatActivity {
     private TextView mLblTxt3AndHalfHours;
     private TextView mLblTxt6Hours;
     private HoursInfo mHoursInfo;
-    private CalcHours mCalcHours;
+    private HoursManager mHoursManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +32,9 @@ public class ExitTimeActivity extends AppCompatActivity {
         mLblTxt3AndHalfHours = findViewById(R.id.lbl_txt_3_and_half_hours);
         mLblTxt6Hours = findViewById(R.id.lbl_txt_6_hours);
 
-        mCalcHours = CalcHours.getInstance();
+        mHoursManager = HoursManager.getInstance();
         mHoursInfo = new HoursInfo();
-        mHoursInfo.mArrivalTime = new CalcTime(7, 30);
+        mHoursInfo.mArrivalTime = new Timestamp(7, 30);
         mBtnArrivalTime.setText(mHoursInfo.mArrivalTime.toString());
 
         updateHours();
@@ -61,7 +59,7 @@ public class ExitTimeActivity extends AppCompatActivity {
     }
 
     private void updateHours() {
-        mHoursInfo = mCalcHours.GetInfoByArrivalTime(mHoursInfo.mArrivalTime);
+        mHoursInfo = mHoursManager.GetInfoByArrivalTime(mHoursInfo.mArrivalTime);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
         mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
         mLblTxtZeroHours.setText(mHoursInfo.mZeroHours.toString());
