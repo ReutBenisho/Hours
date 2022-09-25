@@ -48,19 +48,19 @@ public class HoursManager {
         boolean tookBreak = false;
         switch (breakType){
             case LAUNCH:
-                if(mHourInfo.tookLaunchBreak)
+                if(mHourInfo.mTookLaunchBreak)
                     return exitTime;
                 startBreak = mDefaults.LAUNCH_BREAK_START;
                 endBreak = mDefaults.LAUNCH_BREAK_END;
                 break;
             case EVENING:
-                if(mHourInfo.tookEveningBreak)
+                if(mHourInfo.mTookEveningBreak)
                     return exitTime;
                 startBreak = mDefaults.EVENING_BREAK_START;
                 endBreak = mDefaults.EVENING_BREAK_END;
                 break;
             case NIGHT:
-                if(mHourInfo.tookNightBreak)
+                if(mHourInfo.mTookNightBreak)
                     return exitTime;
                 startBreak = mDefaults.NIGHT_BREAK_START;
                 endBreak = mDefaults.NIGHT_BREAK_DURATION;
@@ -76,13 +76,13 @@ public class HoursManager {
         if(tookBreak){
             switch (breakType){
                 case LAUNCH:
-                    mHourInfo.tookLaunchBreak = true;
+                    mHourInfo.mTookLaunchBreak = true;
                     break;
                 case EVENING:
-                    mHourInfo.tookEveningBreak = true;
+                    mHourInfo.mTookEveningBreak = true;
                     break;
                 case NIGHT:
-                    mHourInfo.tookNightBreak = true;
+                    mHourInfo.mTookNightBreak = true;
                     break;
             }
         }
@@ -91,22 +91,22 @@ public class HoursManager {
 
     private void adjustArrivalToLaunchBreak() {
         if(mHourInfo.mArrivalTime.isBetween(mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END)){
-            mHourInfo.isArrivalDuringLaunchBreak = true;
+            mHourInfo.mIsArrivalDuringLaunchBreak = true;
             mHourInfo.mArrivalTime = mDefaults.LAUNCH_BREAK_END;
         }
         else{
-            mHourInfo.isArrivalDuringLaunchBreak = false;
+            mHourInfo.mIsArrivalDuringLaunchBreak = false;
             mHourInfo.mArrivalTime = mHourInfo.mArrivalTime;
         }
     }
 
     private void AddLaunchBreakToFullDay() {
-        if(!mHourInfo.tookLaunchBreak && Timestamp.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+        if(!mHourInfo.mTookLaunchBreak && Timestamp.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                 mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END))
         {
             mHourInfo.mFullDay = Timestamp.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                     mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END);
-            mHourInfo.tookLaunchBreak = true;
+            mHourInfo.mTookLaunchBreak = true;
         }
     }
 }
