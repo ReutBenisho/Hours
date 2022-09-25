@@ -1,25 +1,25 @@
 package com.example.hours;
 
-public class CalcHours {
-    private static CalcHours mInstance = null;
+public class HoursManager {
+    private static HoursManager mInstance = null;
     private Defaults mDefaults;
     private HoursInfo mHourInfo;
 
-    private CalcHours()
+    private HoursManager()
     {
         mDefaults = Defaults.getInstance();
         mHourInfo = new HoursInfo();
     }
 
-    public static CalcHours getInstance(){
+    public static HoursManager getInstance(){
         if(mInstance == null)
-            mInstance = new CalcHours();
+            mInstance = new HoursManager();
         return mInstance;
     }
 
-    public HoursInfo GetInfoByArrivalTime(CalcTime arrivalTime) {
+    public HoursInfo GetInfoByArrivalTime(Timestamp arrivalTime) {
         mHourInfo = new HoursInfo();
-        mHourInfo.mArrivalTime = new CalcTime(arrivalTime);
+        mHourInfo.mArrivalTime = new Timestamp(arrivalTime);
         mHourInfo.mHalfDay = mHourInfo.mArrivalTime.add(mDefaults.HALF_DAY);
         mHourInfo.mFullDay = mHourInfo.mHalfDay.add(mDefaults.HALF_DAY);
         mHourInfo.mZeroHours = mHourInfo.mFullDay.add(mDefaults.ZERO_HOURS);
@@ -29,7 +29,7 @@ public class CalcHours {
         return mHourInfo;
     }
 
-    private void AddBreaks(CalcTime startTime, CalcTime endTime) {
+    private void AddBreaks(Timestamp startTime, Timestamp endTime) {
         AddLaunchBreak();
         AddEveningBreak();
         AddNightBreak();
@@ -47,20 +47,20 @@ public class CalcHours {
     }
 
     private void AddLaunchBreakToHalfDay() {
-        if(CalcTime.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mHalfDay,
+        if(Timestamp.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mHalfDay,
                 mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END))
         {
-            mHourInfo.mHalfDay = CalcTime.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+            mHourInfo.mHalfDay = Timestamp.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                     mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END);
             mHourInfo.tookLaunchBreak = true;
         }
     }
 
     private void AddLaunchBreakToFullDay() {
-        if(!mHourInfo.tookLaunchBreak && CalcTime.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+        if(!mHourInfo.tookLaunchBreak && Timestamp.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                 mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END))
         {
-            mHourInfo.mFullDay = CalcTime.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+            mHourInfo.mFullDay = Timestamp.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                     mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END);
             mHourInfo.tookLaunchBreak = true;
         }

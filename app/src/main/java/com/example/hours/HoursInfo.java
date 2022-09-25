@@ -1,12 +1,12 @@
 package com.example.hours;
 
 public class HoursInfo {
-    public CalcTime mArrivalTime;
-    public CalcTime mHalfDay;
-    public CalcTime mFullDay;
-    public CalcTime mZeroHours;
-    public CalcTime m3AndHalfHours;
-    public CalcTime m6Hours;
+    public Timestamp mArrivalTime;
+    public Timestamp mHalfDay;
+    public Timestamp mFullDay;
+    public Timestamp mZeroHours;
+    public Timestamp m3AndHalfHours;
+    public Timestamp m6Hours;
     public boolean tookLaunchBreak = false;
     public boolean tookEveningBreak;
 }
