@@ -7,6 +7,8 @@ public class HoursInfo {
     public Timestamp mZeroHours;
     public Timestamp m3AndHalfHours;
     public Timestamp m6Hours;
+    public boolean isArrivalDuringLaunchBreak = false;
     public boolean tookLaunchBreak = false;
-    public boolean tookEveningBreak;
+    public boolean tookEveningBreak = false;
+    public boolean tookNightBreak = false;
 }

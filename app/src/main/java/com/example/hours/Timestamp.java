@@ -86,7 +86,7 @@ public class Timestamp {
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
             Timestamp endOverlap = Timestamp.getEarliest(endRange1, endRange2);
             Timestamp totalOverlap = endOverlap.sub(startOverlap);
-            newTime.add(totalOverlap);
+            newTime = newTime.add(totalOverlap);
         }
         return newTime;
     }
