@@ -1,5 +1,7 @@
 package com.example.hours;
 
+import androidx.annotation.Nullable;
+
 import java.time.LocalTime;
 import java.util.Locale;
 
@@ -8,6 +10,15 @@ public class Timestamp {
 
     public Timestamp(){
         mTime = LocalTime.of(0, 0);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(!(obj instanceof Timestamp))
+            return false;
+        if(!mTime.equals(((Timestamp)obj).mTime))
+            return false;
+        return true;
     }
 
     public Timestamp(int hour){
