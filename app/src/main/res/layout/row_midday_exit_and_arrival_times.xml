@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/lbl_midday_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:text="יציאה:"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lbl_midday_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="כניסה:"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_midday_exit"
+        app:layout_constraintEnd_toStartOf="@+id/btn_midday_exit"
+        app:layout_constraintTop_toTopOf="@+id/btn_midday_exit" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_midday_exit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bkgr_input"
+        android:onClick="popTimePicker"
+        android:text="00:00"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_exit"
+        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_exit"
+        app:layout_constraintTop_toTopOf="@+id/lbl_midday_exit" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_midday_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bkgr_input"
+        android:onClick="popTimePicker"
+        android:text="00:00"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_arrival"
+        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_arrival"
+        app:layout_constraintTop_toTopOf="@+id/lbl_midday_arrival" />
+
+    <ImageView
+        android:id="@+id/img_remove_midday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_midday_arrival"
+        app:layout_constraintEnd_toStartOf="@+id/btn_midday_arrival"
+        app:layout_constraintTop_toTopOf="@+id/btn_midday_arrival"
+        app:srcCompat="@drawable/ic_close" />
+</androidx.constraintlayout.widget.ConstraintLayout>
