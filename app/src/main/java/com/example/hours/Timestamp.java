@@ -135,4 +135,9 @@ public class Timestamp {
     public int getMinute() {
         return mTime.getMinute();
     }
+
+    public void clear() {
+        mTime.withHour(0);
+        mTime.withMinute(0);
+    }
 }

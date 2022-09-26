@@ -1,5 +1,7 @@
 package com.example.hours;
 
+import android.util.Pair;
+
 public class HoursManager {
     private static HoursManager mInstance = null;
     private final Defaults mDefaults;
@@ -17,9 +19,9 @@ public class HoursManager {
         return mInstance;
     }
 
-    public HoursInfo GetInfoByArrivalTime(Timestamp arrivalTime) {
-        mHourInfo = new HoursInfo();
-        mHourInfo.mArrivalTime = new Timestamp(arrivalTime);
+    public HoursInfo GetInfoByArrivalTime(HoursInfo info) {
+        mHourInfo = info;
+        mHourInfo.clearAllButUserTime();
         adjustArrivalToLaunchBreak();
         mHourInfo.mHalfDay = mHourInfo.mArrivalTime.add(mDefaults.HALF_DAY);
         mHourInfo.mHalfDay = adjustBreaks(mHourInfo.mHalfDay);
@@ -39,10 +41,16 @@ public class HoursManager {
         exitTime = adjustToBreak(exitTime, Defaults.Breaks.LAUNCH);
         exitTime = adjustToBreak(exitTime, Defaults.Breaks.EVENING);
         exitTime = adjustToBreak(exitTime, Defaults.Breaks.NIGHT);
+        for(int i = 0; i < mHourInfo.mCustomBreaks.size(); i++){
+            exitTime = adjustToBreak(exitTime, Defaults.Breaks.CUSTOM, i);
+        }
         return exitTime;
     }
-
     private Timestamp adjustToBreak(Timestamp exitTime, Defaults.Breaks breakType) {
+        return adjustToBreak(exitTime, breakType, 0);
+    }
+
+    private Timestamp adjustToBreak(Timestamp exitTime, Defaults.Breaks breakType, int i) {
         Timestamp startBreak = null;
         Timestamp endBreak = null;
         boolean tookBreak = false;
@@ -65,7 +73,16 @@ public class HoursManager {
                 startBreak = mDefaults.NIGHT_BREAK_START;
                 endBreak = mDefaults.NIGHT_BREAK_DURATION;
                 break;
+            case CUSTOM:
+                if(mHourInfo.mTookCustomBreak.get(i))
+                    return exitTime;
+                startBreak = mHourInfo.mCustomBreaks.get(i).first;
+                endBreak = mHourInfo.mCustomBreaks.get(i).second;
+                break;
         }
+
+        if(endBreak.isBefore(startBreak)) // invalid range
+            return exitTime;
 
         if(Timestamp.isOverlapp(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak))
         {
@@ -96,7 +113,6 @@ public class HoursManager {
         }
         else{
             mHourInfo.mIsArrivalDuringLaunchBreak = false;
-            mHourInfo.mArrivalTime = mHourInfo.mArrivalTime;
         }
     }
 
