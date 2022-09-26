@@ -163,6 +163,33 @@
         app:layout_constraintTop_toBottomOf="@+id/lbl_calc_time" />
 
     <TextView
+        android:id="@+id/lbl_midday_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="יציאה:"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_arrival_time" />
+
+    <TextView
+        android:id="@+id/lbl_midday_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="כניסה:"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_midday_exit"
+        app:layout_constraintEnd_toStartOf="@+id/btn_midday_exit"
+        app:layout_constraintTop_toTopOf="@+id/btn_midday_exit" />
+
+    <TextView
         android:id="@+id/lbl_half_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -211,5 +238,31 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_calc_time" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_midday_exit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bkgr_input"
+        android:onClick="popTimePicker"
+        android:text="00:00"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_exit"
+        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_exit"
+        app:layout_constraintTop_toTopOf="@+id/lbl_midday_exit" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_midday_arrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bkgr_input"
+        android:onClick="popTimePicker"
+        android:text="00:00"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_arrival"
+        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_arrival"
+        app:layout_constraintTop_toTopOf="@+id/lbl_midday_arrival" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

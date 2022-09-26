@@ -26,7 +26,8 @@ public class Defaults {
     public enum Breaks{
         LAUNCH,
         EVENING,
-        NIGHT
+        NIGHT,
+        CUSTOM,
     }
 
     private Defaults(){
