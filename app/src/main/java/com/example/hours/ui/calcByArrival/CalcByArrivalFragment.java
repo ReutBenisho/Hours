@@ -77,7 +77,7 @@ public class CalcByArrivalFragment extends Fragment {
             }
         };
         mBtnArrivalTime.setOnClickListener(listener);
-        mHoursInfo.mCustomBreaks.set(0, new Pair(new Timestamp(0, 0), new Timestamp(0, 0)));
+        mHoursInfo.mCustomBreaks.set(0, new HoursInfo.Midday(new Timestamp(), new Timestamp()));
 
         updateHours();
 
@@ -126,10 +126,10 @@ public class CalcByArrivalFragment extends Fragment {
                 time = mHoursInfo.mArrivalTime;
                 break;
             case R.id.btn_midday_exit:
-                time = mHoursInfo.mCustomBreaks.get(0).first;
+                time = mHoursInfo.mCustomBreaks.get(0).exit;
                 break;
             case R.id.btn_midday_arrival:
-                time = mHoursInfo.mCustomBreaks.get(0).second;
+                time = mHoursInfo.mCustomBreaks.get(0).arrival;
                 break;
         }
         return time;
