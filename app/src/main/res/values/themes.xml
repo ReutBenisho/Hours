@@ -10,9 +10,18 @@
         <item name="colorSecondaryVariant">@color/background_end_color</item>
         <item name="colorOnSecondary">@color/background_end_color</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="actionBarStyle">@style/Widget.MaterialComponents.ActionBar.Primary</item>
         <item name="android:navigationBarColor">@color/background_center_color</item>
     </style>
+
+    <style name="Theme.Hours.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Hours.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Hours.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
