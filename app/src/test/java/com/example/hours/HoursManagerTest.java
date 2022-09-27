@@ -10,8 +10,9 @@ public class HoursManagerTest extends TestCase {
     }
 
     public void testGetInfoByArrivalTime() {
-        Timestamp arrival = new Timestamp(7, 30);
-        HoursInfo resHoursInfo = HoursManager.getInstance().GetInfoByArrivalTime(arrival);
+        HoursInfo info = new HoursInfo();
+        info.mArrivalTime = new Timestamp(7, 30);
+        HoursInfo resHoursInfo = HoursManager.getInstance().GetInfoByArrivalTime(info);
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.mArrivalTime = new Timestamp(7, 30);
         expHoursInfo.mHalfDay = new Timestamp(11, 42);

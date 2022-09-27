@@ -76,8 +76,8 @@ public class HoursManager {
             case CUSTOM:
                 if(mHourInfo.mTookCustomBreak.get(i))
                     return exitTime;
-                startBreak = mHourInfo.mCustomBreaks.get(i).first;
-                endBreak = mHourInfo.mCustomBreaks.get(i).second;
+                startBreak = mHourInfo.mCustomBreaks.get(i).exit;
+                endBreak = mHourInfo.mCustomBreaks.get(i).arrival;
                 break;
         }
 

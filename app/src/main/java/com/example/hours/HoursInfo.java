@@ -17,7 +17,7 @@ public class HoursInfo {
     public boolean mTookLaunchBreak;
     public boolean mTookEveningBreak;
     public boolean mTookNightBreak;
-    public ArrayList<Pair<Timestamp, Timestamp>> mCustomBreaks;
+    public ArrayList<Midday> mCustomBreaks;
     public ArrayList<Boolean> mTookCustomBreak;
 
     public HoursInfo(){
@@ -31,9 +31,11 @@ public class HoursInfo {
         if(mCustomBreaks == null)
             mCustomBreaks = new ArrayList<>();
         if(mCustomBreaks.size() == 0)
-            mCustomBreaks.add(new Pair<>(new Timestamp(), new Timestamp()));
-        mCustomBreaks.get(0).first.setTime(0, 0);
-        mCustomBreaks.get(0).second.setTime(0, 0);
+        {
+            mCustomBreaks.add(new Midday());
+        }
+        mCustomBreaks.get(0).exit.setTime(0, 0);
+        mCustomBreaks.get(0).arrival.setTime(0, 0);
 
         clearAllButUserTime();
     }
@@ -66,9 +68,9 @@ public class HoursInfo {
         HoursInfo objHoursInfo = (HoursInfo) obj;
         if(!mArrivalTime.equals(objHoursInfo.mArrivalTime))
             return false;
-        if(!mCustomBreaks.get(0).first.equals(objHoursInfo.mCustomBreaks.get(0).first))
+        if(!mCustomBreaks.get(0).exit.equals(objHoursInfo.mCustomBreaks.get(0).exit))
             return false;
-        if(!mCustomBreaks.get(0).second.equals(objHoursInfo.mCustomBreaks.get(0).second))
+        if(!mCustomBreaks.get(0).arrival.equals(objHoursInfo.mCustomBreaks.get(0).arrival))
             return false;
         if(!mHalfDay.equals(objHoursInfo.mHalfDay))
             return false;
@@ -93,5 +95,20 @@ public class HoursInfo {
                 return false;
         }
         return true;
+    }
+
+    public static class Midday{
+        public Timestamp exit;
+        public Timestamp arrival;
+
+        public Midday(){
+            exit = new Timestamp();
+            arrival = new Timestamp();
+        }
+
+        public Midday(Timestamp exit_time, Timestamp arrival_time){
+            exit = exit_time;
+            arrival = arrival_time;
+        }
     }
 }
