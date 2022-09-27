@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         mLblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, ExitTimeActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                startActivity(new Intent(LoginActivity.this, ExitTimeActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
 
             @Override
