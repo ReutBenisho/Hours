@@ -13,35 +13,29 @@ import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Executor mExecutor;
-    private BiometricPrompt mBiometricPrompt;
-    private BiometricPrompt.PromptInfo mPromptInfo;
-    private TextView mLblRegister;
-    private TextView mLblSignInAsGuest;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mLblRegister = findViewById(R.id.lbl_create_account);
-        mLblRegister.setOnClickListener(new View.OnClickListener() {
+        TextView lblRegister = findViewById(R.id.lbl_create_account);
+        lblRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
-        mLblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
-        mLblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
+        TextView lblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
+        lblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
 
-        mExecutor = ContextCompat.getMainExecutor(this);
-        mBiometricPrompt = new BiometricPrompt(LoginActivity.this, mExecutor, new BiometricPrompt.AuthenticationCallback() {
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
@@ -59,11 +53,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mPromptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Authentication")
-                .setSubtitle("Login using fingerprint")
-                .setNegativeButtonText("Enter password instead")
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.biometric_authentication))
+                .setSubtitle(getString(R.string.login_using_fingerprint))
+                .setNegativeButtonText(getString(R.string.enter_password_instead))
                 .build();
-        mBiometricPrompt.authenticate(mPromptInfo);
+        biometricPrompt.authenticate(promptInfo);
     }
 }

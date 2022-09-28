@@ -1,5 +1,6 @@
 package com.example.hours;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.LocalTime;
@@ -16,9 +17,7 @@ public class Timestamp {
     public boolean equals(@Nullable Object obj) {
         if(!(obj instanceof Timestamp))
             return false;
-        if(!mTime.equals(((Timestamp)obj).mTime))
-            return false;
-        return true;
+        return mTime.equals(((Timestamp) obj).mTime);
     }
 
     public Timestamp(int hour){
@@ -61,8 +60,7 @@ public class Timestamp {
     }
 
     public Timestamp add(Timestamp timeToAdd){
-        Timestamp newTime = new Timestamp(mTime).add(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
-        return newTime;
+        return new Timestamp(mTime).add(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
     }
 
     public Timestamp sub(int hour, int minute){
@@ -73,10 +71,10 @@ public class Timestamp {
     }
 
     public Timestamp sub(Timestamp timeToAdd){
-        Timestamp newTime = new Timestamp(mTime).sub(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
-        return newTime;
+        return new Timestamp(mTime).sub(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
     }
 
+    @NonNull
     public String toString(){
         return String.format(Locale.getDefault(), "%02d:%02d", mTime.getHour(), mTime.getMinute());
     }
@@ -85,15 +83,15 @@ public class Timestamp {
         mTime = LocalTime.of(hour, minute);
     }
 
-    public static boolean isOverlapp(Timestamp startRange1, Timestamp endRange1,
-                                     Timestamp startRange2, Timestamp endRange2){
+    public static boolean isOverlap(Timestamp startRange1, Timestamp endRange1,
+                                    Timestamp startRange2, Timestamp endRange2){
         return !(endRange1.isBefore(startRange2) || endRange2.isBefore(startRange1));
     }
 
-    public static Timestamp addOverlapp(Timestamp startRange1, Timestamp endRange1,
-                                        Timestamp startRange2, Timestamp endRange2){
+    public static Timestamp addOverlap(Timestamp startRange1, Timestamp endRange1,
+                                       Timestamp startRange2, Timestamp endRange2){
         Timestamp newTime = new Timestamp(endRange1);
-        if(isOverlapp(startRange1, endRange1, startRange2, endRange2)){
+        if(isOverlap(startRange1, endRange1, startRange2, endRange2)){
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
             Timestamp endOverlap = Timestamp.getEarliest(endRange1, endRange2);
             Timestamp totalOverlap = endOverlap.sub(startOverlap);

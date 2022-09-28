@@ -1,7 +1,5 @@
 package com.example.hours;
 
-import android.util.Pair;
-
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -98,8 +96,8 @@ public class HoursInfo {
     }
 
     public static class Midday{
-        public Timestamp exit;
-        public Timestamp arrival;
+        public final Timestamp exit;
+        public final Timestamp arrival;
 
         public Midday(){
             exit = new Timestamp();

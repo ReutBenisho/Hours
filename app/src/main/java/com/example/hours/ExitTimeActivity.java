@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -101,7 +100,7 @@ public class ExitTimeActivity extends AppCompatActivity {
                 new TimePickerDialog(this, AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
                         GetTimestampByView(view).getHour(), GetTimestampByView(view).getMinute(),
                         true);
-        timePickerDialog.setTitle("הזן שעה");
+        timePickerDialog.setTitle(R.string.enter_time);
         timePickerDialog.show();
     }
 
