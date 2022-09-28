@@ -3,25 +3,23 @@ package com.example.hours;
 public class Defaults {
     private static Defaults mInstance = null;
 
-    public Timestamp ARRIVAL_TIME;
-    public Timestamp HALF_DAY;
-    public Timestamp FULL_DAY;
+    public final Timestamp HALF_DAY;
 
-    public Timestamp LAUNCH_BREAK_START;
-    public Timestamp LAUNCH_BREAK_DURATION;
-    public Timestamp LAUNCH_BREAK_END;
+    public final Timestamp LAUNCH_BREAK_START;
+    public final Timestamp LAUNCH_BREAK_DURATION;
+    public final Timestamp LAUNCH_BREAK_END;
 
-    public Timestamp ZERO_HOURS;
-    public Timestamp ADDITIONAL_HOURS;
-    public Timestamp EXTRA_ADDITIONAL_HOURS;
+    public final Timestamp ZERO_HOURS;
+    public final Timestamp ADDITIONAL_HOURS;
+    public final Timestamp EXTRA_ADDITIONAL_HOURS;
 
-    public Timestamp EVENING_BREAK_START;
-    public Timestamp EVENING_BREAK_DURATION;
-    public Timestamp EVENING_BREAK_END;
+    public final Timestamp EVENING_BREAK_START;
+    public final Timestamp EVENING_BREAK_DURATION;
+    public final Timestamp EVENING_BREAK_END;
 
-    public Timestamp NIGHT_BREAK_START;
-    public Timestamp NIGHT_BREAK_DURATION;
-    public Timestamp NIGHT_BREAK_END;
+    public final Timestamp NIGHT_BREAK_START;
+    public final Timestamp NIGHT_BREAK_DURATION;
+    public final Timestamp NIGHT_BREAK_END;
 
     public enum Breaks{
         LAUNCH,
@@ -31,9 +29,7 @@ public class Defaults {
     }
 
     private Defaults(){
-        ARRIVAL_TIME = new Timestamp(7, 30);
         HALF_DAY = new Timestamp(4, 12);
-        FULL_DAY = HALF_DAY.add(HALF_DAY);
 
         LAUNCH_BREAK_START = new Timestamp(13, 30);
         LAUNCH_BREAK_DURATION = new Timestamp(0, 30);

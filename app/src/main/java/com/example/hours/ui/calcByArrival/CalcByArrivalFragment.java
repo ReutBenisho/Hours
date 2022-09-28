@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,7 +157,7 @@ public class CalcByArrivalFragment extends Fragment {
                 new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
                         GetTimestampByView(view).getHour(), GetTimestampByView(view).getMinute(),
                         true);
-        timePickerDialog.setTitle("הזן שעה");
+        timePickerDialog.setTitle(getString(R.string.enter_time));
         timePickerDialog.show();
     }
 }

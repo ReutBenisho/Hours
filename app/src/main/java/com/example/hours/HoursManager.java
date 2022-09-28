@@ -1,7 +1,5 @@
 package com.example.hours;
 
-import android.util.Pair;
-
 public class HoursManager {
     private static HoursManager mInstance = null;
     private final Defaults mDefaults;
@@ -84,9 +82,9 @@ public class HoursManager {
         if(endBreak.isBefore(startBreak)) // invalid range
             return exitTime;
 
-        if(Timestamp.isOverlapp(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak))
+        if(Timestamp.isOverlap(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak))
         {
-            exitTime = Timestamp.addOverlapp(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak);
+            exitTime = Timestamp.addOverlap(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak);
             tookBreak = true;
         }
 
@@ -117,10 +115,10 @@ public class HoursManager {
     }
 
     private void AddLaunchBreakToFullDay() {
-        if(!mHourInfo.mTookLaunchBreak && Timestamp.isOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+        if(!mHourInfo.mTookLaunchBreak && Timestamp.isOverlap(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                 mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END))
         {
-            mHourInfo.mFullDay = Timestamp.addOverlapp(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
+            mHourInfo.mFullDay = Timestamp.addOverlap(mHourInfo.mArrivalTime, mHourInfo.mFullDay,
                     mDefaults.LAUNCH_BREAK_START, mDefaults.LAUNCH_BREAK_END);
             mHourInfo.mTookLaunchBreak = true;
         }

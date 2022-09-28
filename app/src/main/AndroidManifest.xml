@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".ExitTimeActivity"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true">

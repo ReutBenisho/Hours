@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/bkgr_app">
+    android:background="@drawable/background_app">
 
     <TextView
         android:id="@+id/lbl_register"
@@ -29,7 +29,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
-        android:background="@drawable/bkgr_input"
+        android:background="@drawable/background_input"
         android:drawableRight="@drawable/ic_person"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bkgr_input"
+        android:background="@drawable/background_input"
         android:drawableRight="@drawable/ic_email"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -71,7 +71,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bkgr_input"
+        android:background="@drawable/background_input"
         android:drawableRight="@drawable/ic_security"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -88,15 +88,15 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
     <EditText
-        android:id="@+id/txt_confim_password"
+        android:id="@+id/txt_confirm_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:background="@drawable/bkgr_input"
+        android:background="@drawable/background_input"
         android:drawableRight="@drawable/ic_security"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Confim password"
+        android:hint="@string/confirm_password_hint"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:paddingLeft="20dp"
@@ -113,20 +113,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="@drawable/bkgr_btn"
+        android:background="@drawable/background_btn"
         android:text="@string/btn_txt_register"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_confim_password"
-        app:layout_constraintStart_toStartOf="@+id/txt_confim_password"
-        app:layout_constraintTop_toBottomOf="@+id/txt_confim_password" />
+        app:layout_constraintEnd_toEndOf="@+id/txt_confirm_password"
+        app:layout_constraintStart_toStartOf="@+id/txt_confirm_password"
+        app:layout_constraintTop_toBottomOf="@+id/txt_confirm_password" />
 
     <TextView
         android:id="@+id/lbl_already_have_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="התחברות לחשבון קיים"
+        android:text="@string/sign_in_to_existing_account"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_register"
