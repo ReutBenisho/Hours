@@ -12,28 +12,7 @@ import android.widget.TextView;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        TextView lblRegister = findViewById(R.id.lbl_create_account);
-        lblRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
-
-        TextView lblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
-        lblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-        });
-
+    private void openBiometricPrompt(){
         Executor executor = ContextCompat.getMainExecutor(this);
         BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
@@ -59,5 +38,34 @@ public class LoginActivity extends AppCompatActivity {
                 .setNegativeButtonText(getString(R.string.enter_password_instead))
                 .build();
         biometricPrompt.authenticate(promptInfo);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        openBiometricPrompt();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        TextView lblRegister = findViewById(R.id.lbl_create_account);
+        lblRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        TextView lblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
+        lblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+        });
+
     }
 }
