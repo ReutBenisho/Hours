@@ -28,12 +28,9 @@ public class HoursInfo {
         mArrivalTime.clear();
         if(mCustomBreaks == null)
             mCustomBreaks = new ArrayList<>();
-        if(mCustomBreaks.size() == 0)
-        {
-            mCustomBreaks.add(new Midday());
+        for(int i = 0; i < mCustomBreaks.size(); i++){
+            mCustomBreaks.remove(i);
         }
-        mCustomBreaks.get(0).exit.setTime(0, 0);
-        mCustomBreaks.get(0).arrival.setTime(0, 0);
 
         clearAllButUserTime();
     }
@@ -66,10 +63,14 @@ public class HoursInfo {
         HoursInfo objHoursInfo = (HoursInfo) obj;
         if(!mArrivalTime.equals(objHoursInfo.mArrivalTime))
             return false;
-        if(!mCustomBreaks.get(0).exit.equals(objHoursInfo.mCustomBreaks.get(0).exit))
+        if(mCustomBreaks.size() != objHoursInfo.mCustomBreaks.size())
             return false;
-        if(!mCustomBreaks.get(0).arrival.equals(objHoursInfo.mCustomBreaks.get(0).arrival))
-            return false;
+        for(int i = 9; i< mCustomBreaks.size(); i++){
+            if(!mCustomBreaks.get(i).exit.equals(objHoursInfo.mCustomBreaks.get(i).exit))
+                return false;
+            if(!mCustomBreaks.get(i).arrival.equals(objHoursInfo.mCustomBreaks.get(i).arrival))
+                return false;
+        }
         if(!mHalfDay.equals(objHoursInfo.mHalfDay))
             return false;
         if(!mFullDay.equals(objHoursInfo.mFullDay))
