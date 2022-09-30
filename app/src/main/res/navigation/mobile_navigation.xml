@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_calc_by_arrival"
-        android:name="com.example.hours.ui.calcByArrival.CalcByArrivalFragment"
+        android:name="com.example.hours.ui.calcDay.CalcDayFragment"
         android:label="חישוב לפי כניסה"
-        tools:layout="@layout/fragment_calc_by_arrival" />
+        tools:layout="@layout/fragment_calc_day" />
 
     <fragment
         android:id="@+id/nav_gallery"

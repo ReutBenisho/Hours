@@ -50,8 +50,12 @@ public class HoursInfo {
         mTookLaunchBreak = false;
         mTookEveningBreak = false;
         mTookNightBreak = false;
-        mTookCustomBreak = new ArrayList<>();
-        mTookCustomBreak.add(false);
+        if(mTookCustomBreak == null)
+            mTookCustomBreak = new ArrayList<>();
+        for(int i = 0; i < mTookCustomBreak.size(); i++)
+        {
+            mTookCustomBreak.set(i, false);
+        }
 
     }
 
