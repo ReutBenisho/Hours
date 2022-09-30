@@ -76,7 +76,6 @@ public class CalcByArrivalFragment extends Fragment {
             }
         };
         mBtnArrivalTime.setOnClickListener(listener);
-        mHoursInfo.mCustomBreaks.set(0, new HoursInfo.Midday(new Timestamp(), new Timestamp()));
 
         updateHours();
 
@@ -116,25 +115,25 @@ public class CalcByArrivalFragment extends Fragment {
 
     private void removeMiddayRowFromLayout(View view) {
         mLayoutMiddayTimes.removeView(view);
+        updateHours();
     }
 
-    private Timestamp GetTimestampByView(View view){
-        Timestamp time = null;
-        switch(view.getId()){
-            case R.id.btn_arrival_time:
-                time = mHoursInfo.mArrivalTime;
-                break;
-            case R.id.btn_midday_exit:
-                time = mHoursInfo.mCustomBreaks.get(0).exit;
-                break;
-            case R.id.btn_midday_arrival:
-                time = mHoursInfo.mCustomBreaks.get(0).arrival;
-                break;
-        }
-        return time;
+    private void GetTimestampsFromViewIndex(int i, Timestamp exit, Timestamp arrival){
+        View middayView = mLayoutMiddayTimes.getChildAt(i);
+        Button middayExit = middayView.findViewById(R.id.btn_midday_exit);
+        Button middayArrival = middayView.findViewById(R.id.btn_midday_arrival);
+        exit.setTime(middayExit.getText().toString());
+        arrival.setTime(middayArrival.getText().toString());
     }
-
     private void updateHours() {
+        mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
+        mHoursInfo.mCustomBreaks.clear();
+        for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
+            Timestamp middayExit = new Timestamp();
+            Timestamp middayArrival = new Timestamp();
+            GetTimestampsFromViewIndex(i, middayExit, middayArrival);
+            mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
+        }
         mHoursInfo = mHoursManager.GetInfoByArrivalTime(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
         mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
@@ -143,19 +142,24 @@ public class CalcByArrivalFragment extends Fragment {
         mLblTxt6Hours.setText(mHoursInfo.m6Hours.toString());
     }
 
-    public void popTimePicker(View view) {
+    public void popTimePicker(View btnView) {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                GetTimestampByView(view).setTime(selectedHour, selectedMinute);
-                ((Button)view).setText(GetTimestampByView(view).toString());
+                Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
+                ((Button)btnView).setText(viewTimestamp.toString());
+                if(btnView.getId() == R.id.btn_midday_exit){
+                    ((Button)getActivity().findViewById(R.id.btn_midday_arrival)).setText(viewTimestamp.toString());
+                }
 
                 updateHours();
             }
         };
+        Timestamp timestamp = new Timestamp();
+        timestamp.setTime(((Button)btnView).getText().toString());
         TimePickerDialog timePickerDialog =
                 new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
-                        GetTimestampByView(view).getHour(), GetTimestampByView(view).getMinute(),
+                        timestamp.getHour(), timestamp.getMinute(),
                         true);
         timePickerDialog.setTitle(getString(R.string.enter_time));
         timePickerDialog.show();

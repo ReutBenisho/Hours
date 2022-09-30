@@ -69,7 +69,7 @@ public class HoursManager {
                 if(mHourInfo.mTookNightBreak)
                     return exitTime;
                 startBreak = mDefaults.NIGHT_BREAK_START;
-                endBreak = mDefaults.NIGHT_BREAK_DURATION;
+                endBreak = mDefaults.NIGHT_BREAK_END;
                 break;
             case CUSTOM:
                 if(mHourInfo.mTookCustomBreak.get(i))

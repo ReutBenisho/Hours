@@ -83,6 +83,11 @@ public class Timestamp {
         mTime = LocalTime.of(hour, minute);
     }
 
+    public void setTime(String str){
+        mTime = mTime.withHour(Integer.parseInt(str.substring(0, 2)));
+        mTime = mTime.withMinute(Integer.parseInt(str.substring(3, 5)));
+    }
+
     public static boolean isOverlap(Timestamp startRange1, Timestamp endRange1,
                                     Timestamp startRange2, Timestamp endRange2){
         return !(endRange1.isBefore(startRange2) || endRange2.isBefore(startRange1));
