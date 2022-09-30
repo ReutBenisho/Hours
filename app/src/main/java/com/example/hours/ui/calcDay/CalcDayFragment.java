@@ -49,6 +49,8 @@ public class CalcDayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        container.removeAllViews(); // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
