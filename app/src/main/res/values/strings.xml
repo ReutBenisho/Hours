@@ -12,15 +12,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="confirm_password_hint">Confirm password</string>
     <string name="sign_in_to_existing_account">התחברות לחשבון קיים</string>
     <string name="enter_time">הזן שעה</string>
-    <string name="biometric_authentication">Biometric Authentication</string>
-    <string name="login_using_fingerprint">Login using fingerprint</string>
-    <string name="enter_password_instead">Enter password instead</string>
+    <string name="biometric_authentication">הזדהות ביומטרית</string>
+    <string name="login_using_fingerprint">התחבר באמצעות טביעת אצבע</string>
+    <string name="enter_password_instead">הקלד סיסמא</string>
 </resources>
