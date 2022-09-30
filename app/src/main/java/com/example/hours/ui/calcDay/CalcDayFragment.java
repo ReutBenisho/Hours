@@ -1,5 +1,6 @@
-package com.example.hours.ui.calcByArrival;
+package com.example.hours.ui.calcDay;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +26,9 @@ import com.example.hours.HoursManager;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
 
-public class CalcByArrivalFragment extends Fragment {
+public class CalcDayFragment extends Fragment {
 
-    private CalcByArrivalViewModel mViewModel;
+    private CalcDayViewModel mViewModel;
 
     private Button mBtnArrivalTime;
     private TextView mLblTxtHalfDay;
@@ -40,14 +42,14 @@ public class CalcByArrivalFragment extends Fragment {
     private Button mBtnAddMiddayRow;
 
 
-    public static CalcByArrivalFragment newInstance() {
-        return new CalcByArrivalFragment();
+    public static CalcDayFragment newInstance() {
+        return new CalcDayFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calc_by_arrival, container, false);
+        View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
         mLblTxtHalfDay = view.findViewById(R.id.lbl_txt_half_day);
@@ -85,7 +87,7 @@ public class CalcByArrivalFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CalcByArrivalViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CalcDayViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -128,13 +130,15 @@ public class CalcByArrivalFragment extends Fragment {
     private void updateHours() {
         mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
         mHoursInfo.mCustomBreaks.clear();
+        mHoursInfo.mTookCustomBreak.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             GetTimestampsFromViewIndex(i, middayExit, middayArrival);
             mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
+            mHoursInfo.mTookCustomBreak.add(false);
         }
-        mHoursInfo = mHoursManager.GetInfoByArrivalTime(mHoursInfo);
+        mHoursInfo = mHoursManager.CalcDay(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
         mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
         mLblTxtZeroHours.setText(mHoursInfo.mZeroHours.toString());
@@ -149,7 +153,7 @@ public class CalcByArrivalFragment extends Fragment {
                 Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
                 ((Button)btnView).setText(viewTimestamp.toString());
                 if(btnView.getId() == R.id.btn_midday_exit){
-                    ((Button)getActivity().findViewById(R.id.btn_midday_arrival)).setText(viewTimestamp.toString());
+                    ((Button)((ConstraintLayout)btnView.getParent()).findViewById(R.id.btn_midday_arrival)).setText(viewTimestamp.toString());
                 }
 
                 updateHours();

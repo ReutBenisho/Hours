@@ -17,7 +17,7 @@ public class HoursManager {
         return mInstance;
     }
 
-    public HoursInfo GetInfoByArrivalTime(HoursInfo info) {
+    public HoursInfo CalcDay(HoursInfo info) {
         mHourInfo = info;
         mHourInfo.clearAllButUserTime();
         adjustArrivalToLaunchBreak();
