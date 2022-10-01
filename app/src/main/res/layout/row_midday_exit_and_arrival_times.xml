@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:background="@drawable/background_input"
-        android:text="00:00"
+        android:text="@string/midnight_timestamp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_arrival"
         app:layout_constraintEnd_toStartOf="@+id/lbl_midday_arrival"
