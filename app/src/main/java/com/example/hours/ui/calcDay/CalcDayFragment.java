@@ -49,6 +49,8 @@ public class CalcDayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        container.removeAllViews(); // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
@@ -88,7 +90,6 @@ public class CalcDayFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CalcDayViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 

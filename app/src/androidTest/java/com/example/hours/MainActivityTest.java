@@ -24,9 +24,9 @@ public class MainActivityTest {
     @Test
     public void testCalculationByArrival(){
         onView(withId(R.id.drawer_layout))
-                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .check(matches(isClosed(Gravity.RIGHT))) // Left Drawer should be closed.
                 .perform(DrawerActions.open()); // Open Drawer
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_by_arrival));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day));
 
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.mHalfDay = new Timestamp(11, 42);

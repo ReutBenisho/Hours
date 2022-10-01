@@ -20,4 +20,29 @@
     <string name="biometric_authentication">הזדהות ביומטרית</string>
     <string name="login_using_fingerprint">התחבר באמצעות טביעת אצבע</string>
     <string name="enter_password_instead">הקלד סיסמא</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="menu_settings">Settings</string>
+    <string name="general_header">General</string>
+    <string name="pref_dark_mode">dark_mode</string>
+    <string name="pref_reset_general_settings">prev_reset_general_settings</string>
+    <string name="pref_student_mode">prev_student_mode</string>
+    <string name="pref_all_notifications">pref_all_notifications</string>
+    <string name="pref_default_time">pref_default_time</string>
+    <string name="pref_default_arrival_time">pref_default_arrival_time</string>
+    <string name="pref_default_launch_break_time">pref_default_launch_break_time</string>
 </resources>

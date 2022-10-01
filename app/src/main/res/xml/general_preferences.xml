@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="@string/pref_dark_mode"
+        app:title="Dark Mode"
+        app:summaryOff="You are weak."
+        app:summaryOn="You chose wisely."
+        app:defaultValue="false"/>
+
+    <SwitchPreferenceCompat
+        app:key="@string/pref_student_mode"
+        app:summaryOff="Thank god it's over"
+        app:summaryOn="Don't worry, you're half-way there!"
+        app:title="Student Mode"
+        app:defaultValue="false"/>
+
+    <Preference
+        app:title="Reset general settings"
+        app:key="@string/pref_reset_general_settings"
+        app:summary="Click here to reset to the default settings"
+        />
+
+</PreferenceScreen>

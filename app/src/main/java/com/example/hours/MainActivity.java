@@ -1,12 +1,21 @@
 package com.example.hours;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.example.hours.ui.calcDay.CalcDayFragment;
+import com.example.hours.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,10 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private DrawerLayout mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setting the whole application right-to-left
+        //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -35,18 +47,88 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        DrawerLayout drawer = binding.drawerLayout;
+        mDrawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_calc_by_arrival, R.id.nav_gallery)
-                .setOpenableLayout(drawer)
+                R.id.nav_calc_day, R.id.nav_gallery, R.id.nav_settings)
+                .setOpenableLayout(mDrawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        navigationView.getMenu().findItem(R.id.nav_calc_by_arrival).setChecked(true);
+        //navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(R.id.nav_calc_day).setChecked(true);
+        //toggles the navigation view to the right - incomplete code (caused crash)
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, mDrawer, binding.appBarMain.toolbar,
+//                R.string.navigation_drawer_open,
+//                R.string.navigation_drawer_close
+//        );
+//        toggle.setDrawerIndicatorEnabled(false);
+//        toggle.setHomeAsUpIndicator(R.drawable.ic_email);
+//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mDrawer.isDrawerVisible(Gravity.RIGHT)) {
+//                    mDrawer.closeDrawer(Gravity.RIGHT);
+//                } else {
+//                    mDrawer.openDrawer(Gravity.RIGHT);
+//                }
+//            }
+//        });
+//        mDrawer.addDrawerListener(toggle);
+//        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.nav_calc_day:
+                    case R.id.nav_gallery:
+                        openFragment(menuItem);
+                        break;
+                    case R.id.nav_settings:
+                        Intent newIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(newIntent);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void openFragment(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        if(menuItem.getItemId() == R.id.nav_calc_day){
+            fragmentClass = CalcDayFragment.class;
+        } else if(menuItem.getItemId() == R.id.nav_gallery){
+            fragmentClass = GalleryFragment.class;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // set MyFragment Arguments
+        if(fragment != null) {
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, fragment).commit();
+
+            // Highlight the selected item has been done by NavigationView
+            menuItem.setChecked(true);
+            // Set action bar title
+            setTitle(menuItem.getTitle());
+        }
+
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
     }
 
     @Override

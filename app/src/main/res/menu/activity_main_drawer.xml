@@ -5,12 +5,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_calc_by_arrival"
+            android:id="@+id/nav_calc_day"
             android:icon="@drawable/ic_clock_add"
             android:title="חישוב לפי כניסה" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_settings" />
     </group>
 </menu>

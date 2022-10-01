@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_launch_break"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before launch break"
+        app:title="Notify before launch break" />
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_evening_break"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before evening break"
+        app:title="Notify before evening break" />
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_night_break"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before night break"
+        app:title="Notify before night break" />
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_mothers_transportation"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before mothers transportation"
+        app:title="Notify before mothers transportation" />
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_afternoon_transportation"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before afternoon transportation"
+        app:title="Notify before afternoon transportation" />
+
+    <SwitchPreferenceCompat
+        app:key="pref_notify_evening_transportation"
+        app:summaryOff="Don't need a reminder"
+        app:summaryOn="Remind me to get ready to leave before evening_transportation"
+        app:title="Notify before evening transportation" />
+
+    <EditTextPreference
+        android:defaultValue="5"
+        android:key="pref_reminder_time"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Default reminder time (in minute)"
+        app:useSimpleSummaryProvider="true"/>
+
+</PreferenceScreen>
