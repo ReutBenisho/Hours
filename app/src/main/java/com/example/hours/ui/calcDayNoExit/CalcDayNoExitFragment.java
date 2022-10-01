@@ -1,4 +1,4 @@
-package com.example.hours.ui.calcDay;
+package com.example.hours.ui.calcDayNoExit;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +22,15 @@ import android.widget.TimePicker;
 
 import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
+import com.example.hours.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
+import com.example.hours.Utils;
 
-public class CalcDayFragment extends Fragment {
+public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener {
 
-    private CalcDayViewModel mViewModel;
+    private CalcDayNoExitViewModel mViewModel;
+    public static final String TAG = "CALC_DAY_NO_EXIT_TAG";
 
     private Button mBtnArrivalTime;
     private TextView mLblTxtHalfDay;
@@ -42,8 +44,14 @@ public class CalcDayFragment extends Fragment {
     private Button mBtnAddMiddayRow;
 
 
-    public static CalcDayFragment newInstance() {
-        return new CalcDayFragment();
+    public static CalcDayNoExitFragment newInstance() {
+        return new CalcDayNoExitFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Utils.addListener(this);
     }
 
     @Override
@@ -51,7 +59,7 @@ public class CalcDayFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
+        View view = inflater.inflate(R.layout.fragment_calc_day_no_exit, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
         mLblTxtHalfDay = view.findViewById(R.id.lbl_txt_half_day);
@@ -65,7 +73,7 @@ public class CalcDayFragment extends Fragment {
         mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addMiddayRowToLayout();
+                Utils.addMiddayRowToLayout(getLayoutInflater(), mLayoutMiddayTimes, getContext());
             }
         });
 
@@ -76,7 +84,7 @@ public class CalcDayFragment extends Fragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popTimePicker(view);
+                Utils.popTimePicker(view, getContext());
             }
         };
         mBtnArrivalTime.setOnClickListener(listener);
@@ -89,45 +97,15 @@ public class CalcDayFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CalcDayViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CalcDayNoExitViewModel.class);
     }
 
-
-    private void addMiddayRowToLayout() {
-        View viewMiddayRow = getLayoutInflater().inflate(R.layout.row_midday_exit_and_arrival_times, null, false);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popTimePicker(view);
-            }
-        };
-        Button btnMiddayExit = viewMiddayRow.findViewById(R.id.btn_midday_exit);
-        btnMiddayExit.setOnClickListener(listener);
-        Button btnMiddayArrival = viewMiddayRow.findViewById(R.id.btn_midday_arrival);
-        btnMiddayArrival.setOnClickListener(listener);
-
-        ImageView imgRemoveMiddayRow = viewMiddayRow.findViewById(R.id.img_remove_midday);
-        imgRemoveMiddayRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeMiddayRowFromLayout(viewMiddayRow);
-            }
-        });
-        mLayoutMiddayTimes.addView(viewMiddayRow);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Utils.removeListener(this);
     }
 
-    private void removeMiddayRowFromLayout(View view) {
-        mLayoutMiddayTimes.removeView(view);
-        updateHours();
-    }
-
-    private void GetTimestampsFromViewIndex(int i, Timestamp exit, Timestamp arrival){
-        View middayView = mLayoutMiddayTimes.getChildAt(i);
-        Button middayExit = middayView.findViewById(R.id.btn_midday_exit);
-        Button middayArrival = middayView.findViewById(R.id.btn_midday_arrival);
-        exit.setTime(middayExit.getText().toString());
-        arrival.setTime(middayArrival.getText().toString());
-    }
     private void updateHours() {
         mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
         mHoursInfo.mCustomBreaks.clear();
@@ -135,11 +113,11 @@ public class CalcDayFragment extends Fragment {
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
-            GetTimestampsFromViewIndex(i, middayExit, middayArrival);
+            Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
             mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
             mHoursInfo.mTookCustomBreak.add(false);
         }
-        mHoursInfo = mHoursManager.CalcDay(mHoursInfo);
+        mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
         mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
         mLblTxtZeroHours.setText(mHoursInfo.mZeroHours.toString());
@@ -147,26 +125,10 @@ public class CalcDayFragment extends Fragment {
         mLblTxt6Hours.setText(mHoursInfo.m6Hours.toString());
     }
 
-    public void popTimePicker(View btnView) {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
-                ((Button)btnView).setText(viewTimestamp.toString());
-                if(btnView.getId() == R.id.btn_midday_exit){
-                    ((Button)((ConstraintLayout)btnView.getParent()).findViewById(R.id.btn_midday_arrival)).setText(viewTimestamp.toString());
-                }
+    @Override
+    public void onUpdate(OnUpdateListener listener) {
+        if(listener == this)
+            updateHours();
 
-                updateHours();
-            }
-        };
-        Timestamp timestamp = new Timestamp();
-        timestamp.setTime(((Button)btnView).getText().toString());
-        TimePickerDialog timePickerDialog =
-                new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
-                        timestamp.getHour(), timestamp.getMinute(),
-                        true);
-        timePickerDialog.setTitle(getString(R.string.enter_time));
-        timePickerDialog.show();
     }
 }

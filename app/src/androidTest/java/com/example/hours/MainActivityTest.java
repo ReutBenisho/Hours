@@ -26,14 +26,14 @@ public class MainActivityTest {
         onView(withId(R.id.drawer_layout))
                 .check(matches(isClosed(Gravity.RIGHT))) // Left Drawer should be closed.
                 .perform(DrawerActions.open()); // Open Drawer
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day_no_exit));
 
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.mHalfDay = new Timestamp(11, 42);
         expHoursInfo.mFullDay = new Timestamp(16, 24);
         expHoursInfo.mZeroHours = new Timestamp(17, 24);
         expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(22, 36);
+        expHoursInfo.m6Hours = new Timestamp(23, 06);
 
         onView(withId(R.id.lbl_txt_half_day)).check(matches(withText(expHoursInfo.mHalfDay.toString())));
         onView(withId(R.id.lbl_txt_full_day)).check(matches(withText(expHoursInfo.mFullDay.toString())));

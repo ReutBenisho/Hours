@@ -1,5 +1,6 @@
 package com.example.hours;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class HoursInfo {
     public boolean mTookNightBreak;
     public ArrayList<Midday> mCustomBreaks;
     public ArrayList<Boolean> mTookCustomBreak;
+    public Timestamp mExitTime;
+    public Totals mTotalTime;
 
     public HoursInfo(){
         clear();
@@ -31,11 +34,21 @@ public class HoursInfo {
         for(int i = 0; i < mCustomBreaks.size(); i++){
             mCustomBreaks.remove(i);
         }
+        if(mExitTime == null)
+            mExitTime = new Timestamp();
+        mExitTime.clear();
 
-        clearAllButUserTime();
+        clearGenearlInfo();
+        clearTotalTime();
     }
 
-    public void clearAllButUserTime(){
+    public void clearTotalTime() {
+        if(mTotalTime == null)
+            mTotalTime = new Totals();
+        mTotalTime.clear();
+    }
+
+    public void clearGenearlInfo(){
         if(mHalfDay != null)
             mHalfDay.clear();
         if(mFullDay != null)
@@ -56,7 +69,6 @@ public class HoursInfo {
         {
             mTookCustomBreak.set(i, false);
         }
-
     }
 
     @Override
@@ -75,6 +87,10 @@ public class HoursInfo {
             if(!mCustomBreaks.get(i).arrival.equals(objHoursInfo.mCustomBreaks.get(i).arrival))
                 return false;
         }
+        if(!mExitTime.equals(objHoursInfo.mExitTime))
+            return false;
+        if(!mTotalTime.equals(objHoursInfo.mTotalTime))
+            return false;
         if(!mHalfDay.equals(objHoursInfo.mHalfDay))
             return false;
         if(!mFullDay.equals(objHoursInfo.mFullDay))
@@ -100,6 +116,37 @@ public class HoursInfo {
         return true;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        String s = "";
+        s += "Arrival: " + mArrivalTime.toString();
+        s += "\nHalf day: " + mHalfDay.toString();
+        s += "\nFull day: " + mFullDay.toString();
+        s += "\nZero hours: " + mZeroHours.toString();
+        s += "\n3 and half hours: " + m3AndHalfHours.toString();
+        s += "\n6 hours: " + m6Hours.toString();
+        s += "\nArrived during launch: " + mIsArrivalDuringLaunchBreak;
+        s += "\nTook launch break: " + mTookLaunchBreak;
+        s += "\nTook evening break: " + mTookEveningBreak;
+        s += "\nTook night break: " + mTookNightBreak;
+
+        for(int i = 0; i < mCustomBreaks.size(); i++){
+            s += "\nCustom break #" + i + " start: " + mCustomBreaks.get(i).exit + " exit: " + mCustomBreaks.get(i).arrival;
+        }
+
+        for(int i = 0; i < mTookCustomBreak.size(); i++){
+            s += "\nTook custom break #" + i + ": " + mTookCustomBreak.get(i);
+        }
+
+        s += "\nExit time: " + mExitTime.toString();
+        s += "\nTotal time: " + mTotalTime.total.toString();
+        s += "\nZero hours: " + mTotalTime.zeroHours.toString();
+        s += "\nAdditional hours: " + mTotalTime.additionalHours.toString();
+        s += "\nIs full day: " + mTotalTime.isFullDay;
+        return s;
+    }
+
     public static class Midday{
         public final Timestamp exit;
         public final Timestamp arrival;
@@ -114,4 +161,28 @@ public class HoursInfo {
             arrival = arrival_time;
         }
     }
+
+    public static class Totals{
+        public Timestamp total;
+        public boolean isFullDay;
+        public Timestamp zeroHours;
+        public Timestamp additionalHours;
+
+        public Totals(){
+            clear();
+        }
+        public void clear() {
+            if(total == null)
+                total = new Timestamp();
+            total.clear();
+            isFullDay = false;
+            if(zeroHours == null)
+                zeroHours = new Timestamp();
+            zeroHours.clear();
+            if(additionalHours == null)
+                additionalHours = new Timestamp();
+            additionalHours.clear();
+        }
+    }
+
 }

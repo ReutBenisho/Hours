@@ -14,6 +14,7 @@ import com.example.hours.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
 
+    public static final String TAG = "GALLERY_TAG";
     private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -13,6 +13,16 @@ public class Timestamp {
         mTime = LocalTime.of(0, 0);
     }
 
+    public static Timestamp removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
+        if(isOverlap(startRange1, endRange1, startRange2, endRange2)){
+            Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
+            Timestamp endOverlap = Timestamp.getEarliest(endRange1, endRange2);
+            Timestamp totalOverlap = endOverlap.sub(startOverlap);
+            duration = duration.sub(totalOverlap);
+        }
+        return duration;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if(!(obj instanceof Timestamp))
@@ -70,8 +80,8 @@ public class Timestamp {
         return newTime;
     }
 
-    public Timestamp sub(Timestamp timeToAdd){
-        return new Timestamp(mTime).sub(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
+    public Timestamp sub(Timestamp timeToRemove){
+        return new Timestamp(mTime).sub(timeToRemove.mTime.getHour(), timeToRemove.mTime.getMinute());
     }
 
     @NonNull
@@ -142,7 +152,11 @@ public class Timestamp {
     }
 
     public void clear() {
-        mTime.withHour(0);
-        mTime.withMinute(0);
+        mTime = mTime.withHour(0);
+        mTime = mTime.withMinute(0);
+    }
+
+    public boolean greaterThan(Timestamp other) {
+        return isAfter(other);
     }
 }

@@ -6,22 +6,18 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
-import android.window.SplashScreen;
-import android.window.SplashScreenView;
 
-import com.example.hours.ui.calcDay.CalcDayFragment;
+import com.example.hours.databinding.ActivityMainBinding;
+import com.example.hours.ui.calcDayNoExit.CalcDayNoExitFragment;
+import com.example.hours.ui.calcDayWithExit.CalcDayWithExitFragment;
 import com.example.hours.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -30,9 +26,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
-import com.example.hours.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_calc_day, R.id.nav_gallery, R.id.nav_settings)
+                R.id.nav_calc_day_no_exit, R.id.nav_calc_day_with_exit, R.id.nav_gallery, R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().findItem(R.id.nav_calc_day).setChecked(true);
+        navigationView.getMenu().findItem(R.id.nav_calc_day_no_exit).setChecked(true);
         //toggles the navigation view to the right - incomplete code (caused crash)
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 //                this, mDrawer, binding.appBarMain.toolbar,
@@ -97,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
-                    case R.id.nav_calc_day:
+                    case R.id.nav_calc_day_no_exit:
+                    case R.id.nav_calc_day_with_exit:
                     case R.id.nav_gallery:
                         openFragment(menuItem);
                         break;
@@ -151,10 +145,16 @@ public class MainActivity extends AppCompatActivity {
     private void openFragment(MenuItem menuItem) {
         Fragment fragment = null;
         Class fragmentClass = null;
-        if(menuItem.getItemId() == R.id.nav_calc_day){
-            fragmentClass = CalcDayFragment.class;
-        } else if(menuItem.getItemId() == R.id.nav_gallery){
+        String tag = "";
+        if(menuItem.getItemId() == R.id.nav_calc_day_no_exit){
+            fragmentClass = CalcDayNoExitFragment.class;
+            tag = CalcDayNoExitFragment.TAG;
+        } else if(menuItem.getItemId() == R.id.nav_calc_day_with_exit){
+            fragmentClass = CalcDayWithExitFragment.class;
+            tag = CalcDayWithExitFragment.TAG;
+        }else if(menuItem.getItemId() == R.id.nav_gallery){
             fragmentClass = GalleryFragment.class;
+            tag = GalleryFragment.TAG;
         }
 
         try {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, fragment, tag).commit();
 
             // Highlight the selected item has been done by NavigationView
             menuItem.setChecked(true);
@@ -188,9 +188,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
