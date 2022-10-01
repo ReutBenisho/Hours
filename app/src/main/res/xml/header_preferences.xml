@@ -12,4 +12,9 @@
         app:key="sync_header"
         app:title="@string/sync_header" />
 
+    <Preference
+        app:fragment="com.example.hours.SettingsActivity$GeneralFragment"
+        app:key="general_header"
+        app:title="@string/general_header" />
+
 </PreferenceScreen>

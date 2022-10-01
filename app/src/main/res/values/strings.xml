@@ -37,4 +37,8 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="menu_settings">Settings</string>
+    <string name="general_header">General</string>
+    <string name="pref_dark_mode">dark_mode</string>
+    <string name="pref_reset_general_settings">prev_reset_general_settings</string>
+    <string name="pref_student_mode">prev_student_mode</string>
 </resources>
