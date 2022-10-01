@@ -1,5 +1,7 @@
 package com.example.hours;
 
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,13 +10,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -166,6 +172,64 @@ public class SettingsActivity extends AppCompatActivity implements
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
+        }
+    }
+
+    public static class TimesFragment extends PreferenceFragmentCompat {
+
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.times_preferences, rootKey);
+        }
+
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            setDefaultTime(R.string.pref_default_arrival_time, "07:30");
+            setDefaultTime(R.string.pref_default_launch_break_time, "13:30");
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+
+        private void setDefaultTime(int idDefaultTime, String defaultValue) {
+            String strDefaultTime = getString(idDefaultTime);
+            findPreference(strDefaultTime)
+                    .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                    Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
+                                    preference.setDefaultValue(viewTimestamp.toString());
+                                    preference.setSummary(viewTimestamp.toString());
+                                }
+                            };
+                            Timestamp timestamp = new Timestamp();
+                            String value = preference.getSummary().toString();
+                            timestamp.setTime(value);
+                            TimePickerDialog timePickerDialog =
+                                    new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
+                                            timestamp.getHour(), timestamp.getMinute(),
+                                            true);
+                            timePickerDialog.setTitle(R.string.enter_time);
+                            timePickerDialog.show();
+                            return true;
+                        }
+                    });
+            Preference myPreference = findPreference(strDefaultTime);
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
+            myPreference.setSummary(defaultValue);
+            myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    preference.setSummary(newValue.toString());
+                    return false;
+                }
+            });
+        }
+
+        private void ResetGeneralSettings() {
+            //TODO: ADD LOGIC TO RESET ALL GENERAL SETTINGS
+
         }
     }
 }

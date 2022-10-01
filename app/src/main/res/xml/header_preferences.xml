@@ -22,4 +22,9 @@
         app:key="notifications_header"
         app:title="Notifications" />
 
+    <Preference
+        app:fragment="com.example.hours.SettingsActivity$TimesFragment"
+        app:key="times_header"
+        app:title="Default Timestamps" />
+
 </PreferenceScreen>

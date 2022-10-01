@@ -2,6 +2,7 @@ package com.example.hours;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -11,6 +12,8 @@ import com.example.hours.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setting the whole application right-to-left
+        //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -55,6 +60,26 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().findItem(R.id.nav_calc_day).setChecked(true);
+        //toggles the navigation view to the right - incomplete code (caused crash)
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, mDrawer, binding.appBarMain.toolbar,
+//                R.string.navigation_drawer_open,
+//                R.string.navigation_drawer_close
+//        );
+//        toggle.setDrawerIndicatorEnabled(false);
+//        toggle.setHomeAsUpIndicator(R.drawable.ic_email);
+//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mDrawer.isDrawerVisible(Gravity.RIGHT)) {
+//                    mDrawer.closeDrawer(Gravity.RIGHT);
+//                } else {
+//                    mDrawer.openDrawer(Gravity.RIGHT);
+//                }
+//            }
+//        });
+//        mDrawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

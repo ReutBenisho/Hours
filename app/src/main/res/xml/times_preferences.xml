@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:defaultValue="true"
+        app:key="@string/pref_default_time"
+        app:title="Use default time settings"
+        app:disableDependentsState="true"/>
+
+    <Preference
+        app:dependency="@string/pref_default_time"
+        app:title="Default arrival time"
+        app:key="@string/pref_default_arrival_time"
+        app:useSimpleSummaryProvider="true"/>
+
+    <Preference
+        app:dependency="@string/pref_default_time"
+        app:title="Default launch break time"
+        app:key="@string/pref_default_launch_break_time"
+        app:useSimpleSummaryProvider="true"/>
+
+    <Preference
+        app:dependency="@string/pref_default_time"
+        app:title="Default launch break time"
+        app:key="@string/pref_default_launch_break_time"
+        app:useSimpleSummaryProvider="true"/>
+
+</PreferenceScreen>
