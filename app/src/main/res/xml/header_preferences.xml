@@ -17,4 +17,9 @@
         app:key="general_header"
         app:title="@string/general_header" />
 
+    <Preference
+        app:fragment="com.example.hours.SettingsActivity$NotificationsFragment"
+        app:key="notifications_header"
+        app:title="Notifications" />
+
 </PreferenceScreen>

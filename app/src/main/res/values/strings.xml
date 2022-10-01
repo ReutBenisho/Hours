@@ -41,4 +41,5 @@
     <string name="pref_dark_mode">dark_mode</string>
     <string name="pref_reset_general_settings">prev_reset_general_settings</string>
     <string name="pref_student_mode">prev_student_mode</string>
+    <string name="pref_all_notifications">pref_all_notifications</string>
 </resources>
