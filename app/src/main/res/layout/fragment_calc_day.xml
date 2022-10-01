@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_app"
     tools:context=".ui.calcDay.CalcDayFragment">
 
     <ScrollView
@@ -51,7 +50,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/background_input"
-                android:text="00:00"
+                android:text="@string/midnight_timestamp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toStartOf="@+id/lbl_arrival_time"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -75,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:drawableRight="@drawable/ic_clock_add"
+                android:drawableTint="@color/white"
                 android:text="יציאה וכניסה באמצע היום"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"

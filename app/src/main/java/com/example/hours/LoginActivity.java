@@ -43,29 +43,43 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        openBiometricPrompt();
+        SharedPreferencesUtil.loadDefaults(getApplicationContext());
+        if(SharedPreferencesUtil.getString("existing_user", getApplicationContext()) == "true"){
+
+        }
+        else{
+            //openBiometricPrompt();
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SharedPreferencesUtil.loadDefaults(getApplicationContext());
+        if(SharedPreferencesUtil.getString("existing_user", getApplicationContext()) == "true"){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            TextView lblRegister = findViewById(R.id.lbl_create_account);
+            lblRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                }
+            });
 
-        TextView lblRegister = findViewById(R.id.lbl_create_account);
-        lblRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
-
-        TextView lblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
-        lblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-        });
+            TextView lblSignInAsGuest = findViewById(R.id.lbl_sign_in_as_guest);
+            lblSignInAsGuest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+            });
+        }
 
     }
 }

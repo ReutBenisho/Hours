@@ -46,4 +46,6 @@
     <string name="pref_default_arrival_time">pref_default_arrival_time</string>
     <string name="pref_default_launch_break_time">pref_default_launch_break_time</string>
     <string name="midnight_timestamp">00:00</string>
+    <string name="pref_system_mode">pref_system_mode</string>
+    <string name="pref_default_evening_break_time">pref_default_evening_break_time</string>
 </resources>

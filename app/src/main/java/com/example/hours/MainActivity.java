@@ -1,11 +1,18 @@
 package com.example.hours;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.animation.AnticipateInterpolator;
+import android.window.SplashScreen;
+import android.window.SplashScreenView;
 
 import com.example.hours.ui.calcDay.CalcDayFragment;
 import com.example.hours.ui.gallery.GalleryFragment;
@@ -13,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -22,6 +30,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.example.hours.databinding.ActivityMainBinding;
 
@@ -36,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
+        setupSplashScreen();
+        SharedPreferencesUtil.setDefaults("existing_user", "true", getApplicationContext());
+        SharedPreferencesUtil.loadDefaults(getApplicationContext());
+        Utils.setupDarkMode(getApplicationContext());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                sendEmail();
             }
         });
         mDrawer = binding.drawerLayout;
@@ -96,6 +108,43 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
+        });
+    }
+
+    private void sendEmail() {
+        String[] addresses = new String[1];
+        addresses[0] = "xreutx197@gmail.com";
+        String subject = "Issue regarding the Hours app";
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        startActivity(intent);
+    }
+
+    private void setupSplashScreen() {
+        // Add a callback that's called when the splash screen is animating to
+        // the app content.
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(1000L);
+
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+
+            // Run your animation.
+            slideUp.start();
         });
     }
 
