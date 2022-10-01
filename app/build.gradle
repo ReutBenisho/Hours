@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.hours"
-        minSdk 28
+        minSdk 31
         targetSdk 32
         versionCode 1
         versionName "1.0"

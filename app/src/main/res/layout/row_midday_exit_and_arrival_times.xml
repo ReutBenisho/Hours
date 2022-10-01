@@ -74,5 +74,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_midday_arrival"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
