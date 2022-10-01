@@ -79,13 +79,15 @@ public class Timestamp {
         return String.format(Locale.getDefault(), "%02d:%02d", mTime.getHour(), mTime.getMinute());
     }
 
-    public void setTime(int hour, int minute){
-        mTime = LocalTime.of(hour, minute);
-    }
-
     public void setTime(String str){
         mTime = mTime.withHour(Integer.parseInt(str.substring(0, 2)));
         mTime = mTime.withMinute(Integer.parseInt(str.substring(3, 5)));
+    }
+
+    public void setTime(Timestamp other)
+    {
+        mTime = mTime.withHour(other.getHour());
+        mTime = mTime.withMinute(other.getMinute());
     }
 
     public static boolean isOverlap(Timestamp startRange1, Timestamp endRange1,
@@ -100,7 +102,7 @@ public class Timestamp {
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
             Timestamp endOverlap = Timestamp.getEarliest(endRange1, endRange2);
             Timestamp totalOverlap = endOverlap.sub(startOverlap);
-            newTime = newTime.add(totalOverlap);
+            newTime.setTime(Timestamp.getLatest(endRange1, endRange2).add(totalOverlap));
         }
         return newTime;
     }

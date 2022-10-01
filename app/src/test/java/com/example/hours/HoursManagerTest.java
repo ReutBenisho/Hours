@@ -30,10 +30,10 @@ public class HoursManagerTest extends TestCase {
         expHoursInfo.mFullDay = new Timestamp(16, 24);
         expHoursInfo.mZeroHours = new Timestamp(17, 24);
         expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(22, 36);
+        expHoursInfo.m6Hours = new Timestamp(23, 06);
         expHoursInfo.mTookLaunchBreak = true;
         expHoursInfo.mTookEveningBreak = true;
-        expHoursInfo.mTookNightBreak = false;
+        expHoursInfo.mTookNightBreak = true;
         compareHoursInfo(expHoursInfo, resHoursInfo);
     }
 
@@ -47,7 +47,7 @@ public class HoursManagerTest extends TestCase {
         expHoursInfo.mFullDay = new Timestamp(16, 43);
         expHoursInfo.mZeroHours = new Timestamp(17, 43);
         expHoursInfo.m3AndHalfHours = new Timestamp(20, 25);
-        expHoursInfo.m6Hours = new Timestamp(23, 20);
+        expHoursInfo.m6Hours = new Timestamp(23, 25);
         expHoursInfo.mTookLaunchBreak = true;
         expHoursInfo.mTookEveningBreak = true;
         expHoursInfo.mTookNightBreak = true;
