@@ -7,8 +7,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_calc_day_no_exit"
-            android:icon="@drawable/ic_clock_add"
+            android:icon="@drawable/ic_clock"
             android:title="חישוב לפי כניסה" />
+        <item
+            android:id="@+id/nav_calc_day_with_exit"
+            android:icon="@drawable/ic_clock"
+            android:title="חישוב לפי כניסה ויציאה" />
     </group>
     <group android:checkableBehavior="none">
         <item

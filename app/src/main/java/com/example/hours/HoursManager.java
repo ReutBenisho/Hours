@@ -37,16 +37,20 @@ public class HoursManager {
         mHourInfo = info;
         mHourInfo.clearGenearlInfo();
         mHourInfo.clearTotalTime();
+        if(mHourInfo.mArrivalTime.isAfter(mHourInfo.mExitTime))
+            return mHourInfo;
         mHourInfo.mTotalTime.total = removeOvelaps();
 
         if(mHourInfo.mTotalTime.total.greaterThan(Defaults.FULL_DAY)){
             mHourInfo.mTotalTime.isFullDay = true;
             Timestamp additional = mHourInfo.mTotalTime.total.sub(Defaults.FULL_DAY);
             if(additional.greaterThan(Defaults.ZERO_HOURS)){
+                mHourInfo.mTotalTime.zeroHours.clear();
                 mHourInfo.mTotalTime.additionalHours.setTime(additional);
             }
             else{
                 mHourInfo.mTotalTime.zeroHours.setTime(additional);
+                mHourInfo.mTotalTime.additionalHours.clear();
             }
         }
         else {

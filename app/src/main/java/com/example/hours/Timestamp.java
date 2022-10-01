@@ -152,8 +152,8 @@ public class Timestamp {
     }
 
     public void clear() {
-        mTime.withHour(0);
-        mTime.withMinute(0);
+        mTime = mTime.withHour(0);
+        mTime = mTime.withMinute(0);
     }
 
     public boolean greaterThan(Timestamp other) {
