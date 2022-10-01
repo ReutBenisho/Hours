@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,7 +138,7 @@ public class CalcDayFragment extends Fragment {
             mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
             mHoursInfo.mTookCustomBreak.add(false);
         }
-        mHoursInfo = mHoursManager.CalcDay(mHoursInfo);
+        mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
         mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
         mLblTxtZeroHours.setText(mHoursInfo.mZeroHours.toString());

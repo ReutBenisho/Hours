@@ -7,7 +7,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.view.Gravity;
+import android.widget.TextView;
 
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.rule.ActivityTestRule;
@@ -33,7 +35,7 @@ public class MainActivityTest {
         expHoursInfo.mFullDay = new Timestamp(16, 24);
         expHoursInfo.mZeroHours = new Timestamp(17, 24);
         expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(22, 36);
+        expHoursInfo.m6Hours = new Timestamp(23, 06);
 
         onView(withId(R.id.lbl_txt_half_day)).check(matches(withText(expHoursInfo.mHalfDay.toString())));
         onView(withId(R.id.lbl_txt_full_day)).check(matches(withText(expHoursInfo.mFullDay.toString())));
