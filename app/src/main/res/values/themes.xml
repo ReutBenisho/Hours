@@ -16,9 +16,6 @@
         <item name="android:navigationBarColor">@color/background_center_color</item>
         <item name="android:windowBackground">@drawable/background_app</item>
         <item name="android:windowSplashScreenAnimationDuration">5000</item>
-
-
-
     </style>
 
     <style name="Theme.Hours.NoActionBar">
@@ -29,5 +26,14 @@
     <style name="Theme.Hours.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Hours.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Hours.Settings" >
+        <item name="android:textColor">@color/white</item>
+        <item name="android:tint">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorSwitchThumbNormal">@color/background_center_color</item>
+        <item name="android:textColorSecondary">@color/white</item>
+
+    </style>
 
 </resources>

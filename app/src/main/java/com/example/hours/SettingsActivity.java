@@ -34,9 +34,8 @@ public class SettingsActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                Intent homeIntent = new Intent(this, MainActivity.class);
-                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(menuItem);
     }
