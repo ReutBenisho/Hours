@@ -1,5 +1,6 @@
 package com.example.hours;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -37,10 +38,17 @@ public class HoursInfo {
             mExitTime = new Timestamp();
         mExitTime.clear();
 
-        clearAllButUserTime();
+        clearGenearlInfo();
+        clearTotalTime();
     }
 
-    public void clearAllButUserTime(){
+    public void clearTotalTime() {
+        if(mTotalTime == null)
+            mTotalTime = new Totals();
+        mTotalTime.clear();
+    }
+
+    public void clearGenearlInfo(){
         if(mHalfDay != null)
             mHalfDay.clear();
         if(mFullDay != null)
@@ -61,9 +69,6 @@ public class HoursInfo {
         {
             mTookCustomBreak.set(i, false);
         }
-        if(mTotalTime == null)
-            mTotalTime = new Totals();
-        mTotalTime.clear();
     }
 
     @Override
@@ -109,6 +114,37 @@ public class HoursInfo {
                 return false;
         }
         return true;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String s = "";
+        s += "Arrival: " + mArrivalTime.toString();
+        s += "\nHalf day: " + mHalfDay.toString();
+        s += "\nFull day: " + mFullDay.toString();
+        s += "\nZero hours: " + mZeroHours.toString();
+        s += "\n3 and half hours: " + m3AndHalfHours.toString();
+        s += "\n6 hours: " + m6Hours.toString();
+        s += "\nArrived during launch: " + mIsArrivalDuringLaunchBreak;
+        s += "\nTook launch break: " + mTookLaunchBreak;
+        s += "\nTook evening break: " + mTookEveningBreak;
+        s += "\nTook night break: " + mTookNightBreak;
+
+        for(int i = 0; i < mCustomBreaks.size(); i++){
+            s += "\nCustom break #" + i + " start: " + mCustomBreaks.get(i).exit + " exit: " + mCustomBreaks.get(i).arrival;
+        }
+
+        for(int i = 0; i < mTookCustomBreak.size(); i++){
+            s += "\nTook custom break #" + i + ": " + mTookCustomBreak.get(i);
+        }
+
+        s += "\nExit time: " + mExitTime.toString();
+        s += "\nTotal time: " + mTotalTime.total.toString();
+        s += "\nZero hours: " + mTotalTime.zeroHours.toString();
+        s += "\nAdditional hours: " + mTotalTime.additionalHours.toString();
+        s += "\nIs full day: " + mTotalTime.isFullDay;
+        return s;
     }
 
     public static class Midday{

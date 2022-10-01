@@ -7,9 +7,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.view.Gravity;
-import android.widget.TextView;
 
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.rule.ActivityTestRule;
@@ -28,7 +26,7 @@ public class MainActivityTest {
         onView(withId(R.id.drawer_layout))
                 .check(matches(isClosed(Gravity.RIGHT))) // Left Drawer should be closed.
                 .perform(DrawerActions.open()); // Open Drawer
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day_no_exit));
 
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.mHalfDay = new Timestamp(11, 42);

@@ -3,24 +3,19 @@ package com.example.hours;
 import junit.framework.TestCase;
 
 public class HoursManagerNoExitTest extends TestCase {
-
-    public void compareHoursInfo(HoursInfo expHoursInfo, HoursInfo resHoursInfo){
-        assertEquals("Different arrival ", expHoursInfo.mArrivalTime.toString(), resHoursInfo.mArrivalTime.toString());
-        assertEquals("Different exit ", expHoursInfo.mExitTime.toString(), resHoursInfo.mExitTime.toString());
-        assertEquals("Different total time ", expHoursInfo.mTotalTime.total.toString(), resHoursInfo.mTotalTime.total.toString());
-        assertEquals("Different is full day ", expHoursInfo.mTotalTime.isFullDay, resHoursInfo.mTotalTime.isFullDay);
-        assertEquals("Different total zero hours ", expHoursInfo.mTotalTime.zeroHours.toString(), resHoursInfo.mTotalTime.zeroHours.toString());
-        assertEquals("Different total additional hours ", expHoursInfo.mTotalTime.additionalHours.toString(), resHoursInfo.mTotalTime.additionalHours.toString());
-        assertEquals("Different half day", expHoursInfo.mHalfDay.toString(), resHoursInfo.mHalfDay.toString());
-        assertEquals("Different full day", expHoursInfo.mFullDay.toString(), resHoursInfo.mFullDay.toString());
-        assertEquals("Different zero hours", expHoursInfo.mZeroHours.toString(), resHoursInfo.mZeroHours.toString());
-        assertEquals("Different 3 and a half hours ", expHoursInfo.m3AndHalfHours.toString(), resHoursInfo.m3AndHalfHours.toString());
-        assertEquals("Different 6 hours", expHoursInfo.m6Hours.toString(), resHoursInfo.m6Hours.toString());
-        assertEquals("Different took launch break", expHoursInfo.mIsArrivalDuringLaunchBreak, resHoursInfo.mIsArrivalDuringLaunchBreak);
-        assertEquals("Different took launch break", expHoursInfo.mTookLaunchBreak, resHoursInfo.mTookLaunchBreak);
-        assertEquals("Different took evening break", expHoursInfo.mTookEveningBreak, resHoursInfo.mTookEveningBreak);
-        assertEquals("Different took night break", expHoursInfo.mTookNightBreak, resHoursInfo.mTookNightBreak);
-    }
+//
+//    public void compareHoursInfo(HoursInfo expHoursInfo, HoursInfo resHoursInfo){
+//        assertEquals("Different arrival ", expHoursInfo.mArrivalTime.toString(), resHoursInfo.mArrivalTime.toString());
+//        assertEquals("Different half day", expHoursInfo.mHalfDay.toString(), resHoursInfo.mHalfDay.toString());
+//        assertEquals("Different full day", expHoursInfo.mFullDay.toString(), resHoursInfo.mFullDay.toString());
+//        assertEquals("Different zero hours", expHoursInfo.mZeroHours.toString(), resHoursInfo.mZeroHours.toString());
+//        assertEquals("Different 3 and a half hours ", expHoursInfo.m3AndHalfHours.toString(), resHoursInfo.m3AndHalfHours.toString());
+//        assertEquals("Different 6 hours", expHoursInfo.m6Hours.toString(), resHoursInfo.m6Hours.toString());
+//        assertEquals("Different took launch break", expHoursInfo.mIsArrivalDuringLaunchBreak, resHoursInfo.mIsArrivalDuringLaunchBreak);
+//        assertEquals("Different took launch break", expHoursInfo.mTookLaunchBreak, resHoursInfo.mTookLaunchBreak);
+//        assertEquals("Different took evening break", expHoursInfo.mTookEveningBreak, resHoursInfo.mTookEveningBreak);
+//        assertEquals("Different took night break", expHoursInfo.mTookNightBreak, resHoursInfo.mTookNightBreak);
+//    }
     public void testGetInstance() {
         HoursManager hm = HoursManager.getInstance();
         assertNotNull(hm);
@@ -41,9 +36,7 @@ public class HoursManagerNoExitTest extends TestCase {
         expHoursInfo.mTookLaunchBreak = true;
         expHoursInfo.mTookEveningBreak = true;
         expHoursInfo.mTookNightBreak = true;
-        expHoursInfo.mTotalTime = new HoursInfo.Totals();
-        expHoursInfo.mExitTime = new Timestamp();
-        compareHoursInfo(expHoursInfo, resHoursInfo);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 
     public void testArrival_07_49() {
@@ -61,8 +54,6 @@ public class HoursManagerNoExitTest extends TestCase {
         expHoursInfo.mTookLaunchBreak = true;
         expHoursInfo.mTookEveningBreak = true;
         expHoursInfo.mTookNightBreak = true;
-        expHoursInfo.mTotalTime = new HoursInfo.Totals();
-        expHoursInfo.mExitTime = new Timestamp();
-        compareHoursInfo(expHoursInfo, resHoursInfo);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 }

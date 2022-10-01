@@ -13,13 +13,14 @@ public class Timestamp {
         mTime = LocalTime.of(0, 0);
     }
 
-    public static void removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
+    public static Timestamp removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
         if(isOverlap(startRange1, endRange1, startRange2, endRange2)){
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
             Timestamp endOverlap = Timestamp.getEarliest(endRange1, endRange2);
             Timestamp totalOverlap = endOverlap.sub(startOverlap);
-            duration.add(totalOverlap);
+            duration = duration.sub(totalOverlap);
         }
+        return duration;
     }
 
     @Override

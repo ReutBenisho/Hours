@@ -17,7 +17,7 @@ public class HoursManager {
 
     public HoursInfo CalcDayNoExit(HoursInfo info) {
         mHourInfo = info;
-        mHourInfo.clearAllButUserTime();
+        mHourInfo.clearGenearlInfo();
         adjustArrivalToLaunchBreak();
         mHourInfo.mHalfDay = mHourInfo.mArrivalTime.add(Defaults.HALF_DAY);
         mHourInfo.mHalfDay = adjustBreaks(mHourInfo.mHalfDay);
@@ -35,7 +35,8 @@ public class HoursManager {
 
     public HoursInfo CalcDayWithExit(HoursInfo info) {
         mHourInfo = info;
-        mHourInfo.clearAllButUserTime();
+        mHourInfo.clearGenearlInfo();
+        mHourInfo.clearTotalTime();
         mHourInfo.mTotalTime.total = removeOvelaps();
 
         if(mHourInfo.mTotalTime.total.greaterThan(Defaults.FULL_DAY)){
@@ -51,22 +52,23 @@ public class HoursManager {
         else {
             mHourInfo.mTotalTime.isFullDay = false;
         }
+        mHourInfo = CalcDayNoExit(mHourInfo);
         return mHourInfo;
     }
 
     private Timestamp removeOvelaps() {
         Timestamp duration = mHourInfo.mExitTime.sub(mHourInfo.mArrivalTime);
-        removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, duration);
-        removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, duration);
-        removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.NIGHT_BREAK_START, Defaults.NIGHT_BREAK_END, duration);
+        duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, duration);
+        duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, duration);
+       // duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.NIGHT_BREAK_START, Defaults.NIGHT_BREAK_END, duration);
         for(int i = 0; i < mHourInfo.mCustomBreaks.size(); i++){
-            removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, mHourInfo.mCustomBreaks.get(i).exit, mHourInfo.mCustomBreaks.get(i).arrival, duration);
+            duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, mHourInfo.mCustomBreaks.get(i).exit, mHourInfo.mCustomBreaks.get(i).arrival, duration);
         }
         return duration;
     }
 
-    private void removeOverlap(Timestamp arrivalTime, Timestamp exitTime, Timestamp break_start, Timestamp break_end, Timestamp duration) {
-        Timestamp.removeOverlap(arrivalTime, exitTime, break_start, break_end, duration);
+    private Timestamp removeOverlap(Timestamp arrivalTime, Timestamp exitTime, Timestamp break_start, Timestamp break_end, Timestamp duration) {
+        return Timestamp.removeOverlap(arrivalTime, exitTime, break_start, break_end, duration);
     }
 
     private Timestamp adjustBreaks(Timestamp exitTime) {

@@ -1,4 +1,4 @@
-package com.example.hours.ui.calcDay;
+package com.example.hours.ui.calcDayNoExit;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,9 +25,9 @@ import com.example.hours.HoursManager;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
 
-public class CalcDayFragment extends Fragment {
+public class CalcDayNoExitFragment extends Fragment {
 
-    private CalcDayViewModel mViewModel;
+    private CalcDayNoExitViewModel mViewModel;
 
     private Button mBtnArrivalTime;
     private TextView mLblTxtHalfDay;
@@ -41,8 +41,8 @@ public class CalcDayFragment extends Fragment {
     private Button mBtnAddMiddayRow;
 
 
-    public static CalcDayFragment newInstance() {
-        return new CalcDayFragment();
+    public static CalcDayNoExitFragment newInstance() {
+        return new CalcDayNoExitFragment();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CalcDayFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
+        View view = inflater.inflate(R.layout.fragment_calc_day_no_exit, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
         mLblTxtHalfDay = view.findViewById(R.id.lbl_txt_half_day);
@@ -88,7 +88,7 @@ public class CalcDayFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CalcDayViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CalcDayNoExitViewModel.class);
     }
 
 
