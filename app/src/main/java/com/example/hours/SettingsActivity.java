@@ -68,15 +68,16 @@ public class SettingsActivity extends AppCompatActivity implements
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
-                if(s == getString(R.string.pref_dark_mode)){
-                    Snackbar.make(findViewById(R.id.settings), "Pressed on dark mode", Snackbar.LENGTH_SHORT).show();
-                } else if(s == getString(R.string.pref_student_mode)){
+                if(s == getString(R.string.pref_system_mode) ||
+                    s == getString(R.string.pref_dark_mode)){
+                    Utils.setupDarkMode(getApplicationContext());
+                }
+                else if(s == getString(R.string.pref_student_mode)){
                     Snackbar.make(findViewById(R.id.settings), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -141,6 +142,12 @@ public class SettingsActivity extends AppCompatActivity implements
     }
 
     public static class GeneralFragment extends PreferenceFragmentCompat {
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+
+            super.onCreate(savedInstanceState);
+        }
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -216,7 +223,8 @@ public class SettingsActivity extends AppCompatActivity implements
                         }
                     });
             Preference myPreference = findPreference(strDefaultTime);
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
+            SharedPreferencesUtil.setDefaults(strDefaultTime, defaultValue, getActivity());
+            //PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
             myPreference.setSummary(defaultValue);
             myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override

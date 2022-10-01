@@ -1,11 +1,17 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
+        app:key="@string/pref_system_mode"
+        app:title="Use system's default mode"
+        app:defaultValue="true"
+        app:disableDependentsState="true"/>
+
+    <SwitchPreferenceCompat
+        app:dependency="@string/pref_system_mode"
         app:key="@string/pref_dark_mode"
         app:title="Dark Mode"
         app:summaryOff="You are weak."
-        app:summaryOn="You chose wisely."
-        app:defaultValue="false"/>
+        app:summaryOn="You chose wisely."/>
 
     <SwitchPreferenceCompat
         app:key="@string/pref_student_mode"
