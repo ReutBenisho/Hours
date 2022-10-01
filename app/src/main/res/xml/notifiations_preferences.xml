@@ -3,39 +3,27 @@
 
     <SwitchPreferenceCompat
         app:key="pref_notify_launch_break"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before launch break"
-        app:title="Notify before launch break" />
+        app:title="Launch break" />
 
     <SwitchPreferenceCompat
         app:key="pref_notify_evening_break"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before evening break"
-        app:title="Notify before evening break" />
+        app:title="Evening break" />
 
     <SwitchPreferenceCompat
         app:key="pref_notify_night_break"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before night break"
-        app:title="Notify before night break" />
+        app:title="Night break" />
 
     <SwitchPreferenceCompat
         app:key="pref_notify_mothers_transportation"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before mothers transportation"
-        app:title="Notify before mothers transportation" />
+        app:title="Mothers transportation" />
 
     <SwitchPreferenceCompat
         app:key="pref_notify_afternoon_transportation"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before afternoon transportation"
-        app:title="Notify before afternoon transportation" />
+        app:title="Afternoon transportation" />
 
     <SwitchPreferenceCompat
         app:key="pref_notify_evening_transportation"
-        app:summaryOff="Don't need a reminder"
-        app:summaryOn="Remind me to get ready to leave before evening_transportation"
-        app:title="Notify before evening transportation" />
+        app:title="Evening transportation" />
 
     <EditTextPreference
         android:defaultValue="5"
