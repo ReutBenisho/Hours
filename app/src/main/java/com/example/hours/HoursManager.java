@@ -64,6 +64,7 @@ public class HoursManager {
         Timestamp duration = mHourInfo.mExitTime.sub(mHourInfo.mArrivalTime);
         duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, duration);
         duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, duration);
+        // SO far - it seems there's no break at 22:30..
        // duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, Defaults.NIGHT_BREAK_START, Defaults.NIGHT_BREAK_END, duration);
         for(int i = 0; i < mHourInfo.mCustomBreaks.size(); i++){
             duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime, mHourInfo.mCustomBreaks.get(i).exit, mHourInfo.mCustomBreaks.get(i).arrival, duration);
