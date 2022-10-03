@@ -94,6 +94,10 @@ public class Timestamp {
         mTime = mTime.withMinute(Integer.parseInt(str.substring(3, 5)));
     }
 
+    public void setTime(int hour, int minute){
+        mTime = mTime.withHour(hour);
+        mTime = mTime.withMinute(minute);
+    }
     public void setTime(Timestamp other)
     {
         mTime = mTime.withHour(other.getHour());

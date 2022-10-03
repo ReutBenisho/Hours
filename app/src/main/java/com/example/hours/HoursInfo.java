@@ -7,19 +7,17 @@ import java.util.ArrayList;
 
 public class HoursInfo {
     public Timestamp mArrivalTime;
+    public Timestamp mExitTime;
     public Timestamp mHalfDay;
     public Timestamp mFullDay;
     public Timestamp mZeroHours;
     public Timestamp m3AndHalfHours;
     public Timestamp m6Hours;
-    public boolean mIsArrivalDuringLaunchBreak;
-    public boolean mTookLaunchBreak;
-    public boolean mTookEveningBreak;
-    public boolean mTookNightBreak;
-    public ArrayList<Midday> mCustomBreaks;
-    public ArrayList<Boolean> mTookCustomBreak;
-    public Timestamp mExitTime;
+    public ArrayList<Break> mPreDefinedBreaks;
+    public ArrayList<Break> mCustomBreaks;
+    public ArrayList<Break> mAllBreaks;
     public Totals mTotalTime;
+    public boolean mTookEveningBreak;
 
     public HoursInfo(){
         clear();
@@ -37,8 +35,16 @@ public class HoursInfo {
         if(mExitTime == null)
             mExitTime = new Timestamp();
         mExitTime.clear();
+        if(mPreDefinedBreaks == null)
+            mPreDefinedBreaks = new ArrayList<>();
+        mPreDefinedBreaks.add(new Break(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, false));
+        //Not really a breaks - if you reach 19:36, they'll subtrack automatically 12 minutes of your time.
+        //it doesn't matter if you left a minute later...
+        //mPreDefinedBreaks.add(new Break(Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, false));
+        //Not sure if this is a real break...
+        //mPreDefinedBreaks.add(new Break(Defaults.NIGHT_BREAK_START, Defaults.NIGHT_BREAK_END, false));
 
-        clearGenearlInfo();
+        clearGeneralInfo();
         clearTotalTime();
     }
 
@@ -48,7 +54,7 @@ public class HoursInfo {
         mTotalTime.clear();
     }
 
-    public void clearGenearlInfo(){
+    public void clearGeneralInfo(){
         if(mHalfDay != null)
             mHalfDay.clear();
         if(mFullDay != null)
@@ -59,16 +65,24 @@ public class HoursInfo {
             m3AndHalfHours.clear();
         if(m6Hours != null)
             m6Hours.clear();
-        mIsArrivalDuringLaunchBreak = false;
-        mTookLaunchBreak = false;
-        mTookEveningBreak = false;
-        mTookNightBreak = false;
-        if(mTookCustomBreak == null)
-            mTookCustomBreak = new ArrayList<>();
-        for(int i = 0; i < mTookCustomBreak.size(); i++)
+        for(int i = 0; i < mPreDefinedBreaks.size(); i++)
         {
-            mTookCustomBreak.set(i, false);
+            Break current = mPreDefinedBreaks.get(i);
+            current.tookBreak = false;
+            mPreDefinedBreaks.set(i, current);
         }
+        if(mCustomBreaks == null)
+            mCustomBreaks = new ArrayList<>();
+        for(int i = 0; i < mCustomBreaks.size(); i++)
+        {
+            Break current = mCustomBreaks.get(i);
+            current.tookBreak = false;
+            mCustomBreaks.set(i, current);
+        }
+        if(mAllBreaks == null)
+            mAllBreaks = new ArrayList<>();
+        mAllBreaks.clear();
+        mTookEveningBreak = false;
     }
 
     @Override
@@ -82,9 +96,11 @@ public class HoursInfo {
         if(mCustomBreaks.size() != objHoursInfo.mCustomBreaks.size())
             return false;
         for(int i = 9; i< mCustomBreaks.size(); i++){
-            if(!mCustomBreaks.get(i).exit.equals(objHoursInfo.mCustomBreaks.get(i).exit))
+            if(!mCustomBreaks.get(i).breakTimes.start.equals(objHoursInfo.mCustomBreaks.get(i).breakTimes.start))
                 return false;
-            if(!mCustomBreaks.get(i).arrival.equals(objHoursInfo.mCustomBreaks.get(i).arrival))
+            if(!mCustomBreaks.get(i).breakTimes.end.equals(objHoursInfo.mCustomBreaks.get(i).breakTimes.end))
+                return false;
+            if(mCustomBreaks.get(i).tookBreak != objHoursInfo.mCustomBreaks.get(i).tookBreak)
                 return false;
         }
         if(!mExitTime.equals(objHoursInfo.mExitTime))
@@ -101,18 +117,7 @@ public class HoursInfo {
             return false;
         if(!m6Hours.equals(objHoursInfo.m6Hours))
             return false;
-        if(mIsArrivalDuringLaunchBreak != objHoursInfo.mIsArrivalDuringLaunchBreak)
-            return false;
-        if(mTookLaunchBreak != objHoursInfo.mTookLaunchBreak)
-            return false;
-        if(mTookEveningBreak != objHoursInfo.mTookEveningBreak)
-            return false;
-        if(mTookNightBreak != objHoursInfo.mTookNightBreak)
-            return false;
-        for(int i = 0; i < mTookCustomBreak.size(); i++){
-            if(mTookCustomBreak.get(i) != objHoursInfo.mTookCustomBreak.get(i))
-                return false;
-        }
+
         return true;
     }
 
@@ -120,45 +125,59 @@ public class HoursInfo {
     @Override
     public String toString() {
         String s = "";
-        s += "Arrival: " + mArrivalTime.toString();
-        s += "\nHalf day: " + mHalfDay.toString();
-        s += "\nFull day: " + mFullDay.toString();
-        s += "\nZero hours: " + mZeroHours.toString();
-        s += "\n3 and half hours: " + m3AndHalfHours.toString();
-        s += "\n6 hours: " + m6Hours.toString();
-        s += "\nArrived during launch: " + mIsArrivalDuringLaunchBreak;
-        s += "\nTook launch break: " + mTookLaunchBreak;
-        s += "\nTook evening break: " + mTookEveningBreak;
-        s += "\nTook night break: " + mTookNightBreak;
+        if(mArrivalTime != null)
+            s += "Arrival: " + mArrivalTime.toString();
+        if(mHalfDay != null)
+            s += "\nHalf day: " + mHalfDay.toString();
+        if(mFullDay != null)
+            s += "\nFull day: " + mFullDay.toString();
+        if(mZeroHours != null)
+            s += "\nZero hours: " + mZeroHours.toString();
+        if(m3AndHalfHours != null)
+            s += "\n3 and half hours: " + m3AndHalfHours.toString();
+        if(m6Hours != null)
+            s += "\n6 hours: " + m6Hours.toString();
+
+        for(int i = 0; i < mPreDefinedBreaks.size(); i++){
+            s += "\nPre defined break #" + i + " start: " + mPreDefinedBreaks.get(i).breakTimes.start + " end: " + mPreDefinedBreaks.get(i).breakTimes.end;
+        }
 
         for(int i = 0; i < mCustomBreaks.size(); i++){
-            s += "\nCustom break #" + i + " start: " + mCustomBreaks.get(i).exit + " exit: " + mCustomBreaks.get(i).arrival;
+            s += "\nCustom break #" + i + " start: " + mCustomBreaks.get(i).breakTimes.start + " end: " + mCustomBreaks.get(i).breakTimes.end;
         }
 
-        for(int i = 0; i < mTookCustomBreak.size(); i++){
-            s += "\nTook custom break #" + i + ": " + mTookCustomBreak.get(i);
+        if(mExitTime != null)
+            s += "\nExit time: " + mExitTime.toString();
+        if(mTotalTime != null) {
+            s += "\nTotal time: " + mTotalTime.total.toString();
+            s += "\nZero hours: " + mTotalTime.zeroHours.toString();
+            s += "\nAdditional hours: " + mTotalTime.additionalHours.toString();
+            s += "\nIs full day: " + mTotalTime.isFullDay;
         }
-
-        s += "\nExit time: " + mExitTime.toString();
-        s += "\nTotal time: " + mTotalTime.total.toString();
-        s += "\nZero hours: " + mTotalTime.zeroHours.toString();
-        s += "\nAdditional hours: " + mTotalTime.additionalHours.toString();
-        s += "\nIs full day: " + mTotalTime.isFullDay;
         return s;
     }
 
-    public static class Midday{
-        public final Timestamp exit;
-        public final Timestamp arrival;
+    public static class BreakTimes {
+        public Timestamp start;
+        public Timestamp end;
 
-        public Midday(){
-            exit = new Timestamp();
-            arrival = new Timestamp();
+        public BreakTimes(){
+            start = new Timestamp();
+            end = new Timestamp();
+        }
+        public BreakTimes(int startHour, int startMinute, int endHour, int endMinute){
+            start = new Timestamp(startHour, startMinute);
+            end = new Timestamp(endHour, endMinute);
         }
 
-        public Midday(Timestamp exit_time, Timestamp arrival_time){
-            exit = exit_time;
-            arrival = arrival_time;
+        public BreakTimes(Timestamp start_time, Timestamp end_time){
+            start = start_time;
+            end = end_time;
+        }
+
+        public BreakTimes(BreakTimes midday) {
+            start = new Timestamp(midday.start);
+            end = new Timestamp(midday.end);
         }
     }
 
@@ -185,4 +204,44 @@ public class HoursInfo {
         }
     }
 
+    public static class Break {
+        public BreakTimes breakTimes;
+        public Boolean tookBreak;
+        public Break(BreakTimes pair, Boolean _tookBreak){
+            breakTimes = new BreakTimes(pair);
+            tookBreak = _tookBreak;
+        }
+
+        public Break() {
+            breakTimes = new BreakTimes();
+            tookBreak = false;
+        }
+
+        public Break(Timestamp breakStart, Timestamp breakEnd, boolean _tookBreak) {
+            breakTimes = new BreakTimes(breakStart, breakEnd);
+            tookBreak = _tookBreak;
+        }
+
+        public Break(Break aBreak) {
+            breakTimes = new BreakTimes(aBreak.breakTimes);
+            tookBreak = aBreak.tookBreak;
+        }
+
+        public boolean expandBreak(Break other)
+        {
+            boolean isExpand = false;
+
+            if(breakTimes.start.isBetween(other.breakTimes.start, other.breakTimes.end)){
+                breakTimes.start.setTime(other.breakTimes.start);
+                isExpand = true;
+            }
+
+            if(breakTimes.end.isBetween(other.breakTimes.start, other.breakTimes.end)){
+                breakTimes.end.setTime(other.breakTimes.end);
+                isExpand = true;
+            }
+
+            return isExpand;
+        }
+    }
 }

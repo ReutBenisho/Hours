@@ -103,13 +103,11 @@ public class CalcDayWithExitFragment extends Fragment implements OnUpdateListene
         mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
         mHoursInfo.mExitTime.setTime(mBtnExitTime.getText().toString());
         mHoursInfo.mCustomBreaks.clear();
-        mHoursInfo.mTookCustomBreak.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
-            mHoursInfo.mTookCustomBreak.add(false);
+            mHoursInfo.mCustomBreaks.add(new HoursInfo.Break(new HoursInfo.BreakTimes(middayExit, middayArrival), false));
         }
         mHoursInfo = mHoursManager.CalcDayWithExit(mHoursInfo);
         if(mHoursInfo.mTotalTime.isFullDay){

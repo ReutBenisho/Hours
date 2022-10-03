@@ -1,10 +1,7 @@
 package com.example.hours.ui.calcDayNoExit;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
@@ -109,13 +104,12 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
     private void updateHours() {
         mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
         mHoursInfo.mCustomBreaks.clear();
-        mHoursInfo.mTookCustomBreak.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new HoursInfo.Midday(middayExit, middayArrival));
-            mHoursInfo.mTookCustomBreak.add(false);
+            HoursInfo.BreakTimes customBreak = new HoursInfo.BreakTimes(middayExit, middayArrival);
+            mHoursInfo.mCustomBreaks.add(new HoursInfo.Break(customBreak, false));
         }
         mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
