@@ -160,7 +160,7 @@ public class Timestamp {
         mTime = mTime.withMinute(0);
     }
 
-    public boolean greaterThan(Timestamp other) {
-        return isAfter(other);
+    public boolean equalsOrGreaterThan(Timestamp other) {
+        return equals(other) || isAfter(other);
     }
 }

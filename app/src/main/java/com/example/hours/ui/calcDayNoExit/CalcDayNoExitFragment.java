@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.hours.Break;
+import com.example.hours.BreakTimes;
 import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
 import com.example.hours.OnUpdateListener;
@@ -108,8 +110,8 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            HoursInfo.BreakTimes customBreak = new HoursInfo.BreakTimes(middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new HoursInfo.Break(customBreak, false));
+            BreakTimes customBreak = new BreakTimes(middayExit, middayArrival);
+            mHoursInfo.mCustomBreaks.add(new Break(customBreak, false));
         }
         mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
         mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());

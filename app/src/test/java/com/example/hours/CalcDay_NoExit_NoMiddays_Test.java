@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 import org.junit.Before;
 
-public class HoursManagerNoExitNoMiddaysTest extends TestCase {
+public class CalcDay_NoExit_NoMiddays_Test extends TestCase {
 //
 //    public void compareHoursInfo(HoursInfo expHoursInfo, HoursInfo resHoursInfo){
 //        assertEquals("Different arrival ", expHoursInfo.mArrivalTime.toString(), resHoursInfo.mArrivalTime.toString());

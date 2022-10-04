@@ -36,22 +36,22 @@ public class HoursManager {
 
     private void sumAllBreaks() {
         mHourInfo.mAllBreaks.clear();
-        mHourInfo.mAllBreaks.add(new HoursInfo.Break(mHourInfo.mPreDefinedBreaks.get(0)));
+        mHourInfo.mAllBreaks.add(new Break(mHourInfo.mPreDefinedBreaks.get(0)));
         for(int i = 1; i < mHourInfo.mPreDefinedBreaks.size(); i++){
-            HoursInfo.Break breakToAdd = mHourInfo.mPreDefinedBreaks.get(i);
+            Break breakToAdd = mHourInfo.mPreDefinedBreaks.get(i);
             addBreakIfOverlap(breakToAdd);
         }
         for(int i = 0; i < mHourInfo.mCustomBreaks.size(); i++){
-            HoursInfo.Break breakToAdd = mHourInfo.mCustomBreaks.get(i);
+            Break breakToAdd = mHourInfo.mCustomBreaks.get(i);
             addBreakIfOverlap(breakToAdd);
         }
 
     }
 
-    private void addBreakIfOverlap(HoursInfo.Break breakToAdd) {
+    private void addBreakIfOverlap(Break breakToAdd) {
         boolean isExpanded = false;
         for(int i = 0; i < mHourInfo.mAllBreaks.size(); i++){
-            HoursInfo.Break currBreak = mHourInfo.mAllBreaks.get(i);
+            Break currBreak = mHourInfo.mAllBreaks.get(i);
             isExpanded = isExpanded || currBreak.expandBreak(breakToAdd);
         }
         if(!isExpanded)
@@ -69,10 +69,10 @@ public class HoursManager {
         if(mHourInfo.mExitTime.isAfter(Defaults.EVENING_BREAK_START))
             mHourInfo.mTotalTime.total = mHourInfo.mTotalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
 
-        if(mHourInfo.mTotalTime.total.greaterThan(Defaults.FULL_DAY)){
+        if(mHourInfo.mTotalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){
             mHourInfo.mTotalTime.isFullDay = true;
             Timestamp additional = mHourInfo.mTotalTime.total.sub(Defaults.FULL_DAY);
-            if(additional.greaterThan(Defaults.ZERO_HOURS)){
+            if(additional.equalsOrGreaterThan(Defaults.ZERO_HOURS)){
                 mHourInfo.mTotalTime.zeroHours.clear();
                 mHourInfo.mTotalTime.additionalHours.setTime(additional);
             }

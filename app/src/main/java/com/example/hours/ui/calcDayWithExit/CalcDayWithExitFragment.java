@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.hours.Break;
+import com.example.hours.BreakTimes;
 import com.example.hours.Defaults;
 import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
@@ -107,7 +109,7 @@ public class CalcDayWithExitFragment extends Fragment implements OnUpdateListene
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new HoursInfo.Break(new HoursInfo.BreakTimes(middayExit, middayArrival), false));
+            mHoursInfo.mCustomBreaks.add(new Break(middayExit, middayArrival, false));
         }
         mHoursInfo = mHoursManager.CalcDayWithExit(mHoursInfo);
         if(mHoursInfo.mTotalTime.isFullDay){
