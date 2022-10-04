@@ -29,17 +29,17 @@ public class MainActivityTest {
         onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day_no_exit));
 
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.mHalfDay = new Timestamp(11, 42);
-        expHoursInfo.mFullDay = new Timestamp(16, 24);
-        expHoursInfo.mZeroHours = new Timestamp(17, 24);
-        expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(22, 36);
+        expHoursInfo.halfDay = new Timestamp(11, 42);
+        expHoursInfo.fullDay = new Timestamp(16, 24);
+        expHoursInfo.zeroHours = new Timestamp(17, 24);
+        expHoursInfo.additional3AndHalfHours = new Timestamp(20, 6);
+        expHoursInfo.additional6Hours = new Timestamp(22, 36);
 
-        onView(withId(R.id.lbl_txt_half_day)).check(matches(withText(expHoursInfo.mHalfDay.toString())));
-        onView(withId(R.id.lbl_txt_full_day)).check(matches(withText(expHoursInfo.mFullDay.toString())));
-        onView(withId(R.id.lbl_txt_zero_hours)).check(matches(withText(expHoursInfo.mZeroHours.toString())));
-        onView(withId(R.id.lbl_txt_3_and_half_hours)).check(matches(withText(expHoursInfo.m3AndHalfHours.toString())));
-        onView(withId(R.id.lbl_txt_6_hours)).check(matches(withText(expHoursInfo.m6Hours.toString())));
+        onView(withId(R.id.lbl_txt_half_day)).check(matches(withText(expHoursInfo.halfDay.toString())));
+        onView(withId(R.id.lbl_txt_full_day)).check(matches(withText(expHoursInfo.fullDay.toString())));
+        onView(withId(R.id.lbl_txt_zero_hours)).check(matches(withText(expHoursInfo.zeroHours.toString())));
+        onView(withId(R.id.lbl_txt_3_and_half_hours)).check(matches(withText(expHoursInfo.additional3AndHalfHours.toString())));
+        onView(withId(R.id.lbl_txt_6_hours)).check(matches(withText(expHoursInfo.additional6Hours.toString())));
 
     }
 

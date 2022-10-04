@@ -6,6 +6,8 @@ public class Totals {
     public boolean isFullDay;
     public Timestamp zeroHours;
     public Timestamp additionalHours;
+    public Timestamp globalAbsence;
+    public Timestamp unpaidAbsence;
 
     public Totals(){
         clear();
@@ -21,6 +23,12 @@ public class Totals {
         if(additionalHours == null)
             additionalHours = new Timestamp();
         additionalHours.clear();
+        if(globalAbsence == null)
+            globalAbsence = new Timestamp();
+        globalAbsence.clear();
+        if(unpaidAbsence == null)
+            unpaidAbsence = new Timestamp();
+        unpaidAbsence.clear();
     }
 
 }

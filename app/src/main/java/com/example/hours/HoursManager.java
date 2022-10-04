@@ -20,29 +20,29 @@ public class HoursManager {
         mHourInfo.clearGeneralInfo();
         sumAllBreaks();
         adjustArrivalToLaunchBreak();
-        mHourInfo.mHalfDay = mHourInfo.mArrivalTime.add(Defaults.HALF_DAY);
-        mHourInfo.mHalfDay = adjustBreaks(mHourInfo.mHalfDay);
-        mHourInfo.mFullDay = mHourInfo.mHalfDay.add(Defaults.HALF_DAY);
-        mHourInfo.mFullDay = adjustBreaks(mHourInfo.mFullDay);
-        mHourInfo.mZeroHours = mHourInfo.mFullDay.add(Defaults.ZERO_HOURS);
-        mHourInfo.mZeroHours = adjustBreaks(mHourInfo.mZeroHours);
-        mHourInfo.m3AndHalfHours = mHourInfo.mZeroHours.add(Defaults.ADDITIONAL_HOURS);
-        mHourInfo.m3AndHalfHours = adjustBreaks(mHourInfo.m3AndHalfHours);
-        mHourInfo.m6Hours = mHourInfo.m3AndHalfHours.add(Defaults.EXTRA_ADDITIONAL_HOURS);
-        mHourInfo.m6Hours = adjustBreaks(mHourInfo.m6Hours);
+        mHourInfo.halfDay = mHourInfo.arrivalTime.add(Defaults.HALF_DAY);
+        mHourInfo.halfDay = adjustBreaks(mHourInfo.halfDay);
+        mHourInfo.fullDay = mHourInfo.halfDay.add(Defaults.HALF_DAY);
+        mHourInfo.fullDay = adjustBreaks(mHourInfo.fullDay);
+        mHourInfo.zeroHours = mHourInfo.fullDay.add(Defaults.ZERO_HOURS);
+        mHourInfo.zeroHours = adjustBreaks(mHourInfo.zeroHours);
+        mHourInfo.additional3AndHalfHours = mHourInfo.zeroHours.add(Defaults.ADDITIONAL_HOURS);
+        mHourInfo.additional3AndHalfHours = adjustBreaks(mHourInfo.additional3AndHalfHours);
+        mHourInfo.additional6Hours = mHourInfo.additional3AndHalfHours.add(Defaults.EXTRA_ADDITIONAL_HOURS);
+        mHourInfo.additional6Hours = adjustBreaks(mHourInfo.additional6Hours);
 
         return mHourInfo;
     }
 
     private void sumAllBreaks() {
-        mHourInfo.mAllBreaks.clear();
-        mHourInfo.mAllBreaks.add(new Break(mHourInfo.mPreDefinedBreaks.get(0)));
-        for(int i = 1; i < mHourInfo.mPreDefinedBreaks.size(); i++){
-            Break breakToAdd = mHourInfo.mPreDefinedBreaks.get(i);
+        mHourInfo.allBreaks.clear();
+        mHourInfo.allBreaks.add(new Break(mHourInfo.preDefinedBreaks.get(0)));
+        for(int i = 1; i < mHourInfo.preDefinedBreaks.size(); i++){
+            Break breakToAdd = mHourInfo.preDefinedBreaks.get(i);
             addBreakIfOverlap(breakToAdd);
         }
-        for(int i = 0; i < mHourInfo.mCustomBreaks.size(); i++){
-            Break breakToAdd = mHourInfo.mCustomBreaks.get(i);
+        for(int i = 0; i < mHourInfo.customBreaks.size(); i++){
+            Break breakToAdd = mHourInfo.customBreaks.get(i);
             addBreakIfOverlap(breakToAdd);
         }
 
@@ -50,12 +50,12 @@ public class HoursManager {
 
     private void addBreakIfOverlap(Break breakToAdd) {
         boolean isExpanded = false;
-        for(int i = 0; i < mHourInfo.mAllBreaks.size(); i++){
-            Break currBreak = mHourInfo.mAllBreaks.get(i);
+        for(int i = 0; i < mHourInfo.allBreaks.size(); i++){
+            Break currBreak = mHourInfo.allBreaks.get(i);
             isExpanded = isExpanded || currBreak.expandBreak(breakToAdd);
         }
         if(!isExpanded)
-            mHourInfo.mAllBreaks.add(breakToAdd);
+            mHourInfo.allBreaks.add(breakToAdd);
     }
 
     public HoursInfo CalcDayWithExit(HoursInfo info) {
@@ -63,36 +63,39 @@ public class HoursManager {
         mHourInfo.clearGeneralInfo();
         mHourInfo.clearTotalTime();
         sumAllBreaks();
-        if(mHourInfo.mArrivalTime.isAfter(mHourInfo.mExitTime))
+        if(mHourInfo.arrivalTime.isAfter(mHourInfo.exitTime))
             return mHourInfo;
-        mHourInfo.mTotalTime.total = removeOvelaps();
-        if(mHourInfo.mExitTime.isAfter(Defaults.EVENING_BREAK_START))
-            mHourInfo.mTotalTime.total = mHourInfo.mTotalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
+        mHourInfo.totalTime.total = removeOvelaps();
+        if(mHourInfo.exitTime.isAfter(Defaults.EVENING_BREAK_START)
+        && mHourInfo.customBreaks.size() == 0)
+            mHourInfo.totalTime.total = mHourInfo.totalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
 
-        if(mHourInfo.mTotalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){
-            mHourInfo.mTotalTime.isFullDay = true;
-            Timestamp additional = mHourInfo.mTotalTime.total.sub(Defaults.FULL_DAY);
+        if(mHourInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){
+            mHourInfo.totalTime.isFullDay = true;
+            Timestamp additional = mHourInfo.totalTime.total.sub(Defaults.FULL_DAY);
             if(additional.equalsOrGreaterThan(Defaults.ZERO_HOURS)){
-                mHourInfo.mTotalTime.zeroHours.clear();
-                mHourInfo.mTotalTime.additionalHours.setTime(additional);
+                mHourInfo.totalTime.additionalHours.setTime(additional);
             }
             else{
-                mHourInfo.mTotalTime.zeroHours.setTime(additional);
-                mHourInfo.mTotalTime.additionalHours.clear();
+                mHourInfo.totalTime.zeroHours.setTime(additional);
             }
         }
         else {
-            mHourInfo.mTotalTime.isFullDay = false;
+            mHourInfo.totalTime.isFullDay = false;
+            if(mHourInfo.totalTime.total.lessThan(Defaults.HALF_DAY))
+                mHourInfo.totalTime.unpaidAbsence.setTime(Defaults.FULL_DAY.sub(mHourInfo.totalTime.total));
+            else
+                mHourInfo.totalTime.globalAbsence.setTime(Defaults.FULL_DAY.sub(mHourInfo.totalTime.total));
         }
         //mHourInfo = CalcDayNoExit(mHourInfo);
         return mHourInfo;
     }
 
     private Timestamp removeOvelaps() {
-        Timestamp duration = mHourInfo.mExitTime.sub(mHourInfo.mArrivalTime);
-        for(int i = 0; i < mHourInfo.mAllBreaks.size(); i++)
-            duration = removeOverlap(mHourInfo.mArrivalTime, mHourInfo.mExitTime,
-                    mHourInfo.mAllBreaks.get(i).breakTimes.start, mHourInfo.mAllBreaks.get(i).breakTimes.end,
+        Timestamp duration = mHourInfo.exitTime.sub(mHourInfo.arrivalTime);
+        for(int i = 0; i < mHourInfo.allBreaks.size(); i++)
+            duration = removeOverlap(mHourInfo.arrivalTime, mHourInfo.exitTime,
+                    mHourInfo.allBreaks.get(i).breakTimes.start, mHourInfo.allBreaks.get(i).breakTimes.end,
                     duration);
 
         return duration;
@@ -103,11 +106,11 @@ public class HoursManager {
     }
 
     private Timestamp adjustBreaks(Timestamp exitTime) {
-        for(int i = 0; i < mHourInfo.mAllBreaks.size(); i++){
+        for(int i = 0; i < mHourInfo.allBreaks.size(); i++){
             exitTime = adjustToBreak(exitTime, i);
         }
-        if(!mHourInfo.mTookEveningBreak && exitTime.isAfter(Defaults.EVENING_BREAK_START)) {
-            mHourInfo.mTookEveningBreak = true;
+        if(!mHourInfo.tookEveningBreak && exitTime.isAfter(Defaults.EVENING_BREAK_START)) {
+            mHourInfo.tookEveningBreak = true;
             exitTime = exitTime.add(Defaults.EVENING_BREAK_DURATION);
         }
 
@@ -116,29 +119,29 @@ public class HoursManager {
 
     private Timestamp adjustToBreak(Timestamp exitTime, int i) {
         boolean tookBreak = false;
-        if(mHourInfo.mAllBreaks.get(i).tookBreak)
+        if(mHourInfo.allBreaks.get(i).tookBreak)
             return exitTime;
-        Timestamp startBreak = mHourInfo.mAllBreaks.get(i).breakTimes.start;
-        Timestamp endBreak = mHourInfo.mAllBreaks.get(i).breakTimes.end;
+        Timestamp startBreak = mHourInfo.allBreaks.get(i).breakTimes.start;
+        Timestamp endBreak = mHourInfo.allBreaks.get(i).breakTimes.end;
 
         if(endBreak.isBefore(startBreak)) // invalid range
             return exitTime;
 
-        if(Timestamp.isOverlap(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak))
+        if(Timestamp.isOverlap(mHourInfo.arrivalTime, exitTime, startBreak, endBreak))
         {
-            exitTime = Timestamp.addOverlap(mHourInfo.mArrivalTime, exitTime, startBreak, endBreak);
+            exitTime = Timestamp.addOverlap(mHourInfo.arrivalTime, exitTime, startBreak, endBreak);
             tookBreak = true;
         }
 
         if(tookBreak){
-            mHourInfo.mAllBreaks.get(i).tookBreak = true;
+            mHourInfo.allBreaks.get(i).tookBreak = true;
         }
         return exitTime;
     }
 
     private void adjustArrivalToLaunchBreak() {
-        if(mHourInfo.mArrivalTime.isBetween(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END)){
-            mHourInfo.mArrivalTime = Defaults.LAUNCH_BREAK_END;
+        if(mHourInfo.arrivalTime.isBetween(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END)){
+            mHourInfo.arrivalTime = Defaults.LAUNCH_BREAK_END;
         }
     }
 

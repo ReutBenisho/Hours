@@ -26,29 +26,29 @@ public class CalcDay_NoExit_NoMiddays_Test extends TestCase {
 
     public void test1_Arrival_07_30() {
         HoursInfo info = new HoursInfo();
-        info.mArrivalTime = new Timestamp(7, 30);
+        info.arrivalTime = new Timestamp(7, 30);
         HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayNoExit(info);
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.mArrivalTime = new Timestamp(7, 30);
-        expHoursInfo.mHalfDay = new Timestamp(11, 42);
-        expHoursInfo.mFullDay = new Timestamp(16, 24);
-        expHoursInfo.mZeroHours = new Timestamp(17, 24);
-        expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(22, 36);
+        expHoursInfo.arrivalTime = new Timestamp(7, 30);
+        expHoursInfo.halfDay = new Timestamp(11, 42);
+        expHoursInfo.fullDay = new Timestamp(16, 24);
+        expHoursInfo.zeroHours = new Timestamp(17, 24);
+        expHoursInfo.additional3AndHalfHours = new Timestamp(20, 6);
+        expHoursInfo.additional6Hours = new Timestamp(22, 36);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 
     public void test2_Arrival_07_49() {
         HoursInfo info = new HoursInfo();
-        info.mArrivalTime = new Timestamp(7, 49);
+        info.arrivalTime = new Timestamp(7, 49);
         HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayNoExit(info);
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.mArrivalTime = new Timestamp(7, 49);
-        expHoursInfo.mHalfDay = new Timestamp(12, 01);
-        expHoursInfo.mFullDay = new Timestamp(16, 43);
-        expHoursInfo.mZeroHours = new Timestamp(17, 43);
-        expHoursInfo.m3AndHalfHours = new Timestamp(20, 25);
-        expHoursInfo.m6Hours = new Timestamp(22, 55);
+        expHoursInfo.arrivalTime = new Timestamp(7, 49);
+        expHoursInfo.halfDay = new Timestamp(12, 01);
+        expHoursInfo.fullDay = new Timestamp(16, 43);
+        expHoursInfo.zeroHours = new Timestamp(17, 43);
+        expHoursInfo.additional3AndHalfHours = new Timestamp(20, 25);
+        expHoursInfo.additional6Hours = new Timestamp(22, 55);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 }

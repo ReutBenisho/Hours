@@ -76,8 +76,8 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
 
         mHoursManager = HoursManager.getInstance();
         mHoursInfo = new HoursInfo();
-        mHoursInfo.mArrivalTime = new Timestamp(7, 30);
-        mBtnArrivalTime.setText(mHoursInfo.mArrivalTime.toString());
+        mHoursInfo.arrivalTime = new Timestamp(7, 30);
+        mBtnArrivalTime.setText(mHoursInfo.arrivalTime.toString());
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,21 +104,21 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
     }
 
     private void updateHours() {
-        mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
-        mHoursInfo.mCustomBreaks.clear();
+        mHoursInfo.arrivalTime.setTime(mBtnArrivalTime.getText().toString());
+        mHoursInfo.customBreaks.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
             BreakTimes customBreak = new BreakTimes(middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new Break(customBreak, false));
+            mHoursInfo.customBreaks.add(new Break(customBreak, false));
         }
         mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
-        mLblTxtHalfDay.setText(mHoursInfo.mHalfDay.toString());
-        mLblTxtFullDay.setText(mHoursInfo.mFullDay.toString());
-        mLblTxtZeroHours.setText(mHoursInfo.mZeroHours.toString());
-        mLblTxt3AndHalfHours.setText(mHoursInfo.m3AndHalfHours.toString());
-        mLblTxt6Hours.setText(mHoursInfo.m6Hours.toString());
+        mLblTxtHalfDay.setText(mHoursInfo.halfDay.toString());
+        mLblTxtFullDay.setText(mHoursInfo.fullDay.toString());
+        mLblTxtZeroHours.setText(mHoursInfo.zeroHours.toString());
+        mLblTxt3AndHalfHours.setText(mHoursInfo.additional3AndHalfHours.toString());
+        mLblTxt6Hours.setText(mHoursInfo.additional6Hours.toString());
     }
 
     @Override

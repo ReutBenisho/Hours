@@ -6,38 +6,38 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class HoursInfo {
-    public Timestamp mArrivalTime;
-    public Timestamp mExitTime;
-    public Timestamp mHalfDay;
-    public Timestamp mFullDay;
-    public Timestamp mZeroHours;
-    public Timestamp m3AndHalfHours;
-    public Timestamp m6Hours;
-    public ArrayList<Break> mPreDefinedBreaks;
-    public ArrayList<Break> mCustomBreaks;
-    public ArrayList<Break> mAllBreaks;
-    public Totals mTotalTime;
-    public boolean mTookEveningBreak;
+    public Timestamp arrivalTime;
+    public Timestamp exitTime;
+    public Timestamp halfDay;
+    public Timestamp fullDay;
+    public Timestamp zeroHours;
+    public Timestamp additional3AndHalfHours;
+    public Timestamp additional6Hours;
+    public ArrayList<Break> preDefinedBreaks;
+    public ArrayList<Break> customBreaks;
+    public ArrayList<Break> allBreaks;
+    public Totals totalTime;
+    public boolean tookEveningBreak;
 
     public HoursInfo(){
         clear();
     }
 
     public void clear(){
-        if(mArrivalTime == null)
-            mArrivalTime = new Timestamp();
-        mArrivalTime.clear();
-        if(mCustomBreaks == null)
-            mCustomBreaks = new ArrayList<>();
-        for(int i = 0; i < mCustomBreaks.size(); i++){
-            mCustomBreaks.remove(i);
+        if(arrivalTime == null)
+            arrivalTime = new Timestamp();
+        arrivalTime.clear();
+        if(customBreaks == null)
+            customBreaks = new ArrayList<>();
+        for(int i = 0; i < customBreaks.size(); i++){
+            customBreaks.remove(i);
         }
-        if(mExitTime == null)
-            mExitTime = new Timestamp();
-        mExitTime.clear();
-        if(mPreDefinedBreaks == null)
-            mPreDefinedBreaks = new ArrayList<>();
-        mPreDefinedBreaks.add(new Break(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, false));
+        if(exitTime == null)
+            exitTime = new Timestamp();
+        exitTime.clear();
+        if(preDefinedBreaks == null)
+            preDefinedBreaks = new ArrayList<>();
+        preDefinedBreaks.add(new Break(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, false));
         //Not really a breaks - if you reach 19:36, they'll subtrack automatically 12 minutes of your time.
         //it doesn't matter if you left a minute later...
         //mPreDefinedBreaks.add(new Break(Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, false));
@@ -49,40 +49,40 @@ public class HoursInfo {
     }
 
     public void clearTotalTime() {
-        if(mTotalTime == null)
-            mTotalTime = new Totals();
-        mTotalTime.clear();
+        if(totalTime == null)
+            totalTime = new Totals();
+        totalTime.clear();
     }
 
     public void clearGeneralInfo(){
-        if(mHalfDay != null)
-            mHalfDay.clear();
-        if(mFullDay != null)
-            mFullDay.clear();
-        if(mZeroHours != null)
-            mZeroHours.clear();
-        if(m3AndHalfHours != null)
-            m3AndHalfHours.clear();
-        if(m6Hours != null)
-            m6Hours.clear();
-        for(int i = 0; i < mPreDefinedBreaks.size(); i++)
+        if(halfDay != null)
+            halfDay.clear();
+        if(fullDay != null)
+            fullDay.clear();
+        if(zeroHours != null)
+            zeroHours.clear();
+        if(additional3AndHalfHours != null)
+            additional3AndHalfHours.clear();
+        if(additional6Hours != null)
+            additional6Hours.clear();
+        for(int i = 0; i < preDefinedBreaks.size(); i++)
         {
-            Break current = mPreDefinedBreaks.get(i);
+            Break current = preDefinedBreaks.get(i);
             current.tookBreak = false;
-            mPreDefinedBreaks.set(i, current);
+            preDefinedBreaks.set(i, current);
         }
-        if(mCustomBreaks == null)
-            mCustomBreaks = new ArrayList<>();
-        for(int i = 0; i < mCustomBreaks.size(); i++)
+        if(customBreaks == null)
+            customBreaks = new ArrayList<>();
+        for(int i = 0; i < customBreaks.size(); i++)
         {
-            Break current = mCustomBreaks.get(i);
+            Break current = customBreaks.get(i);
             current.tookBreak = false;
-            mCustomBreaks.set(i, current);
+            customBreaks.set(i, current);
         }
-        if(mAllBreaks == null)
-            mAllBreaks = new ArrayList<>();
-        mAllBreaks.clear();
-        mTookEveningBreak = false;
+        if(allBreaks == null)
+            allBreaks = new ArrayList<>();
+        allBreaks.clear();
+        tookEveningBreak = false;
     }
 
     @Override
@@ -91,31 +91,31 @@ public class HoursInfo {
             return false;
 
         HoursInfo objHoursInfo = (HoursInfo) obj;
-        if(!mArrivalTime.equals(objHoursInfo.mArrivalTime))
+        if(!arrivalTime.equals(objHoursInfo.arrivalTime))
             return false;
-        if(mCustomBreaks.size() != objHoursInfo.mCustomBreaks.size())
+        if(customBreaks.size() != objHoursInfo.customBreaks.size())
             return false;
-        for(int i = 9; i< mCustomBreaks.size(); i++){
-            if(!mCustomBreaks.get(i).breakTimes.start.equals(objHoursInfo.mCustomBreaks.get(i).breakTimes.start))
+        for(int i = 9; i< customBreaks.size(); i++){
+            if(!customBreaks.get(i).breakTimes.start.equals(objHoursInfo.customBreaks.get(i).breakTimes.start))
                 return false;
-            if(!mCustomBreaks.get(i).breakTimes.end.equals(objHoursInfo.mCustomBreaks.get(i).breakTimes.end))
+            if(!customBreaks.get(i).breakTimes.end.equals(objHoursInfo.customBreaks.get(i).breakTimes.end))
                 return false;
-            if(mCustomBreaks.get(i).tookBreak != objHoursInfo.mCustomBreaks.get(i).tookBreak)
+            if(customBreaks.get(i).tookBreak != objHoursInfo.customBreaks.get(i).tookBreak)
                 return false;
         }
-        if(!mExitTime.equals(objHoursInfo.mExitTime))
+        if(!exitTime.equals(objHoursInfo.exitTime))
             return false;
-        if(!mTotalTime.equals(objHoursInfo.mTotalTime))
+        if(!totalTime.equals(objHoursInfo.totalTime))
             return false;
-        if(!mHalfDay.equals(objHoursInfo.mHalfDay))
+        if(!halfDay.equals(objHoursInfo.halfDay))
             return false;
-        if(!mFullDay.equals(objHoursInfo.mFullDay))
+        if(!fullDay.equals(objHoursInfo.fullDay))
             return false;
-        if(!mZeroHours.equals(objHoursInfo.mZeroHours))
+        if(!zeroHours.equals(objHoursInfo.zeroHours))
             return false;
-        if(!m3AndHalfHours.equals(objHoursInfo.m3AndHalfHours))
+        if(!additional3AndHalfHours.equals(objHoursInfo.additional3AndHalfHours))
             return false;
-        if(!m6Hours.equals(objHoursInfo.m6Hours))
+        if(!additional6Hours.equals(objHoursInfo.additional6Hours))
             return false;
 
         return true;
@@ -125,34 +125,36 @@ public class HoursInfo {
     @Override
     public String toString() {
         String s = "";
-        if(mArrivalTime != null)
-            s += "Arrival: " + mArrivalTime.toString();
-        if(mHalfDay != null)
-            s += "\nHalf day: " + mHalfDay.toString();
-        if(mFullDay != null)
-            s += "\nFull day: " + mFullDay.toString();
-        if(mZeroHours != null)
-            s += "\nZero hours: " + mZeroHours.toString();
-        if(m3AndHalfHours != null)
-            s += "\n3 and half hours: " + m3AndHalfHours.toString();
-        if(m6Hours != null)
-            s += "\n6 hours: " + m6Hours.toString();
+        if(arrivalTime != null)
+            s += "Arrival: " + arrivalTime.toString();
+        if(halfDay != null)
+            s += "\nHalf day: " + halfDay.toString();
+        if(fullDay != null)
+            s += "\nFull day: " + fullDay.toString();
+        if(zeroHours != null)
+            s += "\nZero hours: " + zeroHours.toString();
+        if(additional3AndHalfHours != null)
+            s += "\nAdditional 3 and half hours: " + additional3AndHalfHours.toString();
+        if(additional6Hours != null)
+            s += "\nAdditional 6 hours: " + additional6Hours.toString();
 
-        for(int i = 0; i < mPreDefinedBreaks.size(); i++){
-            s += "\nPre defined break #" + i + " start: " + mPreDefinedBreaks.get(i).breakTimes.start + " end: " + mPreDefinedBreaks.get(i).breakTimes.end;
+        for(int i = 0; i < preDefinedBreaks.size(); i++){
+            s += "\nPre defined break #" + i + " start: " + preDefinedBreaks.get(i).breakTimes.start + " end: " + preDefinedBreaks.get(i).breakTimes.end;
         }
 
-        for(int i = 0; i < mCustomBreaks.size(); i++){
-            s += "\nCustom break #" + i + " start: " + mCustomBreaks.get(i).breakTimes.start + " end: " + mCustomBreaks.get(i).breakTimes.end;
+        for(int i = 0; i < customBreaks.size(); i++){
+            s += "\nCustom break #" + i + " start: " + customBreaks.get(i).breakTimes.start + " end: " + customBreaks.get(i).breakTimes.end;
         }
 
-        if(mExitTime != null)
-            s += "\nExit time: " + mExitTime.toString();
-        if(mTotalTime != null) {
-            s += "\nTotal time: " + mTotalTime.total.toString();
-            s += "\nZero hours: " + mTotalTime.zeroHours.toString();
-            s += "\nAdditional hours: " + mTotalTime.additionalHours.toString();
-            s += "\nIs full day: " + mTotalTime.isFullDay;
+        if(exitTime != null)
+            s += "\nExit time: " + exitTime.toString();
+        if(totalTime != null) {
+            s += "\nTotal time: " + totalTime.total.toString();
+            s += "\nZero hours: " + totalTime.zeroHours.toString();
+            s += "\nAdditional hours: " + totalTime.additionalHours.toString();
+            s += "\nIs full day: " + totalTime.isFullDay;
+            s += "\nGlobal absence: " + totalTime.globalAbsence.toString();
+            s += "\nUnpaid absence: " + totalTime.unpaidAbsence.toString();
         }
         return s;
     }

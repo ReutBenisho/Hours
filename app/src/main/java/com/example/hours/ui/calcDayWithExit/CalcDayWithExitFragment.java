@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.hours.Break;
-import com.example.hours.BreakTimes;
 import com.example.hours.Defaults;
 import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
@@ -79,8 +78,8 @@ public class CalcDayWithExitFragment extends Fragment implements OnUpdateListene
 
         mHoursManager = HoursManager.getInstance();
         mHoursInfo = new HoursInfo();
-        mHoursInfo.mArrivalTime = new Timestamp(7, 30);
-        mBtnArrivalTime.setText(mHoursInfo.mArrivalTime.toString());
+        mHoursInfo.arrivalTime = new Timestamp(7, 30);
+        mBtnArrivalTime.setText(mHoursInfo.arrivalTime.toString());
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,27 +101,27 @@ public class CalcDayWithExitFragment extends Fragment implements OnUpdateListene
     }
 
     private void updateHours() {
-        mHoursInfo.mArrivalTime.setTime(mBtnArrivalTime.getText().toString());
-        mHoursInfo.mExitTime.setTime(mBtnExitTime.getText().toString());
-        mHoursInfo.mCustomBreaks.clear();
+        mHoursInfo.arrivalTime.setTime(mBtnArrivalTime.getText().toString());
+        mHoursInfo.exitTime.setTime(mBtnExitTime.getText().toString());
+        mHoursInfo.customBreaks.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            mHoursInfo.mCustomBreaks.add(new Break(middayExit, middayArrival, false));
+            mHoursInfo.customBreaks.add(new Break(middayExit, middayArrival, false));
         }
         mHoursInfo = mHoursManager.CalcDayWithExit(mHoursInfo);
-        if(mHoursInfo.mTotalTime.isFullDay){
+        if(mHoursInfo.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
         }
         else
         {
-            mLblTxtFullDay.setText(mHoursInfo.mTotalTime.total.toString());
+            mLblTxtFullDay.setText(mHoursInfo.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
         }
-        mLblTxtZeroHours.setText(mHoursInfo.mTotalTime.zeroHours.toString());
-        mLblTxtAdditionalHours.setText(mHoursInfo.mTotalTime.additionalHours.toString());
+        mLblTxtZeroHours.setText(mHoursInfo.totalTime.zeroHours.toString());
+        mLblTxtAdditionalHours.setText(mHoursInfo.totalTime.additionalHours.toString());
     }
 
     @Override

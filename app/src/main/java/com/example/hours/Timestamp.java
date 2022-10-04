@@ -163,4 +163,8 @@ public class Timestamp {
     public boolean equalsOrGreaterThan(Timestamp other) {
         return equals(other) || isAfter(other);
     }
+
+    public boolean lessThan(Timestamp other) {
+        return isBefore(other);
+    }
 }
