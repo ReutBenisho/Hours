@@ -41,6 +41,9 @@ public class Break {
             breakTimes.end.setTime(other.breakTimes.end);
             isExpand = true;
         }
+        if(breakTimes.contain(other.breakTimes)){
+            isExpand = true;
+        }
 
         return isExpand;
     }

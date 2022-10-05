@@ -22,4 +22,8 @@ public class BreakTimes {
         start = new Timestamp(midday.start);
         end = new Timestamp(midday.end);
     }
+
+    public boolean contain(BreakTimes other) {
+        return other.start.isBetween(start, end) && other.end.isBetween(start, end);
+    }
 }

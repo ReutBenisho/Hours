@@ -220,4 +220,151 @@ public class CalcDay_WithExit_WithMiddays_Test extends TestCase {
         expHoursInfo.totalTime.zeroHours = new Timestamp(0, 59);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
+
+    public void test14_Arrival_8_18_Exit_11_15_Arrival_11_50_Exit_19_48() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 18);
+        info.customBreaks.add(new Break(11, 15, 11, 50));
+        info.exitTime = new Timestamp(19, 48);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 18);
+        expHoursInfo.customBreaks.add(new Break(11, 15, 11, 50));
+        expHoursInfo.exitTime = new Timestamp(19, 48);
+        expHoursInfo.totalTime.total = new Timestamp(10, 13);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.additionalHours = new Timestamp(1, 49);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test15_Arrival_7_38_Exit_13_35_Arrival_13_54_Exit_16_38() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(7, 38);
+        info.customBreaks.add(new Break(13, 35, 13, 54));
+        info.exitTime = new Timestamp(16, 38);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(7, 38);
+        expHoursInfo.customBreaks.add(new Break(13, 35, 13, 54));
+        expHoursInfo.exitTime = new Timestamp(16, 38);
+        expHoursInfo.totalTime.total = new Timestamp(8, 30);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.zeroHours = new Timestamp(0, 6);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test16_Arrival_9_49_Exit_13_0_Arrival_18_13_Exit_21_39() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(9, 49);
+        info.customBreaks.add(new Break(13, 0, 18, 13));
+        info.exitTime = new Timestamp(21, 39);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(9, 49);
+        expHoursInfo.customBreaks.add(new Break(13, 0, 18, 13));
+        expHoursInfo.exitTime = new Timestamp(21, 39);
+        expHoursInfo.totalTime.total = new Timestamp(6, 37);
+        expHoursInfo.totalTime.isFullDay = false;
+        expHoursInfo.totalTime.globalAbsence = new Timestamp(1, 47);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test17_Arrival_7_32_Exit_14_56_Arrival_19_0_Exit_20_59() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(7, 32);
+        info.customBreaks.add(new Break(14, 56, 19, 0));
+        info.exitTime = new Timestamp(20, 59);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(7, 32);
+        expHoursInfo.customBreaks.add(new Break(14, 56, 19, 0));
+        expHoursInfo.exitTime = new Timestamp(20, 59);
+        expHoursInfo.totalTime.total = new Timestamp(8, 53);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.zeroHours = new Timestamp(0, 29);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test18_Arrival_8_40_Exit_15_55_Arrival_18_35_Exit_20_10() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 40);
+        info.customBreaks.add(new Break(15, 55, 18, 35));
+        info.exitTime = new Timestamp(20, 10);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 40);
+        expHoursInfo.customBreaks.add(new Break(15, 55, 18, 35));
+        expHoursInfo.exitTime = new Timestamp(20, 10);
+        expHoursInfo.totalTime.total = new Timestamp(8, 20);
+        expHoursInfo.totalTime.isFullDay = false;
+        expHoursInfo.totalTime.globalAbsence = new Timestamp(0, 4);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test19_Arrival_8_37_Exit_15_55_Arrival_16_34_Exit_19_12() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 37);
+        info.customBreaks.add(new Break(15, 55, 16, 34));
+        info.exitTime = new Timestamp(19, 12);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 37);
+        expHoursInfo.customBreaks.add(new Break(15, 55, 16, 34));
+        expHoursInfo.exitTime = new Timestamp(19, 12);
+        expHoursInfo.totalTime.total = new Timestamp(9, 26);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.additionalHours = new Timestamp(1, 2);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test20_Arrival_8_54_Exit_16_32_Arrival_20_0_Exit_22_19() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 54);
+        info.customBreaks.add(new Break(16, 32, 20, 0));
+        info.exitTime = new Timestamp(22, 19);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 54);
+        expHoursInfo.customBreaks.add(new Break(16, 32, 20, 0));
+        expHoursInfo.exitTime = new Timestamp(22, 19);
+        expHoursInfo.totalTime.total = new Timestamp(9, 27);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.additionalHours = new Timestamp(1, 3);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test21_Arrival_8_26_Exit_16_36_Arrival_20_37_Exit_22_16() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 26);
+        info.customBreaks.add(new Break(16, 36, 20, 37));
+        info.exitTime = new Timestamp(22, 16);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 26);
+        expHoursInfo.customBreaks.add(new Break(16, 36, 20, 37));
+        expHoursInfo.exitTime = new Timestamp(22, 16);
+        expHoursInfo.totalTime.total = new Timestamp(9, 19);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.zeroHours = new Timestamp(0, 55);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
+    public void test22_Arrival_8_9_Exit_18_6_Arrival_18_32_Exit_19_23_Arrival_19_28_Exit_21_14() {
+        HoursInfo info = new HoursInfo();
+        info.arrivalTime = new Timestamp(8, 9);
+        info.customBreaks.add(new Break(18, 6, 18, 32));
+        info.customBreaks.add(new Break(19, 23, 19, 28));
+        info.exitTime = new Timestamp(21, 14);
+        HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayWithExit(info);
+        HoursInfo expHoursInfo = new HoursInfo();
+        expHoursInfo.arrivalTime = new Timestamp(8, 9);
+        expHoursInfo.customBreaks.add(new Break(18, 6, 18, 32));
+        expHoursInfo.customBreaks.add(new Break(19, 23, 19, 28));
+        expHoursInfo.exitTime = new Timestamp(21, 14);
+        expHoursInfo.totalTime.total = new Timestamp(11, 52);
+        expHoursInfo.totalTime.isFullDay = true;
+        expHoursInfo.totalTime.additionalHours = new Timestamp(3, 28);
+        assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
+    }
+
 }
