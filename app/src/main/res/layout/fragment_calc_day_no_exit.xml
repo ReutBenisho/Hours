@@ -13,6 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/lbl_calc_time"
                 android:layout_width="wrap_content"
@@ -26,11 +27,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <RadioGroup
+                android:id="@+id/rbg_day_of_choice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_calc_time"
+                android:checkedButton="@id/rd_btn_weekday">
+
+                <RadioButton
+                    android:id="@+id/rd_btn_friday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_radio_btn"
+                    android:button="@drawable/btn_transparent"
+                    android:text="שישי"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_radio_selected" />
+
+                <RadioButton
+                    android:id="@+id/rd_btn_weekday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_radio_btn"
+                    android:button="@drawable/btn_transparent"
+                    android:text="ראשון-חמישי"
+                    android:textAlignment="center"
+                    android:textColor="@color/color_radio_selected" />
+            </RadioGroup>
+
             <TextView
                 android:id="@+id/lbl_arrival_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -40,22 +79,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_calc_time" />
+                app:layout_constraintTop_toBottomOf="@+id/rbg_day_of_choice" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_arrival_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/background_input"
                 android:text="@string/midnight_timestamp"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_arrival_time"
                 app:layout_constraintEnd_toStartOf="@+id/lbl_arrival_time"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_calc_time" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_arrival_time" />
+
             <LinearLayout
                 android:id="@+id/layout_midday_exit_and_arrival_times"
                 android:layout_width="0dp"
@@ -66,7 +106,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
                 app:layout_constraintTop_toBottomOf="@+id/btn_arrival_time"
-                app:layout_constraintVertical_bias="0.43"/>
+                app:layout_constraintVertical_bias="0.43" />
 
             <Button
                 android:id="@+id/btn_add_midday_row"

@@ -33,7 +33,6 @@
         <item name="colorControlActivated">@color/white</item>
         <item name="colorSwitchThumbNormal">@color/background_center_color</item>
         <item name="android:textColorSecondary">@color/white</item>
-
     </style>
 
 </resources>
