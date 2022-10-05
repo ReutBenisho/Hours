@@ -2,7 +2,9 @@ package com.example.hours;
 
 import junit.framework.TestCase;
 
-public class HoursManagerNoExitTest extends TestCase {
+import org.junit.Before;
+
+public class CalcDay_NoExit_NoMiddays_Test extends TestCase {
 //
 //    public void compareHoursInfo(HoursInfo expHoursInfo, HoursInfo resHoursInfo){
 //        assertEquals("Different arrival ", expHoursInfo.mArrivalTime.toString(), resHoursInfo.mArrivalTime.toString());
@@ -16,44 +18,37 @@ public class HoursManagerNoExitTest extends TestCase {
 //        assertEquals("Different took evening break", expHoursInfo.mTookEveningBreak, resHoursInfo.mTookEveningBreak);
 //        assertEquals("Different took night break", expHoursInfo.mTookNightBreak, resHoursInfo.mTookNightBreak);
 //    }
-    public void testGetInstance() {
-        HoursManager hm = HoursManager.getInstance();
-        assertNotNull(hm);
+
+    @Before
+    public void resetHoursManager(){
+        HoursManager.getInstance().clear();
     }
 
-    public void testArrival_07_30() {
+    public void test1_Arrival_07_30() {
         HoursInfo info = new HoursInfo();
-        info.mArrivalTime = new Timestamp(7, 30);
+        info.arrivalTime = new Timestamp(7, 30);
         HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayNoExit(info);
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.mArrivalTime = new Timestamp(7, 30);
-        expHoursInfo.mHalfDay = new Timestamp(11, 42);
-        expHoursInfo.mFullDay = new Timestamp(16, 24);
-        expHoursInfo.mZeroHours = new Timestamp(17, 24);
-        expHoursInfo.m3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.m6Hours = new Timestamp(23, 06);
-        expHoursInfo.mIsArrivalDuringLaunchBreak = false;
-        expHoursInfo.mTookLaunchBreak = true;
-        expHoursInfo.mTookEveningBreak = true;
-        expHoursInfo.mTookNightBreak = true;
+        expHoursInfo.arrivalTime = new Timestamp(7, 30);
+        expHoursInfo.halfDay = new Timestamp(11, 42);
+        expHoursInfo.fullDay = new Timestamp(16, 24);
+        expHoursInfo.zeroHours = new Timestamp(17, 24);
+        expHoursInfo.additional3AndHalfHours = new Timestamp(20, 6);
+        expHoursInfo.additional6Hours = new Timestamp(22, 36);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 
-    public void testArrival_07_49() {
+    public void test2_Arrival_07_49() {
         HoursInfo info = new HoursInfo();
-        info.mArrivalTime = new Timestamp(7, 49);
+        info.arrivalTime = new Timestamp(7, 49);
         HoursInfo resHoursInfo = HoursManager.getInstance().CalcDayNoExit(info);
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.mArrivalTime = new Timestamp(7, 49);
-        expHoursInfo.mHalfDay = new Timestamp(12, 01);
-        expHoursInfo.mFullDay = new Timestamp(16, 43);
-        expHoursInfo.mZeroHours = new Timestamp(17, 43);
-        expHoursInfo.m3AndHalfHours = new Timestamp(20, 25);
-        expHoursInfo.m6Hours = new Timestamp(23, 25);
-        expHoursInfo.mIsArrivalDuringLaunchBreak = false;
-        expHoursInfo.mTookLaunchBreak = true;
-        expHoursInfo.mTookEveningBreak = true;
-        expHoursInfo.mTookNightBreak = true;
+        expHoursInfo.arrivalTime = new Timestamp(7, 49);
+        expHoursInfo.halfDay = new Timestamp(12, 01);
+        expHoursInfo.fullDay = new Timestamp(16, 43);
+        expHoursInfo.zeroHours = new Timestamp(17, 43);
+        expHoursInfo.additional3AndHalfHours = new Timestamp(20, 25);
+        expHoursInfo.additional6Hours = new Timestamp(22, 55);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 }

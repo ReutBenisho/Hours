@@ -20,10 +20,8 @@ public class Defaults {
     public static final Timestamp NIGHT_BREAK_DURATION = new Timestamp(0, 30);
     public static final Timestamp NIGHT_BREAK_END = NIGHT_BREAK_START.add(NIGHT_BREAK_DURATION);
 
-    public enum Breaks{
-        LAUNCH,
-        EVENING,
-        NIGHT,
+    public enum Breaks_e{
+        PRE_DEFINED,
         CUSTOM,
     }
 }
