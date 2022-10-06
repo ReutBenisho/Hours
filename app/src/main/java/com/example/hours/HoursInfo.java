@@ -159,4 +159,13 @@ public class HoursInfo {
         return s;
     }
 
+    public void setUserData(HoursInfo other) {
+        arrivalTime.setTime(other.arrivalTime);
+        exitTime.setTime(other.exitTime);
+        exitTime.setTime(other.exitTime);
+        preDefinedBreaks.clear();
+        preDefinedBreaks.addAll(other.preDefinedBreaks);
+        customBreaks.clear();
+        customBreaks.addAll(other.customBreaks);
+    }
 }

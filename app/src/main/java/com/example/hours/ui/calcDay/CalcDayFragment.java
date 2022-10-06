@@ -1,5 +1,6 @@
-package com.example.hours.ui.calcDayNoExit;
+package com.example.hours.ui.calcDay;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RadioGroup;
 
 import com.example.hours.Break;
 import com.example.hours.BreakTimes;
@@ -23,26 +24,25 @@ import com.example.hours.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
 import com.example.hours.Utils;
+import com.example.hours.ui.noExit.NoExitFragment;
+import com.example.hours.ui.withExit.WithExitFragment;
 
-public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener {
+public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
-    private CalcDayNoExitViewModel mViewModel;
+    private CalcDayModel mViewModel;
     public static final String TAG = "CALC_DAY_NO_EXIT_TAG";
 
     private Button mBtnArrivalTime;
-    private TextView mLblTxtHalfDay;
-    private TextView mLblTxtFullDay;
-    private TextView mLblTxtZeroHours;
-    private TextView mLblTxt3AndHalfHours;
-    private TextView mLblTxt6Hours;
     private HoursInfo mHoursInfo;
     private HoursManager mHoursManager;
     private LinearLayout mLayoutMiddayTimes;
     private Button mBtnAddMiddayRow;
+    private RadioGroup mRadioGroupDay;
+    private IExitFragment mFragment;
 
 
-    public static CalcDayNoExitFragment newInstance() {
-        return new CalcDayNoExitFragment();
+    public static CalcDayFragment newInstance() {
+        return new CalcDayFragment();
     }
 
     @Override
@@ -56,14 +56,9 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
                              @Nullable Bundle savedInstanceState) {
         container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_calc_day_no_exit, container, false);
+        View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
         mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
-        mLblTxtHalfDay = view.findViewById(R.id.lbl_txt_half_day);
-        mLblTxtFullDay = view.findViewById(R.id.lbl_txt_full_day);
-        mLblTxtZeroHours = view.findViewById(R.id.lbl_txt_zero_hours);
-        mLblTxt3AndHalfHours = view.findViewById(R.id.lbl_txt_3_and_half_hours);
-        mLblTxt6Hours = view.findViewById(R.id.lbl_txt_6_hours);
         mLayoutMiddayTimes = view.findViewById(R.id.layout_midday_exit_and_arrival_times);
         mBtnAddMiddayRow = view.findViewById(R.id.btn_add_midday_row);
 
@@ -86,6 +81,15 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
         };
         mBtnArrivalTime.setOnClickListener(listener);
 
+        mRadioGroupDay = view.findViewById(R.id.rbg_day_of_choice);
+        mRadioGroupDay.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                openCalcDayFragment(checkedId);
+            }
+        });
+
+        mRadioGroupDay.check(R.id.rd_btn_day_weekday);
         updateHours();
 
         return view;
@@ -94,7 +98,7 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CalcDayNoExitViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(CalcDayModel.class);
     }
 
     @Override
@@ -113,18 +117,48 @@ public class CalcDayNoExitFragment extends Fragment implements OnUpdateListener 
             BreakTimes customBreak = new BreakTimes(middayExit, middayArrival);
             mHoursInfo.customBreaks.add(new Break(customBreak, false));
         }
-        mHoursInfo = mHoursManager.CalcDayNoExit(mHoursInfo);
-        mLblTxtHalfDay.setText(mHoursInfo.halfDay.toString());
-        mLblTxtFullDay.setText(mHoursInfo.fullDay.toString());
-        mLblTxtZeroHours.setText(mHoursInfo.zeroHours.toString());
-        mLblTxt3AndHalfHours.setText(mHoursInfo.additional3AndHalfHours.toString());
-        mLblTxt6Hours.setText(mHoursInfo.additional6Hours.toString());
+        mFragment.updateHours(mHoursInfo);
     }
 
     @Override
     public void onUpdate(OnUpdateListener listener) {
         if(listener == this)
             updateHours();
+    }
 
+    private void openCalcDayFragment(int checkedRadioId) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        String tag = "";
+        if(checkedRadioId == R.id.rd_btn_day_weekday){
+            fragmentClass = NoExitFragment.class;
+            tag = NoExitFragment.TAG;
+        } else if(checkedRadioId == R.id.rd_btn_day_friday){
+            fragmentClass = WithExitFragment.class;
+            tag = WithExitFragment.TAG;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // set MyFragment Arguments
+        if(fragment != null) {
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getChildFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_calc_day, fragment, tag)
+                    .commit();
+
+            mFragment = (IExitFragment) fragment;
+            mFragment.updateHours(mHoursInfo);
+        }
+    }
+
+    public interface IExitFragment{
+        void updateHours(HoursInfo hoursInfo);
     }
 }
