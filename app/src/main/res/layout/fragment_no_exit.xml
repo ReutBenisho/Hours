@@ -11,10 +11,10 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/lbl_exit_time"
+            android:id="@+id/lbl_exit_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:text="מתי לצאת?"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -29,12 +29,12 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lbl_exit_time">
+            app:layout_constraintTop_toBottomOf="@+id/lbl_exit_time_title">
 
             <TextView
                 android:id="@+id/lbl_txt_zero_hours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
@@ -42,14 +42,13 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_zero_hours"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_txt_full_day"
                 app:layout_constraintStart_toStartOf="@+id/lbl_txt_full_day"
                 app:layout_constraintTop_toTopOf="@+id/lbl_zero_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_3_and_half_hours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
@@ -57,14 +56,13 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_3_and_half_hours"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_txt_zero_hours"
                 app:layout_constraintStart_toStartOf="@+id/lbl_txt_zero_hours"
                 app:layout_constraintTop_toTopOf="@+id/lbl_3_and_half_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_6_hours"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
@@ -72,41 +70,42 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_6_hours"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_txt_3_and_half_hours"
-                app:layout_constraintStart_toStartOf="@+id/lbl_txt_3_and_half_hours"
+                app:layout_constraintEnd_toStartOf="@+id/lbl_6_hours"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/lbl_6_hours" />
 
             <TextView
                 android:id="@+id/lbl_zero_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="47dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="שעות אפס:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_full_day"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_full_day" />
+                app:layout_constraintBottom_toTopOf="@+id/lbl_3_and_half_hours"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_full_day" />
 
             <TextView
                 android:id="@+id/lbl_3_and_half_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="47dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="3.5 נוספות:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_zero_hours"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_zero_hours" />
+                app:layout_constraintBottom_toTopOf="@+id/lbl_6_hours"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_zero_hours" />
 
             <TextView
                 android:id="@+id/lbl_6_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="47dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginBottom="32dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -114,13 +113,14 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_3_and_half_hours"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_3_and_half_hours" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lbl_txt_6_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_full_day"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
@@ -128,7 +128,6 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_full_day"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_txt_half_day"
                 app:layout_constraintStart_toStartOf="@+id/lbl_txt_half_day"
                 app:layout_constraintTop_toTopOf="@+id/lbl_full_day" />
 
@@ -136,35 +135,33 @@
                 android:id="@+id/lbl_full_day"
                 android:layout_width="wrap_content"
                 android:layout_height="47dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="יום מלא:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_half_day"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_half_day" />
+                app:layout_constraintBottom_toTopOf="@+id/lbl_half_day"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_half_day" />
 
 
             <TextView
                 android:id="@+id/lbl_half_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
+                android:layout_marginBottom="16dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="חצי יום:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.3"
-                app:layout_constraintStart_toEndOf="@+id/lbl_txt_half_day"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@+id/lbl_zero_hours"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/lbl_txt_half_day"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
@@ -172,8 +169,6 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_half_day"
-                app:layout_constraintEnd_toStartOf="@+id/lbl_half_day"
-                app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/lbl_half_day" />

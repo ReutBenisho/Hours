@@ -18,6 +18,7 @@ public class HoursInfo {
     public ArrayList<Break> allBreaks;
     public Totals totalTime;
     public boolean tookEveningBreak;
+    public boolean isFriday;
 
     public HoursInfo(){
         clear();
@@ -35,8 +36,10 @@ public class HoursInfo {
         if(exitTime == null)
             exitTime = new Timestamp();
         exitTime.clear();
+        isFriday = false;
         if(preDefinedBreaks == null)
             preDefinedBreaks = new ArrayList<>();
+        preDefinedBreaks.clear();
         preDefinedBreaks.add(new Break(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, false));
         //Not really a breaks - if you reach 19:36, they'll subtrack automatically 12 minutes of your time.
         //it doesn't matter if you left a minute later...
@@ -105,6 +108,8 @@ public class HoursInfo {
         }
         if(!exitTime.equals(objHoursInfo.exitTime))
             return false;
+        if(isFriday != objHoursInfo.isFriday)
+            return false;
         if(!totalTime.equals(objHoursInfo.totalTime))
             return false;
         if(!halfDay.equals(objHoursInfo.halfDay))
@@ -148,6 +153,9 @@ public class HoursInfo {
 
         if(exitTime != null)
             s += "\nExit time: " + exitTime.toString();
+
+        s += "\nFriday: " + isFriday;
+
         if(totalTime != null) {
             s += "\nTotal time: " + totalTime.total.toString();
             s += "\nZero hours: " + totalTime.zeroHours.toString();
@@ -159,13 +167,4 @@ public class HoursInfo {
         return s;
     }
 
-    public void setUserData(HoursInfo other) {
-        arrivalTime.setTime(other.arrivalTime);
-        exitTime.setTime(other.exitTime);
-        exitTime.setTime(other.exitTime);
-        preDefinedBreaks.clear();
-        preDefinedBreaks.addAll(other.preDefinedBreaks);
-        customBreaks.clear();
-        customBreaks.addAll(other.customBreaks);
-    }
 }

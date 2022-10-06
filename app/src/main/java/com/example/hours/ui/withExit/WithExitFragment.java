@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hours.Defaults;
-import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
 import com.example.hours.R;
 import com.example.hours.ui.calcDay.CalcDayFragment;
@@ -27,8 +26,11 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
     private TextView mLblTxtFullDay;
     private TextView mLblTxtZeroHours;
     private TextView mLblTxtAdditionalHours;
-    private HoursInfo mHoursInfo;
     private boolean mIsInitialized = false;
+    private HoursManager mHoursManager;
+    private TextView mLblTxtGlobalAbsenceHours;
+    private TextView mLblTxtUnpaidAbsenceHours;
+    private View mView;
 
     public static WithExitFragment newInstance() {
         return new WithExitFragment();
@@ -39,19 +41,21 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
                              @Nullable Bundle savedInstanceState) {
         container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_with_exit, container, false);
+        mView = inflater.inflate(R.layout.fragment_with_exit, container, false);
 
-        initialize(view);
+        initialize();
         updateLabels();
 
-        return view;
+        return mView;
     }
 
-    private void initialize(View view) {
+    private void initialize() {
         mIsInitialized = true;
-        mLblTxtFullDay = view.findViewById(R.id.lbl_txt_full_day);
-        mLblTxtZeroHours = view.findViewById(R.id.lbl_txt_zero_hours);
-        mLblTxtAdditionalHours = view.findViewById(R.id.lbl_txt_additional_hours);
+        mLblTxtFullDay = mView.findViewById(R.id.lbl_txt_full_day);
+        mLblTxtZeroHours = mView.findViewById(R.id.lbl_txt_zero_hours);
+        mLblTxtAdditionalHours = mView.findViewById(R.id.lbl_txt_additional_hours);
+        mLblTxtGlobalAbsenceHours = mView.findViewById(R.id.lbl_txt_global_absence_hours);
+        mLblTxtUnpaidAbsenceHours = mView.findViewById(R.id.lbl_txt_unpaid_absence_hours);
     }
 
     @Override
@@ -62,30 +66,55 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
     }
 
     @Override
-    public void updateHours(HoursInfo hoursInfo) {
-        if(mHoursInfo == null)
-            mHoursInfo = new HoursInfo();
-        mHoursInfo.clear();
-        mHoursInfo.setUserData(hoursInfo);
-        if(getView() == null)
-            return;
+    public void update(boolean isFriday) {
         if(!mIsInitialized)
-            initialize(getView());
+            return;
         updateLabels();
     }
 
     private void updateLabels() {
-        mHoursInfo = HoursManager.getInstance().CalcDayWithExit(mHoursInfo);
-        if(mHoursInfo.totalTime.isFullDay){
+        mHoursManager = HoursManager.getInstance();
+        mHoursManager.CalcDayWithExit();
+
+        if(mHoursManager.info.isFriday)
+        {
+            adjustFriday(View.GONE);
+        }
+
+        if(mHoursManager.info.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
         }
         else
         {
-            mLblTxtFullDay.setText(mHoursInfo.totalTime.total.toString());
+            mLblTxtFullDay.setText(mHoursManager.info.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
         }
-        mLblTxtZeroHours.setText(mHoursInfo.totalTime.zeroHours.toString());
-        mLblTxtAdditionalHours.setText(mHoursInfo.totalTime.additionalHours.toString());
+        mLblTxtZeroHours.setText(mHoursManager.info.totalTime.zeroHours.toString());
+        mLblTxtAdditionalHours.setText(mHoursManager.info.totalTime.additionalHours.toString());
+        mLblTxtGlobalAbsenceHours.setText(mHoursManager.info.totalTime.globalAbsence.toString());
+        mLblTxtUnpaidAbsenceHours.setText(mHoursManager.info.totalTime.unpaidAbsence.toString());
     }
+
+    private void adjustFriday(int visibility) {
+        mView.findViewById(R.id.lbl_full_day).setVisibility(visibility);
+        mView.findViewById(R.id.lbl_zero_hours).setVisibility(visibility);
+        mView.findViewById(R.id.lbl_global_absence_hours).setVisibility(visibility);
+        mView.findViewById(R.id.lbl_unpaid_absence_hours).setVisibility(visibility);
+        mLblTxtFullDay.setVisibility(visibility);
+        mLblTxtZeroHours.setVisibility(visibility);
+        mLblTxtGlobalAbsenceHours.setVisibility(visibility);
+        mLblTxtUnpaidAbsenceHours.setVisibility(visibility);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
 }
