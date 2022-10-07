@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_start_color">#146334</color>
-    <color name="background_center_color">#147B81</color>
-    <color name="background_end_color">#115577</color>
-    <color name="icon_tint">@color/background_center_color</color>
-    <color name="switchActivated">@color/background_center_color</color>
-    <color name="navigation_bar">@color/background_center_color</color>
-    <color name="radio_btn">@color/white</color>
-    <color name="radio_btn_selected">@color/background_end_color</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="dark_gray">#333333</color>
     <color name="pink">#D11D94</color>
     <color name="orange">#FF5722</color>
     <color name="purple">#9C27B0</color>
     <color name="red">#FF0000</color>
     <color name="green">#4CAF50</color>
     <color name="blue">#002AFF</color>
+    <color name="gray_20">#9F9E9E</color>
+    <color name="gray_50">#BF3E3E3E</color>
+    <color name="gray_90">#333333</color>
+    <color name="gray_10">#40C8C8C8</color>
+    <color name="blue_10">#80115577</color>
+
 </resources>
