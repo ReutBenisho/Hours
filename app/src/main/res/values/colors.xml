@@ -12,23 +12,7 @@
     <color name="gray_20">#9F9E9E</color>
     <color name="gray_50">#BF3E3E3E</color>
     <color name="gray_90">#333333</color>
-
-    <color name="background_start_color">#146334</color>
-    <color name="background_center_color">#147B81</color>
-    <color name="background_end_color">#115577</color>
-    <color name="icon_tint">@color/background_center_color</color>
-    <color name="switchActivated">@color/background_center_color</color>
-    <color name="navigation_bar">@color/background_center_color</color>
-    <color name="radio_btn">@color/white</color>
-    <color name="radio_btn_selected">@color/background_end_color</color>
-    <color name="settings_text_primary">@color/black</color>
-    <color name="settings_text_primary_disabled">@color/gray_20</color>
-    <color name="settings_text_secondary">@color/gray_50</color>
-    <color name="settings_text_secondary_disabled">@color/gray_20</color>
-<!--    <color name="settings_icons_tint">@color/background_center_color</color>-->
-    <color name="settings_switch_checked">@color/background_center_color</color>
-    <color name="settings_switch_ununchecked">@color/gray_50</color>
-    <color name="settings_switch_disabled">#80FFFFFF</color>
-    <color name="settings_window_background">@color/white</color>
+    <color name="gray_10">#40C8C8C8</color>
+    <color name="blue_10">#80115577</color>
 
 </resources>

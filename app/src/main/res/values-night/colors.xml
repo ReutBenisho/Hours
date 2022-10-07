@@ -17,4 +17,5 @@
     <color name="settings_switch_ununchecked">@color/gray_20</color>
     <color name="settings_switch_disabled">@color/gray_90</color>
     <color name="settings_window_background">@color/black</color>
+    <color name="calc_labels">@color/blue_10</color>
 </resources>
