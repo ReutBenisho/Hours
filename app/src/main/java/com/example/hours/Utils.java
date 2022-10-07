@@ -110,4 +110,21 @@ public class Utils {
         }
     }
 
+    public static void addExitTimeLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
+        View viewMiddayRow = layoutInflater.inflate(R.layout.row_add_exit_time, null, false);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popTimePicker(view, context);
+            }
+        };
+        Button btnExitTime = viewMiddayRow.findViewById(R.id.btn_exit_time);
+        btnExitTime.setOnClickListener(listener);
+        btnExitTime.setText("16:24");
+
+        layout.addView(viewMiddayRow);
+    }
+    public static void removeExitTime(LinearLayout layout) {
+        layout.removeAllViews();
+    }
 }

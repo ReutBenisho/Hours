@@ -6,6 +6,8 @@
     <color name="icon_tint">@color/background_center_color</color>
     <color name="switchActivated">@color/background_center_color</color>
     <color name="navigation_bar">@color/background_center_color</color>
+    <color name="radio_btn">@color/white</color>
+    <color name="radio_btn_selected">@color/background_end_color</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

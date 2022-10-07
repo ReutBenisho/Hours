@@ -12,8 +12,7 @@ import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.databinding.ActivityMainBinding;
-import com.example.hours.ui.calcDayNoExit.CalcDayNoExitFragment;
-import com.example.hours.ui.calcDayWithExit.CalcDayWithExitFragment;
+import com.example.hours.ui.calcDay.CalcDayFragment;
 import com.example.hours.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -57,41 +56,20 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_calc_day_no_exit, R.id.nav_calc_day_with_exit, R.id.nav_gallery, R.id.nav_settings)
+                R.id.nav_calc_day,R.id.nav_gallery, R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().findItem(R.id.nav_calc_day_no_exit).setChecked(true);
-        //toggles the navigation view to the right - incomplete code (caused crash)
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, mDrawer, binding.appBarMain.toolbar,
-//                R.string.navigation_drawer_open,
-//                R.string.navigation_drawer_close
-//        );
-//        toggle.setDrawerIndicatorEnabled(false);
-//        toggle.setHomeAsUpIndicator(R.drawable.ic_email);
-//        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mDrawer.isDrawerVisible(Gravity.RIGHT)) {
-//                    mDrawer.closeDrawer(Gravity.RIGHT);
-//                } else {
-//                    mDrawer.openDrawer(Gravity.RIGHT);
-//                }
-//            }
-//        });
-//        mDrawer.addDrawerListener(toggle);
-//        toggle.syncState();
+        //navigationView.getMenu().findItem(R.id.nav_calc_day_no_exit).setChecked(true);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
-                    case R.id.nav_calc_day_no_exit:
-                    case R.id.nav_calc_day_with_exit:
+                    case R.id.nav_calc_day:
                     case R.id.nav_gallery:
                         openFragment(menuItem);
                         break;
@@ -146,12 +124,9 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = null;
         String tag = "";
-        if(menuItem.getItemId() == R.id.nav_calc_day_no_exit){
-            fragmentClass = CalcDayNoExitFragment.class;
-            tag = CalcDayNoExitFragment.TAG;
-        } else if(menuItem.getItemId() == R.id.nav_calc_day_with_exit){
-            fragmentClass = CalcDayWithExitFragment.class;
-            tag = CalcDayWithExitFragment.TAG;
+        if(menuItem.getItemId() == R.id.nav_calc_day){
+            fragmentClass = CalcDayFragment.class;
+            tag = CalcDayFragment.TAG;
         }else if(menuItem.getItemId() == R.id.nav_gallery){
             fragmentClass = GalleryFragment.class;
             tag = GalleryFragment.TAG;

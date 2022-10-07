@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.calcDay.CalcDayFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/lbl_calc_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="חישוב שעות"
+                android:textColor="@color/white"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/ckbtn_day_friday"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_radio_btn"
+                android:button="@drawable/btn_transparent"
+                android:minHeight="0dp"
+                android:text="שישי"
+                android:textAlignment="center"
+                android:textColor="@color/color_radio_selected"
+                app:layout_constraintBottom_toBottomOf="@+id/ckbtn_add_exit_time"
+                app:layout_constraintEnd_toStartOf="@+id/ckbtn_add_exit_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ckbtn_add_exit_time" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/ckbtn_add_exit_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_radio_btn"
+                android:button="@drawable/btn_transparent"
+                android:minHeight="30dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="שעת יציאה"
+                android:textAlignment="center"
+                android:textColor="@color/color_radio_selected"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ckbtn_day_friday"
+                app:layout_constraintTop_toBottomOf="@id/lbl_calc_time" />
+
+
+            <TextView
+                android:id="@+id/lbl_arrival_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="כניסה:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btn_arrival_time"
+                app:layout_constraintTop_toBottomOf="@+id/ckbtn_day_friday" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_arrival_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/background_input"
+                android:text="@string/midnight_timestamp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_arrival_time"
+                app:layout_constraintEnd_toStartOf="@+id/lbl_arrival_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_arrival_time" />
+
+            <LinearLayout
+                android:id="@+id/layout_midday_exit_and_arrival_times"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/btn_add_midday_row"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
+                app:layout_constraintTop_toBottomOf="@+id/btn_arrival_time"
+                app:layout_constraintVertical_bias="0.43" />
+
+            <Button
+                android:id="@+id/btn_add_midday_row"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:drawableEnd="@drawable/ic_clock_add"
+                android:drawableTint="@color/white"
+                android:text="יציאה וכניסה באמצע היום"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
+                app:layout_constraintTop_toBottomOf="@+id/layout_midday_exit_and_arrival_times" />
+
+            <LinearLayout
+                android:id="@+id/layout_exit_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
+                app:layout_constraintTop_toBottomOf="@+id/btn_add_midday_row" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment_calc_day"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@id/lbl_arrival_time"
+                app:layout_constraintStart_toStartOf="@id/btn_arrival_time"
+                app:layout_constraintTop_toBottomOf="@id/layout_exit_time"
+                android:background="@drawable/background_calc_labels"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</FrameLayout>

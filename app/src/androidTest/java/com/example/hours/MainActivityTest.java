@@ -26,7 +26,7 @@ public class MainActivityTest {
         onView(withId(R.id.drawer_layout))
                 .check(matches(isClosed(Gravity.RIGHT))) // Left Drawer should be closed.
                 .perform(DrawerActions.open()); // Open Drawer
-        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day_no_exit));
+        onView(withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_calc_day));
 
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.halfDay = new Timestamp(11, 42);

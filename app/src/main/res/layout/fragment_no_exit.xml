@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.noExit.NoExitFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lbl_exit_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="מתי לצאת?"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_exit_time_title">
+
+            <TextView
+                android:id="@+id/lbl_txt_zero_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_zero_hours"
+                app:layout_constraintStart_toStartOf="@+id/lbl_txt_full_day"
+                app:layout_constraintTop_toTopOf="@+id/lbl_zero_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_3_and_half_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_3_and_half_hours"
+                app:layout_constraintStart_toStartOf="@+id/lbl_txt_zero_hours"
+                app:layout_constraintTop_toTopOf="@+id/lbl_3_and_half_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_6_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_6_hours"
+                app:layout_constraintEnd_toStartOf="@+id/lbl_6_hours"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_6_hours" />
+
+            <TextView
+                android:id="@+id/lbl_zero_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginBottom="16dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="שעות אפס:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_3_and_half_hours"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_full_day" />
+
+            <TextView
+                android:id="@+id/lbl_3_and_half_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginBottom="16dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="3.5 נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_6_hours"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_zero_hours" />
+
+            <TextView
+                android:id="@+id/lbl_6_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="32dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="6 נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/lbl_txt_6_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_full_day"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_full_day"
+                app:layout_constraintStart_toStartOf="@+id/lbl_txt_half_day"
+                app:layout_constraintTop_toTopOf="@+id/lbl_full_day" />
+
+            <TextView
+                android:id="@+id/lbl_full_day"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginBottom="16dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="יום מלא:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_half_day"
+                app:layout_constraintEnd_toEndOf="@+id/lbl_half_day" />
+
+
+            <TextView
+                android:id="@+id/lbl_half_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="חצי יום:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_zero_hours"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/lbl_txt_half_day"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_half_day"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_half_day" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
