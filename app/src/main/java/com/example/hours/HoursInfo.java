@@ -28,11 +28,6 @@ public class HoursInfo {
         if(arrivalTime == null)
             arrivalTime = new Timestamp();
         arrivalTime.clear();
-        if(customBreaks == null)
-            customBreaks = new ArrayList<>();
-        for(int i = 0; i < customBreaks.size(); i++){
-            customBreaks.remove(i);
-        }
         if(exitTime == null)
             exitTime = new Timestamp();
         exitTime.clear();
@@ -41,6 +36,16 @@ public class HoursInfo {
             preDefinedBreaks = new ArrayList<>();
         preDefinedBreaks.clear();
         preDefinedBreaks.add(new Break(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END, false));
+
+        if(customBreaks == null)
+            customBreaks = new ArrayList<>();
+        customBreaks.clear();
+        if(allBreaks == null)
+            allBreaks = new ArrayList<>();
+        allBreaks.clear();
+
+
+
         //Not really a breaks - if you reach 19:36, they'll subtrack automatically 12 minutes of your time.
         //it doesn't matter if you left a minute later...
         //mPreDefinedBreaks.add(new Break(Defaults.EVENING_BREAK_START, Defaults.EVENING_BREAK_END, false));
@@ -58,16 +63,23 @@ public class HoursInfo {
     }
 
     public void clearGeneralInfo(){
-        if(halfDay != null)
-            halfDay.clear();
-        if(fullDay != null)
-            fullDay.clear();
-        if(zeroHours != null)
-            zeroHours.clear();
-        if(additional3AndHalfHours != null)
-            additional3AndHalfHours.clear();
-        if(additional6Hours != null)
-            additional6Hours.clear();
+        if(halfDay == null)
+            halfDay = new Timestamp();
+        halfDay.clear();
+        if(fullDay == null)
+            fullDay = new Timestamp();
+        fullDay.clear();
+        if(zeroHours == null)
+            zeroHours = new Timestamp();
+        zeroHours.clear();
+        if(additional3AndHalfHours == null)
+            additional3AndHalfHours = new Timestamp();
+        additional3AndHalfHours.clear();
+        if(additional6Hours == null)
+            additional6Hours = new Timestamp();
+        additional6Hours.clear();
+        if(preDefinedBreaks == null)
+            preDefinedBreaks = new ArrayList<>();
         for(int i = 0; i < preDefinedBreaks.size(); i++)
         {
             Break current = preDefinedBreaks.get(i);
@@ -80,7 +92,6 @@ public class HoursInfo {
         {
             Break current = customBreaks.get(i);
             current.tookBreak = false;
-            customBreaks.set(i, current);
         }
         if(allBreaks == null)
             allBreaks = new ArrayList<>();

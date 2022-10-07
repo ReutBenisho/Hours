@@ -65,7 +65,7 @@ public class HoursManager {
             isExpanded = isExpanded || currBreak.expandBreak(breakToAdd);
         }
         if(!isExpanded)
-            info.allBreaks.add(breakToAdd);
+            info.allBreaks.add(new Break(breakToAdd));
     }
 
     public HoursInfo CalcDayWithExit() {
