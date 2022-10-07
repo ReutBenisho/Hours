@@ -2,6 +2,7 @@ package com.example.hours;
 
 public class Defaults {
 
+    public static final Timestamp ARRIVAL_TIME = new Timestamp(7, 30);
     public static final Timestamp HALF_DAY = new Timestamp(4, 12);
     public static final Timestamp FULL_DAY = HALF_DAY.add(HALF_DAY);
     public static final Timestamp LAUNCH_BREAK_START = new Timestamp(13, 30);

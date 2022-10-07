@@ -4,6 +4,7 @@
     <color name="background_center_color">#147B81</color>
     <color name="background_end_color">#115577</color>
     <color name="icon_tint">@color/background_center_color</color>
+    <color name="add_midday_icon_tint">@color/background_end_color</color>
     <color name="switchActivated">#1A9BA3</color>
     <color name="navigation_bar">@color/gray_90</color>
     <color name="radio_btn">@color/background_end_color</color>
@@ -18,4 +19,5 @@
     <color name="settings_switch_disabled">@color/gray_90</color>
     <color name="settings_window_background">@color/black</color>
     <color name="calc_labels">@color/blue_10</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/background_end_color</color>
 </resources>

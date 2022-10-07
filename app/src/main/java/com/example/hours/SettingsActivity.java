@@ -178,8 +178,8 @@ public class SettingsActivity extends AppCompatActivity implements
 
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            setDefaultTime(R.string.pref_default_arrival_time, "07:30");
-            setDefaultTime(R.string.pref_default_launch_break_time, "13:30");
+            setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
+            setDefaultTime(R.string.pref_default_launch_break_time, Defaults.LAUNCH_BREAK_START.toString());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 
