@@ -155,22 +155,10 @@ public class SettingsActivity extends AppCompatActivity implements
 
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            Preference myPref = (Preference) findPreference(getString(R.string.pref_reset_general_settings));
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Snackbar.make(container.findViewById(R.id.settings), "clicked on reset", Snackbar.LENGTH_SHORT).show();
-                    ResetGeneralSettings();
-                    return false;
-                }
-            });
+
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 
-        private void ResetGeneralSettings() {
-            //TODO: ADD LOGIC TO RESET ALL GENERAL SETTINGS
-
-        }
     }
 
     public static class NotificationsFragment extends PreferenceFragmentCompat {

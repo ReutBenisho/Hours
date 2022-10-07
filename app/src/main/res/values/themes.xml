@@ -27,12 +27,14 @@
 
     <style name="Theme.Hours.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Theme.Hours.Settings" >
-        <item name="android:textColor">@color/white</item>
-        <item name="android:tint">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorSwitchThumbNormal">@color/background_center_color</item>
-        <item name="android:textColorSecondary">@color/white</item>
+    <style name="Theme.Hours.Settings">
+<!--        <item name="android:textColor">@color/settings_text</item>-->
+        <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector</item>
+        <item name="colorControlActivated">@color/switch_color_selector</item>
+<!--        <item name="colorSwitchThumbNormal">@color/switch_color_selector</item>-->
+        <item name="android:windowBackground">@color/white</item>
+
     </style>
 
 </resources>

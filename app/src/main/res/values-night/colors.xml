@@ -5,7 +5,15 @@
     <color name="background_end_color">#115577</color>
     <color name="icon_tint">@color/background_center_color</color>
     <color name="switchActivated">#1A9BA3</color>
-    <color name="navigation_bar">@color/dark_gray</color>
+    <color name="navigation_bar">@color/gray_90</color>
     <color name="radio_btn">@color/background_end_color</color>
     <color name="radio_btn_selected">@color/white</color>
+    <color name="settings_text_primary">@color/white</color>
+    <color name="settings_text_secondary">@color/gray_20</color>
+    <color name="settings_text_primary_disabled">@color/gray_50</color>
+    <color name="settings_text_secondary_disabled">@color/gray_50</color>
+    <color name="settings_icons_tint">@color/settings_text_primary</color>
+    <color name="settings_switch_checked">@color/background_center_color</color>
+    <color name="settings_switch_ununchecked">@color/gray_20</color>
+    <color name="settings_switch_disabled">@color/gray_90</color>
 </resources>

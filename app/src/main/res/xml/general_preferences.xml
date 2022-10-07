@@ -1,17 +1,21 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
-        app:key="@string/pref_system_mode"
-        app:title="Use system's default mode"
-        app:defaultValue="true"
-        app:disableDependentsState="true"/>
+    <PreferenceCategory android:title="Dark mode">
+        <SwitchPreferenceCompat
+            app:key="@string/pref_system_mode"
+            app:title="Use system's default mode"
+            app:defaultValue="true"
+            app:disableDependentsState="true"/>
 
-    <SwitchPreferenceCompat
-        app:dependency="@string/pref_system_mode"
-        app:key="@string/pref_dark_mode"
-        app:title="Dark Mode"
-        app:summaryOff="You are weak."
-        app:summaryOn="You chose wisely."/>
+        <SwitchPreferenceCompat
+            app:dependency="@string/pref_system_mode"
+            app:key="@string/pref_dark_mode"
+            app:title="Dark Mode"
+            app:summaryOff="You are weak."
+            app:summaryOn="You chose wisely."/>
+
+    </PreferenceCategory>
 
     <SwitchPreferenceCompat
         app:key="@string/pref_student_mode"
@@ -19,11 +23,4 @@
         app:summaryOn="Don't worry, you're half-way there!"
         app:title="Student Mode"
         app:defaultValue="false"/>
-
-    <Preference
-        app:title="Reset general settings"
-        app:key="@string/pref_reset_general_settings"
-        app:summary="Click here to reset to the default settings"
-        />
-
 </PreferenceScreen>
