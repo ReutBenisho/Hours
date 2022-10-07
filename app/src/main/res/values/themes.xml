@@ -31,8 +31,8 @@
 <!--        <item name="android:textColor">@color/settings_text</item>-->
         <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
         <item name="android:textColorSecondary">@color/secondary_text_color_selector</item>
-        <item name="colorControlActivated">@color/switch_color_selector</item>
-<!--        <item name="colorSwitchThumbNormal">@color/switch_color_selector</item>-->
+        <item name="colorControlActivated">@color/settings_switch_checked</item>
+        <item name="colorSwitchThumbNormal">@color/gray_50</item>
         <item name="android:windowBackground">@color/white</item>
 
     </style>
