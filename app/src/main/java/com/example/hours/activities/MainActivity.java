@@ -3,6 +3,7 @@ package com.example.hours.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         startActivity(intent);
     }
 
+    @TargetApi(Build.VERSION_CODES.S)
     private void setupSplashScreen() {
         // Add a callback that's called when the splash screen is animating to
         // the app content.
