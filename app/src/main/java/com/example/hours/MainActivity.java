@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
                     Utils.setupDarkMode(getApplicationContext());
                 }
                 else if(s == getString(R.string.pref_student_mode)){
-                    Snackbar.make(findViewById(R.id.nav_host_fragment_content_main), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
