@@ -1,4 +1,6 @@
-package com.example.hours;
+package com.example.hours.utils;
+
+import com.example.hours.interfaces.OnUpdateListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.example.hours.ui.gallery;
+package com.example.hours.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hours.databinding.FragmentGalleryBinding;
+import com.example.hours.models.GalleryViewModel;
 
 public class GalleryFragment extends Fragment {
 

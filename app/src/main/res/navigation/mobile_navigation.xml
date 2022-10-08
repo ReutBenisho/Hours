@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_calc_day"
-        android:name="com.example.hours.ui.calcDay.CalcDayFragment"
+        android:name="com.example.hours.fragments.CalcDayFragment"
         android:label="חישוב יומי"
         tools:layout="@layout/fragment_calc_day"/>
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.hours.ui.gallery.GalleryFragment"
+        android:name="com.example.hours.fragments.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.hours.ui.settings.SettingsFragment"
+        android:name="com.example.hours.fragments.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
 

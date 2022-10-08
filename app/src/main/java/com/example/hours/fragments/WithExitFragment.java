@@ -1,4 +1,4 @@
-package com.example.hours.ui.withExit;
+package com.example.hours.fragments;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hours.Defaults;
-import com.example.hours.HoursManager;
+import com.example.hours.utils.Defaults;
+import com.example.hours.utils.HoursManager;
 import com.example.hours.R;
-import com.example.hours.ui.calcDay.CalcDayFragment;
+import com.example.hours.models.WithExitViewModel;
 
 public class WithExitFragment extends Fragment implements CalcDayFragment.IExitFragment {
 

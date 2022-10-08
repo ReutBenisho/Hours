@@ -1,4 +1,4 @@
-package com.example.hours;
+package com.example.hours.utils;
 public class BreakTimes {
 
     public Timestamp start;

@@ -1,4 +1,4 @@
-package com.example.hours;
+package com.example.hours.utils;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
@@ -12,9 +12,8 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.hours.R;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
 
 public class Utils {
     public static void setupDarkMode(Context context) {

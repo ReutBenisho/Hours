@@ -1,4 +1,4 @@
-package com.example.hours.ui.noExit;
+package com.example.hours.fragments;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hours.HoursManager;
+import com.example.hours.utils.HoursManager;
 import com.example.hours.R;
-import com.example.hours.ui.calcDay.CalcDayFragment;
+import com.example.hours.models.NoExitViewModel;
 
 public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFragment  {
 

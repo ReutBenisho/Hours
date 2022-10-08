@@ -1,4 +1,4 @@
-package com.example.hours.ui.gallery;
+package com.example.hours.models;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

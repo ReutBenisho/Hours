@@ -1,9 +1,11 @@
-package com.example.hours;
+package com.example.hours.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
+
+import com.example.hours.R;
 
 public class SharedPreferencesUtil {
     public static void loadDefaults(Context context){
