@@ -22,6 +22,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -39,12 +40,18 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar mToolbar;
     private boolean mToolBarNavigationListenerIsRegistered = false;
+    private MainActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        ViewModelProvider provider = new ViewModelProvider(
+                getViewModelStore(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()));
+        mViewModel = provider.get(MainActivityViewModel.class);
+
         setupSplashScreen();
         SharedPreferencesUtil.setDefaults("existing_user", "true", getApplicationContext());
         SharedPreferencesUtil.loadDefaults(getApplicationContext());
@@ -126,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
             }
         });
         Utils.addListener(this, Utils.ListenerType.ACTION_BAR_TITLE);
+        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
     }
 
     private void sendEmail() {
@@ -239,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     @Override
     public void onUpdate(OnUpdateListener listener, Object obj) {
         if(listener == this){
+            mViewModel.ActionBarTitle = obj.toString();
             if(obj.toString().equals("")){
                 setActionBarIconToBackArrow(false);
             }
@@ -261,10 +270,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
 //    }
 
     private void setActionBarIconToBackArrow(Boolean backArrow) {
-        for(int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i ++){
-            FragmentManager.BackStackEntry entry= getSupportFragmentManager().getBackStackEntryAt(i);
-            int x = 9;
-        }
+
         // To keep states of ActionBar and ActionBarDrawerToggle synchronized,
         // when you enable on one, you disable on the other.
         // And as you may notice, the order for this operation is disable first, then enable - VERY VERY IMPORTANT.

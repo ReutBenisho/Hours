@@ -60,16 +60,16 @@ public class SettingsFragment extends Fragment implements
         } else {
             getActivity().setTitle(savedInstanceState.getCharSequence(TITLE_TAG));
         }
-        getChildFragmentManager().addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        ParentSettingsFragment topFrag = (ParentSettingsFragment)getChildFragmentManager().findFragmentById(R.id.settings_fragment_container);
-                        if (topFrag != null) {
-                            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, topFrag.TAG);
-                        }
-                    }
-                });
+//        getChildFragmentManager().addOnBackStackChangedListener(
+//                new FragmentManager.OnBackStackChangedListener() {
+//                    @Override
+//                    public void onBackStackChanged() {
+//                        ParentSettingsFragment topFrag = (ParentSettingsFragment)getChildFragmentManager().findFragmentById(R.id.settings_fragment_container);
+//                        if (topFrag != null) {
+//                            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, topFrag.TAG);
+//                        }
+//                    }
+//                });
 
 //        ActionBar actionBar = getSupportActionBar();
 //        if (actionBar != null) {
@@ -120,6 +120,12 @@ public class SettingsFragment extends Fragment implements
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
 
+        @NonNull
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, TAG);
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
 //        @Override
 //        public void onStart() {
 //            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, TAG);
