@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,17 +15,21 @@ import android.view.animation.AnticipateInterpolator;
 import com.example.hours.databinding.ActivityMainBinding;
 import com.example.hours.ui.calcDay.CalcDayFragment;
 import com.example.hours.ui.gallery.GalleryFragment;
+import com.example.hours.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,26 +64,43 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_calc_day,R.id.nav_gallery, R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener(this);
         //navigationView.getMenu().findItem(R.id.nav_calc_day_no_exit).setChecked(true);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                switch(menuItem.getItemId()){
+//                    case R.id.nav_calc_day:
+//                    case R.id.nav_gallery:
+//                    case R.id.nav_settings:
+//                        openFragment(menuItem);
+//                        break;
+//                    //case R.id.nav_settings:
+////                        Intent newIntent = new Intent(MainActivity.this, SettingsActivity.class);
+////                        startActivity(newIntent);
+//                        //break;
+//                }
+//                return true;
+//            }
+//        });
+
+        //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.nav_calc_day:
-                    case R.id.nav_gallery:
-                        openFragment(menuItem);
-                        break;
-                    case R.id.nav_settings:
-                        Intent newIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(newIntent);
-                        break;
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                if(s == getString(R.string.pref_system_mode) ||
+                        s == getString(R.string.pref_dark_mode)){
+                    Utils.setupDarkMode(getApplicationContext());
                 }
-                return true;
+                else if(s == getString(R.string.pref_student_mode)){
+                    Snackbar.make(findViewById(R.id.nav_host_fragment_content_main), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -124,15 +146,22 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         Class fragmentClass = null;
         String tag = "";
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
         if(menuItem.getItemId() == R.id.nav_calc_day){
             fragmentClass = CalcDayFragment.class;
             tag = CalcDayFragment.TAG;
         }else if(menuItem.getItemId() == R.id.nav_gallery){
             fragmentClass = GalleryFragment.class;
             tag = GalleryFragment.TAG;
+        }else if(menuItem.getItemId() == R.id.nav_settings){
+            fragmentClass = SettingsFragment.class;
+            tag = SettingsFragment.TAG;
         }
 
         try {
+//            if(fragmentManager.popBackStackImmediate(tag, 0))
+//                return;
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,8 +171,7 @@ public class MainActivity extends AppCompatActivity {
         if(fragment != null) {
 
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, fragment, tag).commit();
+            fragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main, fragment, tag).commit();
 
             // Highlight the selected item has been done by NavigationView
             menuItem.setChecked(true);
