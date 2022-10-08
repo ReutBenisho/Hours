@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,31 +13,45 @@ import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.databinding.ActivityMainBinding;
-import com.example.hours.ui.calcDay.CalcDayFragment;
-import com.example.hours.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private DrawerLayout mDrawer;
+    private ActionBar mActionBar;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private Toolbar mToolbar;
+    private boolean mToolBarNavigationListenerIsRegistered = false;
+    private MainActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        ViewModelProvider provider = new ViewModelProvider(
+                getViewModelStore(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()));
+        mViewModel = provider.get(MainActivityViewModel.class);
+
         setupSplashScreen();
         SharedPreferencesUtil.setDefaults("existing_user", "true", getApplicationContext());
         SharedPreferencesUtil.loadDefaults(getApplicationContext());
@@ -45,13 +60,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+        mActionBar = getSupportActionBar();
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendEmail();
             }
         });
+        // Initialize ActionBarDrawerToggle, which will control toggle of hamburger.
+        // You set the values of R.string.open and R.string.close accordingly.
+        // Also, you can implement drawer toggle listener if you want.
+
         mDrawer = binding.drawerLayout;
+        mToolbar = findViewById(R.id.toolbar);
+        mDrawerToggle = new ActionBarDrawerToggle (
+                this,
+                mDrawer,
+                mToolbar,
+                R.string.open,
+                R.string.close);
+        // Setting the actionbarToggle to drawer layout
+        mDrawer.addDrawerListener(mDrawerToggle);
+        // Calling sync state is necessary to show your hamburger icon...
+        // or so I hear. Doesn't hurt including it even if you find it works
+        // without it on your test device(s)
+        mDrawerToggle.syncState();
+
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -59,28 +93,47 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_calc_day,R.id.nav_gallery, R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         //navigationView.setNavigationItemSelectedListener(this);
         //navigationView.getMenu().findItem(R.id.nav_calc_day_no_exit).setChecked(true);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                switch(menuItem.getItemId()){
+//                    case R.id.nav_calc_day:
+//                    case R.id.nav_gallery:
+//                    case R.id.nav_settings:
+//                        openFragment(menuItem);
+//                        break;
+//                    //case R.id.nav_settings:
+////                        Intent newIntent = new Intent(MainActivity.this, SettingsActivity.class);
+////                        startActivity(newIntent);
+//                        //break;
+//                }
+//                return true;
+//            }
+//        });
+
+        //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.nav_calc_day:
-                    case R.id.nav_gallery:
-                        openFragment(menuItem);
-                        break;
-                    case R.id.nav_settings:
-                        Intent newIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(newIntent);
-                        break;
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                if(s == getString(R.string.pref_system_mode) ||
+                        s == getString(R.string.pref_dark_mode)){
+                    Utils.setupDarkMode(getApplicationContext());
                 }
-                return true;
+                else if(s == getString(R.string.pref_student_mode)){
+                    Snackbar.make(findViewById(android.R.id.content), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
+        ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
     }
 
     private void sendEmail() {
@@ -120,40 +173,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void openFragment(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        String tag = "";
-        if(menuItem.getItemId() == R.id.nav_calc_day){
-            fragmentClass = CalcDayFragment.class;
-            tag = CalcDayFragment.TAG;
-        }else if(menuItem.getItemId() == R.id.nav_gallery){
-            fragmentClass = GalleryFragment.class;
-            tag = GalleryFragment.TAG;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // set MyFragment Arguments
-        if(fragment != null) {
-
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, fragment, tag).commit();
-
-            // Highlight the selected item has been done by NavigationView
-            menuItem.setChecked(true);
-            // Set action bar title
-            setTitle(menuItem.getTitle());
-        }
-
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
-    }
+//    private void openFragment(MenuItem menuItem) {
+//        Fragment fragment = null;
+//        Class fragmentClass = null;
+//        String tag = "";
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        if(menuItem.getItemId() == R.id.nav_calc_day){
+//            fragmentClass = CalcDayFragment.class;
+//            tag = CalcDayFragment.TAG;
+//        }else if(menuItem.getItemId() == R.id.nav_gallery){
+//            fragmentClass = GalleryFragment.class;
+//            tag = GalleryFragment.TAG;
+//        }else if(menuItem.getItemId() == R.id.nav_settings){
+//            fragmentClass = SettingsFragment.class;
+//            tag = SettingsFragment.TAG;
+//        }
+//
+//        try {
+////            if(fragmentManager.popBackStackImmediate(tag, 0))
+////                return;
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        // set MyFragment Arguments
+//        if(fragment != null) {
+//
+//            // Insert the fragment by replacing any existing fragment
+//            fragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main, fragment, tag).commit();
+//
+//            // Highlight the selected item has been done by NavigationView
+//            menuItem.setChecked(true);
+//            // Set action bar title
+//            setTitle(menuItem.getTitle());
+//        }
+//
+//        // Close the navigation drawer
+//        mDrawer.closeDrawers();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -164,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         super.onDestroy();
     }
 
@@ -174,4 +234,87 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onUpdate(OnUpdateListener listener, Object obj) {
+        if(listener == this){
+            ListenerManager.Data data = (ListenerManager.Data)obj;
+            switch (data.type){
+                case ACTION_BAR_TITLE:{
+
+                    mViewModel.ActionBarTitle = data.obj.toString();
+                    if(mViewModel.ActionBarTitle.toString().equals("")){
+                        setActionBarIconToBackArrow(false);
+                    }
+                    else {
+                        mActionBar.setTitle(mViewModel.ActionBarTitle.toString());
+                        setActionBarIconToBackArrow(true);
+        //            mDrawer.setDrawerIndicatorEnabled(false);
+        //            mActionBar.setDisplayHomeAsUpEnabled(true);
+        //            mActionBar.setDisplayShowHomeEnabled(true);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setActionBarIconToBackArrow(Boolean backArrow) {
+
+        // To keep states of ActionBar and ActionBarDrawerToggle synchronized,
+        // when you enable on one, you disable on the other.
+        // And as you may notice, the order for this operation is disable first, then enable - VERY VERY IMPORTANT.
+        if(backArrow) {
+            //You may not want to open the drawer on swipe from the left in this case
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            // Remove hamburger
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            // Show back button
+            mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            // when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+            // clicks are disabled i.e. the UP button will not work.
+            // We need to add a listener, as in below, so DrawerToggle will forward
+            // click events to this listener.
+            if(!mToolBarNavigationListenerIsRegistered) {
+                mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Doesn't have to be onBackPressed
+                        onBackPressed();
+                    }
+                });
+
+                mToolBarNavigationListenerIsRegistered = true;
+            }
+
+        } else {
+            //You must regain the power of swipe for the drawer.
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            // Remove back button
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            // Show hamburger
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            // Remove the/any drawer toggle listener
+            mDrawerToggle.setToolbarNavigationClickListener(null);
+            mToolBarNavigationListenerIsRegistered = false;
+        }
+
+        // So, one may think "Hmm why not simplify to:
+        // .....
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
+        // mDrawer.setDrawerIndicatorEnabled(!enable);
+        // ......
+        // To re-iterate, the order in which you enable and disable views IS important #dontSimplify.
+    }
 }

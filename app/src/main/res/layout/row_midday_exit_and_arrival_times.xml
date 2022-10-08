@@ -1,79 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/lbl_midday_exit"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_midday_exit_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
-        android:text="יציאה:"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:layout_marginStart="16dp"
+        android:maxLines="1"
+        android:textColorHint="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_midday_exit"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/txt_midday_arrival_layout"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/lbl_midday_arrival"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="כניסה:"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_midday_exit"
-        app:layout_constraintEnd_toStartOf="@+id/btn_midday_exit"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_midday_arrival"
-        app:layout_constraintTop_toTopOf="@+id/btn_midday_exit" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_midday_exit_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="יציאה"
+            android:inputType="none"
+            android:text="@string/midnight_timestamp"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_midday_exit"
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_midday_arrival_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_input"
-        android:text="00:00"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_exit"
-        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_exit"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/lbl_midday_arrival"
-        app:layout_constraintTop_toTopOf="@+id/lbl_midday_exit" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_midday_arrival"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_input"
-        android:text="@string/midnight_timestamp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/lbl_midday_arrival"
-        app:layout_constraintEnd_toStartOf="@+id/lbl_midday_arrival"
+        android:layout_marginStart="16dp"
+        android:maxLines="1"
+        android:textColorHint="@color/white"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="@color/white"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_midday_exit_layout"
+        app:layout_constraintEnd_toStartOf="@+id/txt_midday_exit_layout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/img_remove_midday"
-        app:layout_constraintTop_toTopOf="@+id/lbl_midday_arrival" />
+        app:layout_constraintTop_toTopOf="@+id/txt_midday_exit_layout"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_midday_arrival_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:hint="כניסה"
+            android:inputType="none"
+            android:text="@string/midnight_timestamp"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/img_remove_midday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_midday_arrival"
-        app:layout_constraintEnd_toStartOf="@+id/btn_midday_arrival"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_midday_arrival_layout"
+        app:layout_constraintEnd_toStartOf="@+id/txt_midday_arrival_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_midday_arrival"
-        app:srcCompat="@drawable/ic_close"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="@+id/txt_midday_arrival_layout"
+        app:srcCompat="@drawable/ic_close"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

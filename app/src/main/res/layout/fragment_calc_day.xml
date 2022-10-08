@@ -69,73 +69,70 @@
                 app:layout_constraintStart_toEndOf="@+id/ckbtn_day_friday"
                 app:layout_constraintTop_toBottomOf="@id/lbl_calc_time" />
 
-
-            <TextView
-                android:id="@+id/lbl_arrival_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="כניסה:"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@+id/ckbtn_day_friday" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_arrival_time"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_arrival_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:background="@drawable/background_input"
-                android:text="@string/midnight_timestamp"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/lbl_arrival_time"
-                app:layout_constraintEnd_toStartOf="@+id/lbl_arrival_time"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:maxLines="1"
+                android:textColorHint="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="@color/white"
+                app:errorEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lbl_arrival_time" />
+                app:layout_constraintTop_toBottomOf="@+id/ckbtn_add_exit_time">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_arrival_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="שעת כניסה תחילת היום"
+                    android:inputType="none"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/img_add_midday_row"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="-30dp"
+                android:layout_marginEnd="-10dp"
+                android:src="@drawable/ic_clock_add"
+                app:layout_constraintEnd_toStartOf="@id/txt_arrival_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_arrival_layout" />
 
             <LinearLayout
                 android:id="@+id/layout_midday_exit_and_arrival_times"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/btn_add_midday_row"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+                app:layout_constraintEnd_toEndOf="@+id/txt_arrival_layout"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@+id/btn_arrival_time"
-                app:layout_constraintVertical_bias="0.43" />
-
-            <Button
-                android:id="@+id/btn_add_midday_row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:drawableEnd="@drawable/ic_clock_add"
-                android:drawableTint="@color/white"
-                android:text="יציאה וכניסה באמצע היום"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
-                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@+id/layout_midday_exit_and_arrival_times" />
+                app:layout_constraintStart_toStartOf="@+id/txt_arrival_layout"
+                app:layout_constraintTop_toBottomOf="@+id/txt_arrival_layout" />
 
             <LinearLayout
                 android:id="@+id/layout_exit_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/lbl_arrival_time"
+                app:layout_constraintEnd_toEndOf="@+id/txt_arrival_layout"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@+id/btn_add_midday_row" />
+                app:layout_constraintStart_toStartOf="@+id/txt_arrival_layout"
+                app:layout_constraintTop_toBottomOf="@+id/layout_midday_exit_and_arrival_times" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment_calc_day"
@@ -143,10 +140,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@id/lbl_arrival_time"
-                app:layout_constraintStart_toStartOf="@id/btn_arrival_time"
-                app:layout_constraintTop_toBottomOf="@id/layout_exit_time"
-                android:background="@drawable/background_calc_labels"/>
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/background_calc_labels"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/txt_arrival_layout"
+                app:layout_constraintStart_toStartOf="@id/txt_arrival_layout"
+                app:layout_constraintTop_toBottomOf="@id/layout_exit_time" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

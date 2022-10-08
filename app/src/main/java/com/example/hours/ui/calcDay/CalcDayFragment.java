@@ -13,33 +13,36 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.hours.Break;
 import com.example.hours.BreakTimes;
 import com.example.hours.HoursManager;
+import com.example.hours.ListenerManager;
 import com.example.hours.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
 import com.example.hours.Utils;
 import com.example.hours.ui.noExit.NoExitFragment;
 import com.example.hours.ui.withExit.WithExitFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private CalcDayModel mViewModel;
     public static final String TAG = "CALC_DAY_NO_EXIT_TAG";
 
-    private Button mBtnArrivalTime;
     private HoursManager mHoursManager;
     private LinearLayout mLayoutMiddayTimes;
-    private Button mBtnAddMiddayRow;
+    private ImageView mBtnAddMiddayRow;
     private IExitFragment mFragment;
     private AppCompatCheckBox mCkbtn_add_exit_time;
     private AppCompatCheckBox mCkbtn_friday;
     private LinearLayout mLayoutExitTime;
+    private TextInputEditText mTxtArrivalTime;
 
 
     public static CalcDayFragment newInstance() {
@@ -49,7 +52,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.addListener(this);
+        ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
     }
 
     @Override
@@ -59,10 +62,9 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
-        mBtnArrivalTime = view.findViewById(R.id.btn_arrival_time);
         mLayoutMiddayTimes = view.findViewById(R.id.layout_midday_exit_and_arrival_times);
         mLayoutExitTime = view.findViewById(R.id.layout_exit_time);
-        mBtnAddMiddayRow = view.findViewById(R.id.btn_add_midday_row);
+        mBtnAddMiddayRow = view.findViewById(R.id.img_add_midday_row);
 
         mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +75,15 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         mHoursManager = HoursManager.getInstance();
         mHoursManager.info.arrivalTime = new Timestamp(7, 30);
-        mBtnArrivalTime.setText(mHoursManager.info.arrivalTime.toString());
+        mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
+        mTxtArrivalTime.setText(mHoursManager.info.arrivalTime.toString());
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Utils.popTimePicker(view, getContext());
             }
         };
-        mBtnArrivalTime.setOnClickListener(listener);
+        mTxtArrivalTime.setOnClickListener(listener);
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
         mCkbtn_add_exit_time.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,8 +91,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
                     Utils.addExitTimeLayout(getLayoutInflater(), mLayoutExitTime, getContext());
-                    Button btnExitTime = getView().findViewById(R.id.btn_exit_time);
-                    mHoursManager.info.exitTime.setTime(btnExitTime.getText().toString());
+                    EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
+                    mHoursManager.info.exitTime.setTime(txtExitTime.getText().toString());
                 }
                 else
                     Utils.removeExitTime(mLayoutExitTime);
@@ -112,6 +115,12 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, "");
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CalcDayModel.class);
@@ -120,12 +129,12 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Utils.removeListener(this);
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.INFO_LABELS);
     }
 
     private void updateHours() {
         mHoursManager.info.clear();
-        mHoursManager.info.arrivalTime.setTime(mBtnArrivalTime.getText().toString());
+        mHoursManager.info.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
         mHoursManager.info.customBreaks.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
@@ -136,8 +145,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         }
         if(mCkbtn_add_exit_time.isChecked())
         {
-            Button btnExitTime = getView().findViewById(R.id.btn_exit_time);
-            mHoursManager.info.exitTime.setTime(btnExitTime.getText().toString());
+            EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
+            mHoursManager.info.exitTime.setTime(txtExitTime.getText().toString());
         }
         mHoursManager.info.isFriday = mCkbtn_friday.isChecked();
         mFragment.update(mCkbtn_friday.isChecked());
@@ -176,7 +185,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
-    public void onUpdate(OnUpdateListener listener) {
+    public void onUpdate(OnUpdateListener listener, Object obj) {
+
         updateHours();
     }
 

@@ -1,21 +1,22 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        app:fragment="com.example.hours.SettingsActivity$GeneralFragment"
+        android:fragment="com.example.hours.ui.settings.SettingsFragment$GeneralFragment"
         app:key="general_header"
         app:title="@string/general_header"
         app:icon="@drawable/ic_edit"/>
 
     <Preference
-        app:fragment="com.example.hours.SettingsActivity$NotificationsFragment"
+        android:fragment="com.example.hours.ui.settings.SettingsFragment$NotificationsFragment"
         app:key="notifications_header"
-        app:title="Notifications"
+        app:title="@string/notifications_header"
         app:icon="@drawable/ic_notifications"/>
 
     <Preference
-        app:fragment="com.example.hours.SettingsActivity$TimesFragment"
+        android:fragment="com.example.hours.ui.settings.SettingsFragment$TimesFragment"
         app:key="times_header"
-        app:title="Default Timestamps"
+        app:title="@string/times_header"
         app:icon="@drawable/ic_clock"/>
 
 </PreferenceScreen>

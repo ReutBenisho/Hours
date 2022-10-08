@@ -1,150 +1,166 @@
-package com.example.hours;
+package com.example.hours.ui.settings;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TimePicker;
+
+import com.example.hours.Defaults;
+import com.example.hours.ListenerManager;
+import com.example.hours.R;
+import com.example.hours.SharedPreferencesUtil;
+import com.example.hours.Timestamp;
+import com.example.hours.Utils;
 import com.google.android.material.snackbar.Snackbar;
 
-public class SettingsActivity extends AppCompatActivity implements
-        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+public class SettingsFragment extends Fragment implements
+        PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(menuItem);
-    }
-
+    public static final String TAG = "SETTINGS_FRAGMENT";
+    private SettingsViewModel mViewModel;
     private static final String TITLE_TAG = "settingsActivityTitle";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        container.removeAllViews(); // Inflate the layout for this fragment
+// create ContextThemeWrapper from the original Activity Context with the custom theme
+//        Context context = new ContextThemeWrapper(getActivity(), R.style.Theme_Hours_Settings);
+//        // clone the inflater using the ContextThemeWrapper
+//        LayoutInflater localInflater = inflater.cloneInContext(context);
+//        // inflate using the cloned inflater, not the passed in default
+
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
+            getChildFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.settings, new HeaderFragment())
+                    .replace(R.id.settings_fragment_container, new SettingsFragment.HeaderFragment())
                     .commit();
         } else {
-            setTitle(savedInstanceState.getCharSequence(TITLE_TAG));
+            getActivity().setTitle(savedInstanceState.getCharSequence(TITLE_TAG));
         }
-        getSupportFragmentManager().addOnBackStackChangedListener(
-                new FragmentManager.OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                            setTitle(R.string.title_activity_settings);
-                        }
-                    }
-                });
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                if(s == getString(R.string.pref_system_mode) ||
-                    s == getString(R.string.pref_dark_mode)){
-                    Utils.setupDarkMode(getApplicationContext());
-                }
-                else if(s == getString(R.string.pref_student_mode)){
-                    Snackbar.make(findViewById(R.id.settings), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        getChildFragmentManager().addOnBackStackChangedListener(
+//                new FragmentManager.OnBackStackChangedListener() {
+//                    @Override
+//                    public void onBackStackChanged() {
+//                        ParentSettingsFragment topFrag = (ParentSettingsFragment)getChildFragmentManager().findFragmentById(R.id.settings_fragment_container);
+//                        if (topFrag != null) {
+//                            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, topFrag.TAG);
+//                        }
+//                    }
+//                });
+
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+//
+//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_settings_fragment);
+//        toolbar.setTitle("My Title");
+//        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
+        return view;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Save current activity title so we can set it again after a configuration change
-        outState.putCharSequence(TITLE_TAG, getTitle());
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
+        // TODO: Use the ViewModel
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        if (getSupportFragmentManager().popBackStackImmediate()) {
-            return true;
-        }
-        return super.onSupportNavigateUp();
-    }
-
-    @Override
-    public boolean onPreferenceStartFragment(PreferenceFragmentCompat caller, Preference pref) {
+    public boolean onPreferenceStartFragment(@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref) {
         // Instantiate the new Fragment
         final Bundle args = pref.getExtras();
-        final Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(
-                getClassLoader(),
+        final ParentSettingsFragment fragment = (ParentSettingsFragment)getChildFragmentManager().getFragmentFactory().instantiate(
+                getActivity().getClassLoader(),
                 pref.getFragment());
         fragment.setArguments(args);
         fragment.setTargetFragment(caller, 0);
         // Replace the existing Fragment with the new Fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.settings, fragment)
-                .addToBackStack(null)
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.settings_fragment_container, fragment)
+                .addToBackStack(fragment.TAG)
                 .commit();
-        setTitle(pref.getTitle());
+        getActivity().setTitle(pref.getTitle());
         return true;
     }
-
-    public static class HeaderFragment extends PreferenceFragmentCompat {
-
+    public static class ParentSettingsFragment extends PreferenceFragmentCompat {
+        public String TAG = "Parent Frag";
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
+
+        @NonNull
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, TAG);
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+
     }
 
-    public static class MessagesFragment extends PreferenceFragmentCompat {
+    public static class HeaderFragment extends ParentSettingsFragment {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Settings";
+            setPreferencesFromResource(R.xml.header_preferences, rootKey);
+        }
+    }
+
+    public static class MessagesFragment extends ParentSettingsFragment {
+
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Message Frag";
             setPreferencesFromResource(R.xml.messages_preferences, rootKey);
         }
     }
 
-    public static class SyncFragment extends PreferenceFragmentCompat {
+    public static class SyncFragment extends ParentSettingsFragment {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Sync Frag";
             setPreferencesFromResource(R.xml.sync_preferences, rootKey);
         }
     }
 
-    public static class GeneralFragment extends PreferenceFragmentCompat {
+    public static class GeneralFragment extends ParentSettingsFragment {
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-
+            TAG = "General";
             super.onCreate(savedInstanceState);
         }
 
@@ -161,25 +177,27 @@ public class SettingsActivity extends AppCompatActivity implements
 
     }
 
-    public static class NotificationsFragment extends PreferenceFragmentCompat {
+    public static class NotificationsFragment extends ParentSettingsFragment {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Notifications";
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
 
-    public static class TimesFragment extends PreferenceFragmentCompat {
+    public static class TimesFragment extends ParentSettingsFragment {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Times";
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            setDefaultTime(R.string.pref_default_arrival_time, "07:30");
-            setDefaultTime(R.string.pref_default_launch_break_time, "13:30");
+            setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
+            setDefaultTime(R.string.pref_default_launch_break_time, Defaults.LAUNCH_BREAK_START.toString());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 

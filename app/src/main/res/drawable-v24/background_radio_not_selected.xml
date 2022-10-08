@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <stroke android:color="@color/radio_btn" android:width="2dp"/>
+    <stroke android:color="@color/radio_btn"
+        android:width="2dp"
+        android:dashWidth="10px"
+        android:dashGap="10px"/>
     <corners android:radius="16dp"/>
 </shape>

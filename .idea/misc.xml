@@ -15,7 +15,9 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/bg_btn.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/bg_input.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/bkgr_app.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/btn_transparent.xml" value="0.12" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/color_radio_selected.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_background_grad.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_clock.xml" value="0.1245" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_clock_add.xml" value="0.1" />
@@ -43,7 +45,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/app_bar_main.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_by_arrival.xml" value="0.12681159420289856" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day.xml" value="0.5" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day.xml" value="0.27628149435273675" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day2.xml" value="0.1796875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day_no_exit.xml" value="0.3710618436406068" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day_with_exit.xml" value="0.15853658536585366" />
@@ -51,22 +53,26 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_gallery.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_home.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_no_exit.xml" value="0.22" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_settings.xml" value="0.11785297549591599" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_slideshow.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_with_exit.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/nav_header_main.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/row_add_exit_time.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/row_midday_exit_and_arrival_times.xml" value="0.22" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/row_midday_exit_and_arrival_times.xml" value="0.6666666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/settings_activity.xml" value="0.1272644927536232" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/splash_screen.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/timestamp_preference.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/menu/activity_main_drawer.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/menu/main.xml" value="0.1640625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/mipmap-anydpi-v26/ic_hours_launcher.xml" value="0.107" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/mipmap-anydpi-v26/ic_hours_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.107" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/general_preferences.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/header_preferences.xml" value="0.10729166666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/messages_preferences.xml" value="0.1796875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/notifiations_preferences.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/sync_preferences.xml" value="0.1796875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/xml/times_preferences.xml" value="0.1" />
       </map>
     </option>
