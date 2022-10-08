@@ -21,12 +21,12 @@ import androidx.preference.PreferenceManager;
 
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
 
 import com.example.hours.Defaults;
+import com.example.hours.ListenerManager;
 import com.example.hours.R;
 import com.example.hours.SharedPreferencesUtil;
 import com.example.hours.Timestamp;
@@ -85,7 +85,7 @@ public class SettingsFragment extends Fragment implements
 //
 //            }
 //        });
-        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
         return view;
     }
 
@@ -123,14 +123,10 @@ public class SettingsFragment extends Fragment implements
         @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, TAG);
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, TAG);
             return super.onCreateView(inflater, container, savedInstanceState);
         }
-//        @Override
-//        public void onStart() {
-//            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, TAG);
-//            super.onStart();
-//        }
+
     }
 
     public static class HeaderFragment extends ParentSettingsFragment {

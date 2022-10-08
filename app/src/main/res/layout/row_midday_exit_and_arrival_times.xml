@@ -83,7 +83,6 @@
         app:layout_constraintEnd_toStartOf="@+id/txt_midday_arrival_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_midday_arrival_layout"
-        app:srcCompat="@drawable/ic_close"
-        app:tint="@color/white" />
+        app:srcCompat="@drawable/ic_close"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
                 }
             }
         });
-        Utils.addListener(this, Utils.ListenerType.ACTION_BAR_TITLE);
-        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
+        ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
     }
 
     private void sendEmail() {
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
 
     @Override
     protected void onDestroy() {
-        Utils.removeListener(this, Utils.ListenerType.ACTION_BAR_TITLE);
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         super.onDestroy();
     }
 
@@ -247,27 +247,26 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     @Override
     public void onUpdate(OnUpdateListener listener, Object obj) {
         if(listener == this){
-            mViewModel.ActionBarTitle = obj.toString();
-            if(obj.toString().equals("")){
-                setActionBarIconToBackArrow(false);
-            }
-            else {
-                mActionBar.setTitle(obj.toString());
-                setActionBarIconToBackArrow(true);
-//            mDrawer.setDrawerIndicatorEnabled(false);
-//
-//            mActionBar.setDisplayHomeAsUpEnabled(true);
-//            mActionBar.setDisplayShowHomeEnabled(true);
+            ListenerManager.Data data = (ListenerManager.Data)obj;
+            switch (data.type){
+                case ACTION_BAR_TITLE:{
+
+                    mViewModel.ActionBarTitle = data.obj.toString();
+                    if(mViewModel.ActionBarTitle.toString().equals("")){
+                        setActionBarIconToBackArrow(false);
+                    }
+                    else {
+                        mActionBar.setTitle(mViewModel.ActionBarTitle.toString());
+                        setActionBarIconToBackArrow(true);
+        //            mDrawer.setDrawerIndicatorEnabled(false);
+        //            mActionBar.setDisplayHomeAsUpEnabled(true);
+        //            mActionBar.setDisplayShowHomeEnabled(true);
+                    }
+                    break;
+                }
             }
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-////        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
-////            setActionBarIconToBackArrow(false);
-//        super.onBackPressed();
-//    }
 
     private void setActionBarIconToBackArrow(Boolean backArrow) {
 

@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.example.hours.Break;
 import com.example.hours.BreakTimes;
 import com.example.hours.HoursManager;
+import com.example.hours.ListenerManager;
 import com.example.hours.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.Timestamp;
@@ -51,7 +52,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.addListener(this, Utils.ListenerType.INFO_LABELS);
+        ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onResume() {
         super.onResume();
-        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, "");
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, "");
     }
 
     @Override
@@ -128,7 +129,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Utils.removeListener(this, Utils.ListenerType.INFO_LABELS);
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.INFO_LABELS);
     }
 
     private void updateHours() {

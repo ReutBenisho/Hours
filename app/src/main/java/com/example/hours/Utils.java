@@ -17,29 +17,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 public class Utils {
-    public enum ListenerType{
-        INFO_LABELS,
-        ACTION_BAR_TITLE
-    }
-    private static ArrayList<ArrayList<OnUpdateListener>> mListeners;
-
-    public static void addListener(OnUpdateListener listener, ListenerType type) {
-        if(mListeners == null)
-            mListeners = new ArrayList<>();
-        if(mListeners.size() < type.ordinal() + 1){
-            mListeners.add(type.ordinal(), new ArrayList<>());
-        }
-        if(!mListeners.get(type.ordinal()).contains(listener))
-            mListeners.get(type.ordinal()).add(listener);
-    }
-
-    public static void removeListener(OnUpdateListener listener, ListenerType type) {
-        if(mListeners != null
-                && mListeners.get(type.ordinal()) != null
-                && mListeners.get(type.ordinal()).contains(listener))
-            mListeners.remove(listener);
-    }
-
     public static void setupDarkMode(Context context) {
         if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_system_mode), context)){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
@@ -86,7 +63,7 @@ public class Utils {
                     ((EditText)(view.getRootView().findViewById(R.id.txt_midday_arrival_time))).setText(viewTimestamp.toString());
                 }
 
-                NotifyListeners(ListenerType.INFO_LABELS, null);
+                ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
             }
         };
         Timestamp timestamp = new Timestamp();
@@ -109,16 +86,9 @@ public class Utils {
 
     public static void removeMiddayRowFromLayout(LinearLayout layout, View view) {
         layout.removeView(view);
-        NotifyListeners(ListenerType.INFO_LABELS, null);
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
     }
 
-    public static void NotifyListeners(ListenerType type, Object obj) {
-        if(mListeners == null)
-            return;
-        for(int i = 0; i < mListeners.get(type.ordinal()).size(); i++){
-            mListeners.get(type.ordinal()).get(i).onUpdate(mListeners.get(type.ordinal()).get(i), obj);
-        }
-    }
 
     public static void addExitTimeLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
         View viewExitRow = layoutInflater.inflate(R.layout.row_add_exit_time, null, false);
