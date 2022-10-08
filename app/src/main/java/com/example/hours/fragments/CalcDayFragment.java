@@ -1,4 +1,4 @@
-package com.example.hours.ui.calcDay;
+package com.example.hours.fragments;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.FragmentManager;
@@ -18,16 +18,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.hours.Break;
-import com.example.hours.BreakTimes;
-import com.example.hours.HoursManager;
-import com.example.hours.ListenerManager;
-import com.example.hours.OnUpdateListener;
+import com.example.hours.utils.Break;
+import com.example.hours.utils.BreakTimes;
+import com.example.hours.utils.HoursManager;
+import com.example.hours.utils.ListenerManager;
+import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
-import com.example.hours.Timestamp;
-import com.example.hours.Utils;
-import com.example.hours.ui.noExit.NoExitFragment;
-import com.example.hours.ui.withExit.WithExitFragment;
+import com.example.hours.utils.Timestamp;
+import com.example.hours.utils.Utils;
+import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CalcDayFragment extends Fragment implements OnUpdateListener {

@@ -1,15 +1,9 @@
-package com.example.hours.ui.settings;
+package com.example.hours.fragments;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,21 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
 
-import com.example.hours.Defaults;
-import com.example.hours.ListenerManager;
+import com.example.hours.utils.Defaults;
+import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
-import com.example.hours.SharedPreferencesUtil;
-import com.example.hours.Timestamp;
-import com.example.hours.Utils;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.hours.utils.SharedPreferencesUtil;
+import com.example.hours.utils.Timestamp;
+import com.example.hours.models.SettingsViewModel;
 
 public class SettingsFragment extends Fragment implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{

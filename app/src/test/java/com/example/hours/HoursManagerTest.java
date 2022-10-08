@@ -2,8 +2,7 @@ package com.example.hours;
 
 import static org.junit.Assert.assertNotNull;
 
-import junit.framework.TestCase;
-import junit.runner.Version;
+import com.example.hours.utils.HoursManager;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -1,4 +1,4 @@
-package com.example.hours.ui.settings;
+package com.example.hours.models;
 
 import androidx.lifecycle.ViewModel;
 

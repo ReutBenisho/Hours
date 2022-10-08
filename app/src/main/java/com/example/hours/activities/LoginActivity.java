@@ -1,4 +1,4 @@
-package com.example.hours;
+package com.example.hours.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.hours.R;
+import com.example.hours.utils.SharedPreferencesUtil;
+
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {

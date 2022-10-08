@@ -1,4 +1,4 @@
-package com.example.hours;
+package com.example.hours.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,6 +12,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
+import com.example.hours.utils.ListenerManager;
+import com.example.hours.models.MainActivityViewModel;
+import com.example.hours.interfaces.OnUpdateListener;
+import com.example.hours.R;
+import com.example.hours.utils.SharedPreferencesUtil;
+import com.example.hours.utils.Utils;
 import com.example.hours.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,8 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,7 +35,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity implements OnUpdateListener{
+public class MainActivity extends AppCompatActivity implements OnUpdateListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;

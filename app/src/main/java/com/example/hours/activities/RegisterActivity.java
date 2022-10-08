@@ -1,4 +1,4 @@
-package com.example.hours;
+package com.example.hours.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.hours.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
