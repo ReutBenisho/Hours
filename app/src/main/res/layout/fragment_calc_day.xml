@@ -74,9 +74,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="60dp"
                 android:maxLines="1"
                 android:textColorHint="@color/white"
                 app:boxBackgroundMode="outline"
@@ -87,8 +87,7 @@
                 app:boxStrokeColor="@color/white"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/img_add_midday_row"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ckbtn_add_exit_time">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -103,6 +102,17 @@
                     android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/img_add_midday_row"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="-30dp"
+                android:layout_marginEnd="-10dp"
+                android:src="@drawable/ic_clock_add"
+                app:layout_constraintEnd_toStartOf="@id/txt_arrival_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_arrival_layout" />
 
             <LinearLayout
                 android:id="@+id/layout_midday_exit_and_arrival_times"
@@ -130,22 +140,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/background_calc_labels"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/txt_arrival_layout"
                 app:layout_constraintStart_toStartOf="@id/txt_arrival_layout"
                 app:layout_constraintTop_toBottomOf="@id/layout_exit_time" />
 
-            <ImageView
-                android:id="@+id/img_add_midday_row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_clock_add"
-                app:layout_constraintBottom_toBottomOf="@+id/txt_arrival_layout"
-                app:layout_constraintEnd_toStartOf="@+id/txt_arrival_layout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txt_arrival_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
