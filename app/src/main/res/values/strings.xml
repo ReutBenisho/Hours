@@ -50,4 +50,6 @@
     <string name="pref_default_evening_break_time">pref_default_evening_break_time</string>
     <string name="notifications_header">Notifications</string>
     <string name="times_header">Default Timestamps</string>
+    <string name="open">open_nav</string>
+    <string name="close">close_nav</string>
 </resources>

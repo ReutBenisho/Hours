@@ -114,6 +114,12 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, "");
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(CalcDayModel.class);

@@ -85,7 +85,7 @@ public class SettingsFragment extends Fragment implements
 //
 //            }
 //        });
-
+        Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
         return view;
     }
 
@@ -131,7 +131,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Header Frag";
+            TAG = "Settings";
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
     }
@@ -158,7 +158,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-            TAG = "General Frag";
+            TAG = "General";
             super.onCreate(savedInstanceState);
         }
 
@@ -179,7 +179,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Notifications Frag";
+            TAG = "Notifications";
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
@@ -188,7 +188,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Times Frag";
+            TAG = "Times";
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 

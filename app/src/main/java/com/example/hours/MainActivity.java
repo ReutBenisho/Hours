@@ -13,19 +13,17 @@ import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.databinding.ActivityMainBinding;
-import com.example.hours.ui.calcDay.CalcDayFragment;
-import com.example.hours.ui.gallery.GalleryFragment;
-import com.example.hours.ui.settings.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -38,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     private ActivityMainBinding binding;
     private DrawerLayout mDrawer;
     private ActionBar mActionBar;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private Toolbar mToolbar;
+    private boolean mToolBarNavigationListenerIsRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,25 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
                 sendEmail();
             }
         });
+        // Initialize ActionBarDrawerToggle, which will control toggle of hamburger.
+        // You set the values of R.string.open and R.string.close accordingly.
+        // Also, you can implement drawer toggle listener if you want.
+
         mDrawer = binding.drawerLayout;
+        mToolbar = findViewById(R.id.toolbar);
+        mDrawerToggle = new ActionBarDrawerToggle (
+                this,
+                mDrawer,
+                mToolbar,
+                R.string.open,
+                R.string.close);
+        // Setting the actionbarToggle to drawer layout
+        mDrawer.addDrawerListener(mDrawerToggle);
+        // Calling sync state is necessary to show your hamburger icon...
+        // or so I hear. Doesn't hurt including it even if you find it works
+        // without it on your test device(s)
+        mDrawerToggle.syncState();
+
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -208,8 +227,89 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener{
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onUpdate(OnUpdateListener listener, Object obj) {
-        if(listener == this)
-            mActionBar.setTitle(obj.toString());
+        if(listener == this){
+            if(obj.toString().equals("")){
+                setActionBarIconToBackArrow(false);
+            }
+            else {
+                mActionBar.setTitle(obj.toString());
+                setActionBarIconToBackArrow(true);
+//            mDrawer.setDrawerIndicatorEnabled(false);
+//
+//            mActionBar.setDisplayHomeAsUpEnabled(true);
+//            mActionBar.setDisplayShowHomeEnabled(true);
+            }
+        }
+    }
+
+//    @Override
+//    public void onBackPressed() {
+////        if(getSupportFragmentManager().getBackStackEntryCount() == 0)
+////            setActionBarIconToBackArrow(false);
+//        super.onBackPressed();
+//    }
+
+    private void setActionBarIconToBackArrow(Boolean backArrow) {
+        for(int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); i ++){
+            FragmentManager.BackStackEntry entry= getSupportFragmentManager().getBackStackEntryAt(i);
+            int x = 9;
+        }
+        // To keep states of ActionBar and ActionBarDrawerToggle synchronized,
+        // when you enable on one, you disable on the other.
+        // And as you may notice, the order for this operation is disable first, then enable - VERY VERY IMPORTANT.
+        if(backArrow) {
+            //You may not want to open the drawer on swipe from the left in this case
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            // Remove hamburger
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+            // Show back button
+            mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            // when DrawerToggle is disabled i.e. setDrawerIndicatorEnabled(false), navigation icon
+            // clicks are disabled i.e. the UP button will not work.
+            // We need to add a listener, as in below, so DrawerToggle will forward
+            // click events to this listener.
+            if(!mToolBarNavigationListenerIsRegistered) {
+                mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Doesn't have to be onBackPressed
+                        onBackPressed();
+                    }
+                });
+
+                mToolBarNavigationListenerIsRegistered = true;
+            }
+
+        } else {
+            //You must regain the power of swipe for the drawer.
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+            // Remove back button
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            // Show hamburger
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            // Remove the/any drawer toggle listener
+            mDrawerToggle.setToolbarNavigationClickListener(null);
+            mToolBarNavigationListenerIsRegistered = false;
+        }
+
+        // So, one may think "Hmm why not simplify to:
+        // .....
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(enable);
+        // mDrawer.setDrawerIndicatorEnabled(!enable);
+        // ......
+        // To re-iterate, the order in which you enable and disable views IS important #dontSimplify.
     }
 }
