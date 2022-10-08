@@ -13,11 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hours.HoursInfo;
 import com.example.hours.HoursManager;
-import com.example.hours.OnUpdateListener;
 import com.example.hours.R;
-import com.example.hours.Utils;
 import com.example.hours.ui.calcDay.CalcDayFragment;
 
 public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFragment  {

@@ -3,37 +3,40 @@ package com.example.hours;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
 public class Utils {
-    private static ArrayList<OnUpdateListener> mListeners;
+    public enum ListenerType{
+        INFO_LABELS,
+        ACTION_BAR_TITLE
+    }
+    private static ArrayList<ArrayList<OnUpdateListener>> mListeners;
 
-    public static void addListener(OnUpdateListener listener) {
+    public static void addListener(OnUpdateListener listener, ListenerType type) {
         if(mListeners == null)
             mListeners = new ArrayList<>();
-        if(!mListeners.contains(listener))
-            mListeners.add(listener);
+        if(mListeners.size() < type.ordinal() + 1){
+            mListeners.add(type.ordinal(), new ArrayList<>());
+        }
+        if(!mListeners.get(type.ordinal()).contains(listener))
+            mListeners.get(type.ordinal()).add(listener);
     }
 
-    public static void removeListener(OnUpdateListener listener) {
-        if(mListeners == null)
-            mListeners = new ArrayList<>();
-        if(mListeners.contains(listener))
+    public static void removeListener(OnUpdateListener listener, ListenerType type) {
+        if(mListeners != null
+                && mListeners.get(type.ordinal()) != null
+                && mListeners.get(type.ordinal()).contains(listener))
             mListeners.remove(listener);
     }
 
@@ -83,7 +86,7 @@ public class Utils {
                     ((EditText)(view.getRootView().findViewById(R.id.txt_midday_arrival_time))).setText(viewTimestamp.toString());
                 }
 
-                NotifyListeners();
+                NotifyListeners(ListenerType.INFO_LABELS, null);
             }
         };
         Timestamp timestamp = new Timestamp();
@@ -106,12 +109,14 @@ public class Utils {
 
     public static void removeMiddayRowFromLayout(LinearLayout layout, View view) {
         layout.removeView(view);
-        NotifyListeners();
+        NotifyListeners(ListenerType.INFO_LABELS, null);
     }
 
-    private static void NotifyListeners() {
-        for(int i = 0; i < mListeners.size(); i++){
-            mListeners.get(i).onUpdate(mListeners.get(i));
+    public static void NotifyListeners(ListenerType type, Object obj) {
+        if(mListeners == null)
+            return;
+        for(int i = 0; i < mListeners.get(type.ordinal()).size(); i++){
+            mListeners.get(type.ordinal()).get(i).onUpdate(mListeners.get(type.ordinal()).get(i), obj);
         }
     }
 

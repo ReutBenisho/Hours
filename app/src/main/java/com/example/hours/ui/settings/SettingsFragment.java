@@ -1,9 +1,11 @@
 package com.example.hours.ui.settings;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -62,8 +64,9 @@ public class SettingsFragment extends Fragment implements
                 new FragmentManager.OnBackStackChangedListener() {
                     @Override
                     public void onBackStackChanged() {
-                        if (getChildFragmentManager().getBackStackEntryCount() == 0) {
-                            getActivity().setTitle(R.string.title_activity_settings);
+                        ParentSettingsFragment topFrag = (ParentSettingsFragment)getChildFragmentManager().findFragmentById(R.id.settings_fragment_container);
+                        if (topFrag != null) {
+                            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, topFrag.TAG);
                         }
                     }
                 });
@@ -111,46 +114,51 @@ public class SettingsFragment extends Fragment implements
         return true;
     }
     public static class ParentSettingsFragment extends PreferenceFragmentCompat {
-        public static final String TAG = "Parent Frag";
+        public String TAG = "Parent Frag";
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
+
+//        @Override
+//        public void onStart() {
+//            Utils.NotifyListeners(Utils.ListenerType.ACTION_BAR_TITLE, TAG);
+//            super.onStart();
+//        }
     }
 
     public static class HeaderFragment extends ParentSettingsFragment {
-        public static final String TAG = "Header Frag";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Header Frag";
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
     }
 
     public static class MessagesFragment extends ParentSettingsFragment {
-        public static final String TAG = "Message Frag";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Message Frag";
             setPreferencesFromResource(R.xml.messages_preferences, rootKey);
         }
     }
 
     public static class SyncFragment extends ParentSettingsFragment {
-        public static final String TAG = "Sync Frag";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Sync Frag";
             setPreferencesFromResource(R.xml.sync_preferences, rootKey);
         }
     }
 
     public static class GeneralFragment extends ParentSettingsFragment {
-        public static final String TAG = "General Frag";
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-
+            TAG = "General Frag";
             super.onCreate(savedInstanceState);
         }
 
@@ -168,19 +176,19 @@ public class SettingsFragment extends Fragment implements
     }
 
     public static class NotificationsFragment extends ParentSettingsFragment {
-        public static final String TAG = "Notifications Frag";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Notifications Frag";
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
 
     public static class TimesFragment extends ParentSettingsFragment {
-        public static final String TAG = "Times Frag";
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            TAG = "Times Frag";
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 

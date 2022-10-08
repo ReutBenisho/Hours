@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +28,6 @@ import com.example.hours.Utils;
 import com.example.hours.ui.noExit.NoExitFragment;
 import com.example.hours.ui.withExit.WithExitFragment;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
@@ -53,7 +51,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.addListener(this);
+        Utils.addListener(this, Utils.ListenerType.INFO_LABELS);
     }
 
     @Override
@@ -124,7 +122,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Utils.removeListener(this);
+        Utils.removeListener(this, Utils.ListenerType.INFO_LABELS);
     }
 
     private void updateHours() {
@@ -180,7 +178,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
-    public void onUpdate(OnUpdateListener listener) {
+    public void onUpdate(OnUpdateListener listener, Object obj) {
+
         updateHours();
     }
 

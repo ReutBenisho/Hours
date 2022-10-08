@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -31,11 +32,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener{
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private DrawerLayout mDrawer;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+        mActionBar = getSupportActionBar();
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Utils.addListener(this, Utils.ListenerType.ACTION_BAR_TITLE);
     }
 
     private void sendEmail() {
@@ -142,46 +146,46 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void openFragment(MenuItem menuItem) {
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        String tag = "";
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if(menuItem.getItemId() == R.id.nav_calc_day){
-            fragmentClass = CalcDayFragment.class;
-            tag = CalcDayFragment.TAG;
-        }else if(menuItem.getItemId() == R.id.nav_gallery){
-            fragmentClass = GalleryFragment.class;
-            tag = GalleryFragment.TAG;
-        }else if(menuItem.getItemId() == R.id.nav_settings){
-            fragmentClass = SettingsFragment.class;
-            tag = SettingsFragment.TAG;
-        }
-
-        try {
-//            if(fragmentManager.popBackStackImmediate(tag, 0))
-//                return;
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // set MyFragment Arguments
-        if(fragment != null) {
-
-            // Insert the fragment by replacing any existing fragment
-            fragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main, fragment, tag).commit();
-
-            // Highlight the selected item has been done by NavigationView
-            menuItem.setChecked(true);
-            // Set action bar title
-            setTitle(menuItem.getTitle());
-        }
-
-        // Close the navigation drawer
-        mDrawer.closeDrawers();
-    }
+//    private void openFragment(MenuItem menuItem) {
+//        Fragment fragment = null;
+//        Class fragmentClass = null;
+//        String tag = "";
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        if(menuItem.getItemId() == R.id.nav_calc_day){
+//            fragmentClass = CalcDayFragment.class;
+//            tag = CalcDayFragment.TAG;
+//        }else if(menuItem.getItemId() == R.id.nav_gallery){
+//            fragmentClass = GalleryFragment.class;
+//            tag = GalleryFragment.TAG;
+//        }else if(menuItem.getItemId() == R.id.nav_settings){
+//            fragmentClass = SettingsFragment.class;
+//            tag = SettingsFragment.TAG;
+//        }
+//
+//        try {
+////            if(fragmentManager.popBackStackImmediate(tag, 0))
+////                return;
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        // set MyFragment Arguments
+//        if(fragment != null) {
+//
+//            // Insert the fragment by replacing any existing fragment
+//            fragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main, fragment, tag).commit();
+//
+//            // Highlight the selected item has been done by NavigationView
+//            menuItem.setChecked(true);
+//            // Set action bar title
+//            setTitle(menuItem.getTitle());
+//        }
+//
+//        // Close the navigation drawer
+//        mDrawer.closeDrawers();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        Utils.removeListener(this, Utils.ListenerType.ACTION_BAR_TITLE);
         super.onDestroy();
     }
 
@@ -202,4 +207,9 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public void onUpdate(OnUpdateListener listener, Object obj) {
+        if(listener == this)
+            mActionBar.setTitle(obj.toString());
+    }
 }
