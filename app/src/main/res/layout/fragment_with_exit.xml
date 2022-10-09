@@ -35,6 +35,62 @@
             app:layout_constraintWidth_percent="0.75">
 
             <TextView
+                android:id="@+id/lbl_additional_150_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="150% נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_additional_150_hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_additional_150_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_additional_150_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_global_absence_hours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_additional_125_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_additional_125_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_additional_150_hours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_additional_hours" />
+
+            <TextView
+                android:id="@+id/lbl_additional_125_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="125% נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_additional_125_hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_additional_125_hours" />
+
+            <TextView
                 android:id="@+id/lbl_full_day"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -66,7 +122,6 @@
                 android:id="@+id/lbl_zero_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginBottom="4dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="שעות אפס:"
@@ -95,7 +150,6 @@
                 android:id="@+id/lbl_additional_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginBottom="4dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="שעות נוספות:"
@@ -103,7 +157,8 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_additional_hours"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lbl_txt_additional_hours" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_additional_hours"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/lbl_txt_additional_hours"
@@ -116,7 +171,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_global_absence_hours"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_additional_125_hours"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_txt_zero_hours" />
 
@@ -146,7 +201,7 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/lbl_txt_unpaid_absence_hours"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_additional_hours" />
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_additional_150_hours" />
 
             <TextView
                 android:id="@+id/lbl_unpaid_absence_hours"

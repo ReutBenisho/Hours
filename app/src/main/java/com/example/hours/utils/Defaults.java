@@ -15,6 +15,8 @@ public class Defaults {
     public static final Timestamp ADDITIONAL_HOURS = new Timestamp(2, 30);
     public static final Timestamp EXTRA_ADDITIONAL_HOURS = new Timestamp(2, 30);
     public static final Timestamp MAX_ADDITIONAL_HOURS = ZERO_HOURS.add(ADDITIONAL_HOURS).add(EXTRA_ADDITIONAL_HOURS);
+    public static final Timestamp ADDITIONAL_125_HOURS = new Timestamp(2, 0);
+
 
     public static final Timestamp EVENING_BREAK_START = new Timestamp(19, 36);
     public static final Timestamp EVENING_BREAK_DURATION = new Timestamp(0, 12);

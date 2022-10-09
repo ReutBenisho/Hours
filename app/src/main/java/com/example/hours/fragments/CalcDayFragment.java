@@ -25,6 +25,7 @@ import com.example.hours.utils.ListenerManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.Utils;
 import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -148,6 +149,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
         }
         mHoursManager.info.userInfo.isFriday = mCkbtn_friday.isChecked();
+        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         mFragment.update(mCkbtn_friday.isChecked());
     }
 

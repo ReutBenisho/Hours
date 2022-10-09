@@ -37,7 +37,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity implements OnUpdateListener {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private HoursManager mHoursManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Set up a listener whenever a key changes
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Unregister the listener whenever a key changes
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -62,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         SharedPreferencesUtil.setDefaults("existing_user", "true");
         SharedPreferencesUtil.loadDefaults();
         Utils.setupDarkMode(getApplicationContext());
-        HoursManager.getInstance().info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
+        mHoursManager = HoursManager.getInstance();
+        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -126,19 +145,19 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
 //        });
 
         //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                if(s == getString(R.string.pref_system_mode) ||
-                        s == getString(R.string.pref_dark_mode)){
-                    Utils.setupDarkMode(getApplicationContext());
-                }
-                else if(s == getString(R.string.pref_student_mode)){
-                    HoursManager.getInstance().info.userInfo.isStudent = sharedPreferences.getBoolean(s, false);
-                }
-            }
-        });
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+//            @Override
+//            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+//                if(s == getString(R.string.pref_system_mode) ||
+//                        s == getString(R.string.pref_dark_mode)){
+//                    Utils.setupDarkMode(getApplicationContext());
+//                }
+//                else if(s == getString(R.string.pref_student_mode)){
+//                    mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(s, false);
+//                }
+//            }
+//        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
     }
@@ -327,5 +346,16 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         // mDrawer.setDrawerIndicatorEnabled(!enable);
         // ......
         // To re-iterate, the order in which you enable and disable views IS important #dontSimplify.
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s == getString(R.string.pref_system_mode) || s == getString(R.string.pref_dark_mode)){
+            Utils.setupDarkMode(getApplicationContext());
+        }
+        else if(s == getString(R.string.pref_student_mode)){
+            boolean isStudent = sharedPreferences.getBoolean(s, false);
+            mHoursManager.info.userInfo.isStudent = isStudent;
+        }
     }
 }

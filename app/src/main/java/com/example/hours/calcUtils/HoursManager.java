@@ -22,8 +22,16 @@ public class HoursManager {
         sumAllBreaks();
         if(info.userInfo.isFriday)
         {
+            if(info.userInfo.isStudent)
+            {
+                info.calcInfo.student.additional125Hours = info.userInfo.arrivalTime.add(Defaults.ADDITIONAL_125_HOURS);
+                info.calcInfo.student.additional125Hours = adjustBreaks(info.calcInfo.student.additional125Hours);
+            }
             info.calcInfo.additional6Hours = info.userInfo.arrivalTime.add(Defaults.MAX_ADDITIONAL_HOURS);
             info.calcInfo.additional6Hours = adjustBreaks(info.calcInfo.additional6Hours);
+            if(info.userInfo.isStudent)
+                info.calcInfo.student.additional150Hours = new Timestamp(info.calcInfo.additional6Hours);
+
         }
         else {
             adjustArrivalToLaunchBreak();
@@ -36,12 +44,20 @@ public class HoursManager {
                 info.calcInfo.zeroHours = adjustBreaks(info.calcInfo.zeroHours);
                 info.calcInfo.additional3AndHalfHours = info.calcInfo.zeroHours.add(Defaults.ADDITIONAL_HOURS);
             }
-            else
+            else {
                 info.calcInfo.additional3AndHalfHours = info.calcInfo.fullDay.add(Defaults.ZERO_HOURS).add(Defaults.ADDITIONAL_HOURS);
+                info.calcInfo.student.additional125Hours = info.calcInfo.fullDay.add(Defaults.ADDITIONAL_125_HOURS);
+                info.calcInfo.student.additional125Hours = adjustBreaks(info.calcInfo.student.additional125Hours);
+
+
+            }
 
             info.calcInfo.additional3AndHalfHours = adjustBreaks(info.calcInfo.additional3AndHalfHours);
             info.calcInfo.additional6Hours = info.calcInfo.additional3AndHalfHours.add(Defaults.EXTRA_ADDITIONAL_HOURS);
             info.calcInfo.additional6Hours = adjustBreaks(info.calcInfo.additional6Hours);
+            if(info.userInfo.isStudent){
+                info.calcInfo.student.additional150Hours = new Timestamp(info.calcInfo.additional6Hours);
+            }
         }
     }
 
@@ -82,7 +98,19 @@ public class HoursManager {
             return info;
         if(info.userInfo.isFriday)
         {
-            info.calcInfo.totalTime.additionalHours = removeOvelaps();
+            Timestamp additional = removeOvelaps();
+            if(info.userInfo.isStudent){
+                if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
+                    info.calcInfo.totalTime.additional125Hours.setTime(additional);
+                }
+                else {
+                    info.calcInfo.totalTime.additional125Hours.setTime(Defaults.ADDITIONAL_125_HOURS);
+                    info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.ADDITIONAL_125_HOURS));
+                }
+            }
+            else{
+                info.calcInfo.totalTime.additionalHours.setTime(additional);
+            }
         }
         else
         {
@@ -94,11 +122,21 @@ public class HoursManager {
             if(info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){
                 info.calcInfo.totalTime.isFullDay = true;
                 Timestamp additional = info.calcInfo.totalTime.total.sub(Defaults.FULL_DAY);
-                if(additional.equalsOrGreaterThan(Defaults.ZERO_HOURS) || info.userInfo.isStudent){
-                    info.calcInfo.totalTime.additionalHours.setTime(additional);
+                if(info.userInfo.isStudent){
+                    if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
+                        info.calcInfo.totalTime.additional125Hours.setTime(additional);
+                    }
+                    else {
+                        info.calcInfo.totalTime.additional125Hours.setTime(Defaults.ADDITIONAL_125_HOURS);
+                        info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.ADDITIONAL_125_HOURS));
+                    }
                 }
-                else{
-                    info.calcInfo.totalTime.zeroHours.setTime(additional);
+                else {
+                    if (additional.equalsOrGreaterThan(Defaults.ZERO_HOURS)) {
+                        info.calcInfo.totalTime.additionalHours.setTime(additional);
+                    } else {
+                        info.calcInfo.totalTime.zeroHours.setTime(additional);
+                    }
                 }
             }
             else {
