@@ -46,6 +46,7 @@ public void test1_Arrival_07_30() {
         expHoursInfo.calcInfo.zeroHours = new Timestamp(17, 24);
         expHoursInfo.calcInfo.additional3AndHalfHours = new Timestamp(20, 6);
         expHoursInfo.calcInfo.additional6Hours = new Timestamp(22, 36);
+        expHoursInfo.breaks.tookEveningBreak = true;
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
@@ -60,6 +61,7 @@ public void test2_Arrival_07_49() {
         expHoursInfo.calcInfo.zeroHours = new Timestamp(17, 43);
         expHoursInfo.calcInfo.additional3AndHalfHours = new Timestamp(20, 25);
         expHoursInfo.calcInfo.additional6Hours = new Timestamp(22, 55);
+        expHoursInfo.breaks.tookEveningBreak = true;
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 }

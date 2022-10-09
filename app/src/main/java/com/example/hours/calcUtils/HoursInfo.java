@@ -46,6 +46,7 @@ public class HoursInfo {
             Break current = breaks.customBreaks.get(i);
             current.tookBreak = false;
         }
+        breaks.tookEveningBreak = false;
         breaks.allBreaks.clear();
         calcInfo.clear();
     }

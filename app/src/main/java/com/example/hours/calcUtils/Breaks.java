@@ -60,16 +60,16 @@ public class Breaks {
         String s = "";
 
         for(int i = 0; i < preDefinedBreaks.size(); i++){
-            s += "\nPre defined break #" + i + preDefinedBreaks.get(i).toString();
+            s += "\nPre defined break # " + i + " " + preDefinedBreaks.get(i).toString();
         }
 
         for(int i = 0; i < customBreaks.size(); i++){
-            s += "\nCustom break #" + i + customBreaks.get(i).toString();
+            s += "\nCustom break # " + i + " " + customBreaks.get(i).toString();
         }
 
-        for(int i = 0; i < allBreaks.size(); i++){
-            s += "\nCustom break #" + i + allBreaks.get(i).toString();
-        }
+//        for(int i = 0; i < allBreaks.size(); i++){
+//            s += "\nAll breaks #" + i + allBreaks.get(i).toString();
+//        }
         s += "\nTook evening break: " + tookEveningBreak;
 
         return s;
