@@ -18,13 +18,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.hours.utils.Break;
-import com.example.hours.utils.BreakTimes;
-import com.example.hours.utils.HoursManager;
+import com.example.hours.calcUtils.Break;
+import com.example.hours.calcUtils.BreakTimes;
+import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
-import com.example.hours.utils.Timestamp;
+import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.utils.Utils;
 import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;

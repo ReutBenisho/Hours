@@ -1,4 +1,6 @@
-package com.example.hours.utils;
+package com.example.hours.calcUtils;
+
+import com.example.hours.utils.Defaults;
 
 public class HoursManager {
     private static HoursManager mInstance = null;

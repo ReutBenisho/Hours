@@ -2,7 +2,7 @@ package com.example.hours;
 
 import static org.junit.Assert.assertNotNull;
 
-import com.example.hours.utils.HoursManager;
+import com.example.hours.calcUtils.HoursManager;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

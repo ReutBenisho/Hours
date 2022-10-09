@@ -1,8 +1,6 @@
-package com.example.hours.utils;
+package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
 
 public class Student {
     public Timestamp additional125Hours;

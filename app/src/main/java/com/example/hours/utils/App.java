@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
-public class Hours extends Application {
+public class App extends Application {
     private static Context mContext;
 
     @Override

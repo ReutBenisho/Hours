@@ -2,10 +2,10 @@ package com.example.hours;
 
 import static org.junit.Assert.assertEquals;
 
-import com.example.hours.utils.Break;
-import com.example.hours.utils.HoursInfo;
-import com.example.hours.utils.HoursManager;
-import com.example.hours.utils.Timestamp;
+import com.example.hours.calcUtils.Break;
+import com.example.hours.calcUtils.HoursInfo;
+import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.calcUtils.Timestamp;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_hours_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hours"
-        android:name=".utils.Hours"
+        android:name=".utils.App"
         >
 
         <activity

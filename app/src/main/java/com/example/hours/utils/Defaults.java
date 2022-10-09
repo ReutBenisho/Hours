@@ -1,5 +1,7 @@
 package com.example.hours.utils;
 
+import com.example.hours.calcUtils.Timestamp;
+
 public class Defaults {
 
     public static final Timestamp ARRIVAL_TIME = new Timestamp(7, 30);

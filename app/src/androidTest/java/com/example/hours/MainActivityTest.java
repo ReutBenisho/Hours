@@ -13,8 +13,8 @@ import androidx.test.espresso.contrib.NavigationViewActions;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.hours.activities.MainActivity;
-import com.example.hours.utils.HoursInfo;
-import com.example.hours.utils.Timestamp;
+import com.example.hours.calcUtils.HoursInfo;
+import com.example.hours.calcUtils.Timestamp;
 
 import org.junit.Rule;
 import org.junit.Test;

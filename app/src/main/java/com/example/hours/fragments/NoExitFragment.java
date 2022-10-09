@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hours.utils.HoursManager;
+import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.R;
 import com.example.hours.models.NoExitViewModel;
 import com.example.hours.utils.Utils;

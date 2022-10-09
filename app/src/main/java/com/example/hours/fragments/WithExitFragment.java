@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hours.utils.Defaults;
-import com.example.hours.utils.HoursManager;
+import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.R;
 import com.example.hours.models.WithExitViewModel;
 import com.example.hours.utils.Utils;

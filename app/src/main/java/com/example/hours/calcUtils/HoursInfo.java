@@ -1,9 +1,9 @@
-package com.example.hours.utils;
+package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
+import com.example.hours.utils.Defaults;
 
 public class HoursInfo {
     public UserInfo userInfo;

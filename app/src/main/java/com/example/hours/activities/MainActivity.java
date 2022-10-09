@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
+import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
 import com.example.hours.interfaces.OnUpdateListener;
@@ -22,7 +23,6 @@ import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.Utils;
 import com.example.hours.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -59,9 +59,10 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         mViewModel = provider.get(MainActivityViewModel.class);
 
         setupSplashScreen();
-        SharedPreferencesUtil.setDefaults("existing_user", "true", getApplicationContext());
-        SharedPreferencesUtil.loadDefaults(getApplicationContext());
+        SharedPreferencesUtil.setDefaults("existing_user", "true");
+        SharedPreferencesUtil.loadDefaults();
         Utils.setupDarkMode(getApplicationContext());
+        HoursManager.getInstance().info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
                     Utils.setupDarkMode(getApplicationContext());
                 }
                 else if(s == getString(R.string.pref_student_mode)){
-                    Snackbar.make(findViewById(android.R.id.content), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
+                    HoursManager.getInstance().info.userInfo.isStudent = sharedPreferences.getBoolean(s, false);
                 }
             }
         });
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
     private void sendEmail() {
         String[] addresses = new String[1];
         addresses[0] = "xreutx197@gmail.com";
-        String subject = "Issue regarding the Hours app";
+        String subject = "Issue regarding the App app";
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, addresses);
