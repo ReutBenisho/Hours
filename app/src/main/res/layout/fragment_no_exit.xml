@@ -35,6 +35,62 @@
             app:layout_constraintWidth_percent="0.75">
 
             <TextView
+                android:id="@+id/lbl_150_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="150% נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_150_hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_150_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_150_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_3_and_half_hours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_125_hours" />
+
+            <TextView
+                android:id="@+id/lbl_125_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="125% נוספות:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_125_hours"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_125_hours" />
+
+            <TextView
+                android:id="@+id/lbl_txt_125_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_150_hours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_zero_hours" />
+
+            <TextView
                 android:id="@+id/lbl_half_day"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -116,7 +172,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_3_and_half_hours"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_125_hours"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_txt_full_day" />
 
@@ -144,9 +200,9 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_6_hours"
+                app:layout_constraintBottom_toTopOf="@id/lbl_txt_6_hours"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_zero_hours" />
+                app:layout_constraintTop_toBottomOf="@id/lbl_txt_150_hours" />
 
             <TextView
                 android:id="@+id/lbl_6_hours"

@@ -26,6 +26,8 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
     private TextView mLblTxtHalfDay;
     private TextView mLblTxtFullDay;
     private TextView mLblTxtZeroHours;
+    private TextView mLblTxt125Hours;
+    private TextView mLblTxt150Hours;
     private TextView mLblTxt3AndHalfHours;
     private TextView mLblTxt6Hours;
     private boolean mIsInitialized = false;
@@ -63,6 +65,8 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
         mLblTxtHalfDay = mView.findViewById(R.id.lbl_txt_half_day);
         mLblTxtFullDay = mView.findViewById(R.id.lbl_txt_full_day);
         mLblTxtZeroHours = mView.findViewById(R.id.lbl_txt_zero_hours);
+        mLblTxt125Hours = mView.findViewById(R.id.lbl_txt_125_hours);
+        mLblTxt150Hours = mView.findViewById(R.id.lbl_txt_150_hours);
         mLblTxt3AndHalfHours = mView.findViewById(R.id.lbl_txt_3_and_half_hours);
         mLblTxt6Hours = mView.findViewById(R.id.lbl_txt_6_hours);
 
@@ -95,6 +99,8 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
         mLblTxtHalfDay.setText(mHoursManager.info.calcInfo.halfDay.toString());
         mLblTxtFullDay.setText(mHoursManager.info.calcInfo.fullDay.toString());
         mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.zeroHours.toString());
+        mLblTxt125Hours.setText(mHoursManager.info.calcInfo.student.additional125Hours.toString());
+        mLblTxt150Hours.setText(mHoursManager.info.calcInfo.student.additional150Hours.toString());
         mLblTxt3AndHalfHours.setText(mHoursManager.info.calcInfo.additional3AndHalfHours.toString());
         mLblTxt6Hours.setText(mHoursManager.info.calcInfo.additional6Hours.toString());
 
