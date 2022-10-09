@@ -1,5 +1,7 @@
 package com.example.hours.utils;
 
+import androidx.annotation.NonNull;
+
 public class Totals {
 
     public Timestamp total;
@@ -15,20 +17,34 @@ public class Totals {
     public void clear() {
         if(total == null)
             total = new Timestamp();
-        total.clear();
-        isFullDay = false;
         if(zeroHours == null)
             zeroHours = new Timestamp();
-        zeroHours.clear();
         if(additionalHours == null)
             additionalHours = new Timestamp();
-        additionalHours.clear();
         if(globalAbsence == null)
             globalAbsence = new Timestamp();
-        globalAbsence.clear();
         if(unpaidAbsence == null)
             unpaidAbsence = new Timestamp();
+        total.clear();
+        isFullDay = false;
+        zeroHours.clear();
+        additionalHours.clear();
+        globalAbsence.clear();
         unpaidAbsence.clear();
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        String s = "";
+
+        s += "\nTotal time: " + total.toString();
+        s += "\nZero hours: " + zeroHours.toString();
+        s += "\nAdditional hours: " + additionalHours.toString();
+        s += "\nIs full day: " + isFullDay;
+        s += "\nGlobal absence: " + globalAbsence.toString();
+        s += "\nUnpaid absence: " + unpaidAbsence.toString();
+
+        return s;
+    }
 }

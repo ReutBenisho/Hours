@@ -52,4 +52,5 @@
     <string name="times_header">Default Timestamps</string>
     <string name="open">open_nav</string>
     <string name="close">close_nav</string>
+    <string name="healine_when_to_leave">מתי לצאת?</string>
 </resources>

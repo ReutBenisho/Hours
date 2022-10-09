@@ -73,9 +73,9 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         });
 
         mHoursManager = HoursManager.getInstance();
-        mHoursManager.info.arrivalTime = new Timestamp(7, 30);
+        mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 30);
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
-        mTxtArrivalTime.setText(mHoursManager.info.arrivalTime.toString());
+        mTxtArrivalTime.setText(mHoursManager.info.userInfo.arrivalTime.toString());
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +91,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
                 if(isChecked) {
                     Utils.addExitTimeLayout(getLayoutInflater(), mLayoutExitTime, getContext());
                     EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-                    mHoursManager.info.exitTime.setTime(txtExitTime.getText().toString());
+                    mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
                 }
                 else
                     Utils.removeExitTime(mLayoutExitTime);
@@ -103,7 +103,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         mCkbtn_friday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                mHoursManager.info.isFriday = isChecked;
+                mHoursManager.info.userInfo.isFriday = isChecked;
                 openCalcDayFragment(mCkbtn_add_exit_time.isChecked());
             }
         });
@@ -133,21 +133,21 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private void updateHours() {
         mHoursManager.info.clear();
-        mHoursManager.info.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
-        mHoursManager.info.customBreaks.clear();
+        mHoursManager.info.userInfo.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
+        mHoursManager.info.breaks.customBreaks.clear();
         for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
             Timestamp middayExit = new Timestamp();
             Timestamp middayArrival = new Timestamp();
             Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
             BreakTimes customBreak = new BreakTimes(middayExit, middayArrival);
-            mHoursManager.info.customBreaks.add(new Break(customBreak, false));
+            mHoursManager.info.breaks.customBreaks.add(new Break(customBreak, false));
         }
         if(mCkbtn_add_exit_time.isChecked())
         {
             EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-            mHoursManager.info.exitTime.setTime(txtExitTime.getText().toString());
+            mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
         }
-        mHoursManager.info.isFriday = mCkbtn_friday.isChecked();
+        mHoursManager.info.userInfo.isFriday = mCkbtn_friday.isChecked();
         mFragment.update(mCkbtn_friday.isChecked());
     }
 

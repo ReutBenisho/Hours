@@ -86,13 +86,13 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFra
         mHoursManager = HoursManager.getInstance();
         mHoursManager.CalcDayNoExit();
 
-        mLblTxtHalfDay.setText(mHoursManager.info.halfDay.toString());
-        mLblTxtFullDay.setText(mHoursManager.info.fullDay.toString());
-        mLblTxtZeroHours.setText(mHoursManager.info.zeroHours.toString());
-        mLblTxt3AndHalfHours.setText(mHoursManager.info.additional3AndHalfHours.toString());
-        mLblTxt6Hours.setText(mHoursManager.info.additional6Hours.toString());
+        mLblTxtHalfDay.setText(mHoursManager.info.calcInfo.halfDay.toString());
+        mLblTxtFullDay.setText(mHoursManager.info.calcInfo.fullDay.toString());
+        mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.zeroHours.toString());
+        mLblTxt3AndHalfHours.setText(mHoursManager.info.calcInfo.additional3AndHalfHours.toString());
+        mLblTxt6Hours.setText(mHoursManager.info.calcInfo.additional6Hours.toString());
 
-        if(mHoursManager.info.isFriday)
+        if(mHoursManager.info.userInfo.isFriday)
         {
             adjustFriday(mIsFriday ? View.VISIBLE : View.GONE);
         }

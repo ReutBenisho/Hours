@@ -76,24 +76,24 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
         mHoursManager = HoursManager.getInstance();
         mHoursManager.CalcDayWithExit();
 
-        if(mHoursManager.info.isFriday)
+        if(mHoursManager.info.userInfo.isFriday)
         {
             adjustFriday(View.GONE);
         }
 
-        if(mHoursManager.info.totalTime.isFullDay){
+        if(mHoursManager.info.calcInfo.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
         }
         else
         {
-            mLblTxtFullDay.setText(mHoursManager.info.totalTime.total.toString());
+            mLblTxtFullDay.setText(mHoursManager.info.calcInfo.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
         }
-        mLblTxtZeroHours.setText(mHoursManager.info.totalTime.zeroHours.toString());
-        mLblTxtAdditionalHours.setText(mHoursManager.info.totalTime.additionalHours.toString());
-        mLblTxtGlobalAbsenceHours.setText(mHoursManager.info.totalTime.globalAbsence.toString());
-        mLblTxtUnpaidAbsenceHours.setText(mHoursManager.info.totalTime.unpaidAbsence.toString());
+        mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.totalTime.zeroHours.toString());
+        mLblTxtAdditionalHours.setText(mHoursManager.info.calcInfo.totalTime.additionalHours.toString());
+        mLblTxtGlobalAbsenceHours.setText(mHoursManager.info.calcInfo.totalTime.globalAbsence.toString());
+        mLblTxtUnpaidAbsenceHours.setText(mHoursManager.info.calcInfo.totalTime.unpaidAbsence.toString());
     }
 
     private void adjustFriday(int visibility) {
