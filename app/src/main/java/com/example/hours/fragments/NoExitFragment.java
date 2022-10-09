@@ -16,8 +16,9 @@ import android.widget.TextView;
 import com.example.hours.utils.HoursManager;
 import com.example.hours.R;
 import com.example.hours.models.NoExitViewModel;
+import com.example.hours.utils.Utils;
 
-public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFragment  {
+public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
 
     public static final String TAG = "NO_EXIT_FRAGMENT";
     private NoExitViewModel mViewModel;
@@ -52,7 +53,7 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFra
         mView = inflater.inflate(R.layout.fragment_no_exit, container, false);
 
         initialize();
-        updateLabels();
+        update();
 
         return mView;
     }
@@ -78,7 +79,12 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFra
     public void update(boolean isFriday) {
         if(!mIsInitialized)
             return;
+        update();
+    }
+
+    private void update() {
         updateLabels();
+        updateVisibility();
     }
 
     private void updateLabels() {
@@ -92,22 +98,13 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.IExitFra
         mLblTxt3AndHalfHours.setText(mHoursManager.info.calcInfo.additional3AndHalfHours.toString());
         mLblTxt6Hours.setText(mHoursManager.info.calcInfo.additional6Hours.toString());
 
-        if(mHoursManager.info.userInfo.isFriday)
-        {
-            adjustFriday(mIsFriday ? View.VISIBLE : View.GONE);
-        }
     }
 
-    private void adjustFriday(int visibility) {
-        mView.findViewById(R.id.lbl_half_day).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_full_day).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_zero_hours).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_3_and_half_hours).setVisibility(visibility);
-
-        mLblTxtHalfDay.setVisibility(visibility);
-        mLblTxtFullDay.setVisibility(visibility);
-        mLblTxtZeroHours.setVisibility(visibility);
-        mLblTxt3AndHalfHours.setVisibility(visibility);
+    private void updateVisibility() {
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_half_day));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_full_day));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_zero_hours));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_3_and_half_hours));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_6_hours));
     }
-
 }

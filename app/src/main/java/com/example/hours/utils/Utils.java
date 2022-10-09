@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -105,5 +106,13 @@ public class Utils {
     }
     public static void removeExitTime(LinearLayout layout) {
         layout.removeAllViews();
+    }
+
+
+    public static void updateViewVisibility(View view) {
+        if(((TextView)view).getText().equals(Hours.getStr(R.string.midnight_timestamp)))
+            view.setVisibility(View.GONE);
+        else
+            view.setVisibility(View.VISIBLE);
     }
 }

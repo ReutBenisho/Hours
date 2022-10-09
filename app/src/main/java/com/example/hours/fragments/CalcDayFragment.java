@@ -37,7 +37,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     private HoursManager mHoursManager;
     private LinearLayout mLayoutMiddayTimes;
     private ImageView mBtnAddMiddayRow;
-    private IExitFragment mFragment;
+    private ICalcDayFragment mFragment;
     private AppCompatCheckBox mCkbtn_add_exit_time;
     private AppCompatCheckBox mCkbtn_friday;
     private LinearLayout mLayoutExitTime;
@@ -178,7 +178,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
                     .replace(R.id.nav_host_fragment_calc_day, fragment, tag)
                     .commit();
 
-            mFragment = (IExitFragment) fragment;
+            mFragment = (ICalcDayFragment) fragment;
             mFragment.update(mCkbtn_friday.isChecked());
         }
     }
@@ -189,7 +189,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         updateHours();
     }
 
-    public interface IExitFragment{
+    public interface ICalcDayFragment {
         void update(boolean isFriday);
     }
 }

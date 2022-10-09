@@ -17,8 +17,9 @@ import com.example.hours.utils.Defaults;
 import com.example.hours.utils.HoursManager;
 import com.example.hours.R;
 import com.example.hours.models.WithExitViewModel;
+import com.example.hours.utils.Utils;
 
-public class WithExitFragment extends Fragment implements CalcDayFragment.IExitFragment {
+public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
 
     public static final String TAG = "WITH_EXIT_FRAGMENT";
     private WithExitViewModel mViewModel;
@@ -44,7 +45,7 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
         mView = inflater.inflate(R.layout.fragment_with_exit, container, false);
 
         initialize();
-        updateLabels();
+        update();
 
         return mView;
     }
@@ -69,17 +70,18 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
     public void update(boolean isFriday) {
         if(!mIsInitialized)
             return;
-        updateLabels();
+        update();
     }
+
+    private void update() {
+        updateLabels();
+        updateVisibility();
+    }
+
 
     private void updateLabels() {
         mHoursManager = HoursManager.getInstance();
         mHoursManager.CalcDayWithExit();
-
-        if(mHoursManager.info.userInfo.isFriday)
-        {
-            adjustFriday(View.GONE);
-        }
 
         if(mHoursManager.info.calcInfo.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
@@ -96,15 +98,12 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.IExitF
         mLblTxtUnpaidAbsenceHours.setText(mHoursManager.info.calcInfo.totalTime.unpaidAbsence.toString());
     }
 
-    private void adjustFriday(int visibility) {
-        mView.findViewById(R.id.lbl_full_day).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_zero_hours).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_global_absence_hours).setVisibility(visibility);
-        mView.findViewById(R.id.lbl_unpaid_absence_hours).setVisibility(visibility);
-        mLblTxtFullDay.setVisibility(visibility);
-        mLblTxtZeroHours.setVisibility(visibility);
-        mLblTxtGlobalAbsenceHours.setVisibility(visibility);
-        mLblTxtUnpaidAbsenceHours.setVisibility(visibility);
+    private void updateVisibility() {
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_full_day));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_zero_hours));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_additional_hours));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_global_absence_hours));
+        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_unpaid_absence_hours));
     }
 
     @Override

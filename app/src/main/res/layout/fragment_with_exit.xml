@@ -37,141 +37,144 @@
             <TextView
                 android:id="@+id/lbl_full_day"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="יום מלא:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_zero_hours"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_full_day"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_full_day" />
 
             <TextView
                 android:id="@+id/lbl_txt_full_day"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/lbl_full_day"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_zero_hours"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lbl_full_day" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/lbl_zero_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="4dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="שעות אפס:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_additional_hours"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_zero_hours"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_full_day" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_zero_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_zero_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/lbl_zero_hours"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_additional_hours"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/lbl_zero_hours" />
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_full_day" />
 
             <TextView
                 android:id="@+id/lbl_additional_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="4dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="שעות נוספות:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_global_absence_hours"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_additional_hours"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_zero_hours" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_additional_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_additional_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/lbl_additional_hours"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_global_absence_hours"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lbl_additional_hours" />
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_zero_hours" />
 
             <TextView
                 android:id="@+id/lbl_global_absence_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_height="0dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="ה. גלובלית:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/lbl_unpaid_absence_hours"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_global_absence_hours"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_additional_hours" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_global_absence_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_global_absence_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="00:00"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/lbl_global_absence_hours"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lbl_global_absence_hours" />
-
-            <TextView
-                android:id="@+id/lbl_unpaid_absence_hours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/lbl_txt_unpaid_absence_hours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_additional_hours" />
+
+            <TextView
+                android:id="@+id/lbl_unpaid_absence_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="ה. ללא תשלום:"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/lbl_txt_unpaid_absence_hours"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_global_absence_hours" />
+                app:layout_constraintTop_toTopOf="@+id/lbl_txt_unpaid_absence_hours" />
 
             <TextView
                 android:id="@+id/lbl_txt_unpaid_absence_hours"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="00:00"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/lbl_unpaid_absence_hours"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/lbl_unpaid_absence_hours" />
+                app:layout_constraintTop_toBottomOf="@+id/lbl_txt_global_absence_hours" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
