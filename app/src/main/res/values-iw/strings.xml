@@ -89,5 +89,11 @@
     <string name="launch_break_duration">משך הפסקת צהריים</string>
     <string name="evening_break_duration">משך הפסקת ערב</string>
     <string name="night_break_duration">משך הפסקת לילה</string>
-
+    <string name="email">כתובת מייל</string>
+    <string name="password">סיסמא</string>
+    <string name="forgot_password">שכחתי סיסמא</string>
+    <string name="create_new_account">צור חשבון חדש</string>
+    <string name="sign_in_as_guest">היכנס כאורח</string>
+    <string name="sign_in_via_google">התחבר באמצעות גוגל</string>
+    <string name="or">או</string>
 </resources>

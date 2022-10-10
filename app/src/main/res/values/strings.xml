@@ -151,4 +151,11 @@
     <string name="pref_default_night_break_time" translatable="false">pref_default_night_break_time</string>
     <string name="night_break_duration">Night break duration</string>
     <string name="pref_default_night_break_duration" translatable="false">pref_default_night_break_duration</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="sign_in_as_guest">Sign in as guest</string>
+    <string name="sign_in_via_google">Sign in with google</string>
+    <string name="or">או</string>
 </resources>
