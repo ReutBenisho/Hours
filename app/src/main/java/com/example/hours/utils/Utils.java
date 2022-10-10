@@ -113,8 +113,8 @@ public class Utils {
 
     public static void updateViewVisibility(View view) {
         if(((TextView)view).getText().equals(App.getStr(R.string.midnight_timestamp)))
-            view.setVisibility(View.GONE);
+            ((View)view.getParent()).setVisibility(View.GONE);
         else
-            view.setVisibility(View.VISIBLE);
+            ((View)view.getParent()).setVisibility(View.VISIBLE);
     }
 }

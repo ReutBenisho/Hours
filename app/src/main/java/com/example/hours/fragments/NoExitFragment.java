@@ -107,10 +107,12 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
     }
 
     private void updateVisibility() {
-        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_half_day));
-        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_full_day));
-        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_zero_hours));
-        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_3_and_half_hours));
-        Utils.updateViewVisibility(mView.findViewById(R.id.lbl_txt_6_hours));
+        Utils.updateViewVisibility(mLblTxtHalfDay);
+        Utils.updateViewVisibility(mLblTxtFullDay);
+        Utils.updateViewVisibility(mLblTxtZeroHours);
+        Utils.updateViewVisibility(mLblTxt125Hours);
+        Utils.updateViewVisibility(mLblTxt150Hours);
+        Utils.updateViewVisibility(mLblTxt3AndHalfHours);
+        Utils.updateViewVisibility(mLblTxt6Hours);
     }
 }
