@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
+import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
 import com.example.hours.interfaces.OnUpdateListener;
@@ -22,7 +23,6 @@ import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.Utils;
 import com.example.hours.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -37,7 +37,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity implements OnUpdateListener {
+public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private HoursManager mHoursManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Set up a listener whenever a key changes
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Unregister the listener whenever a key changes
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
+    }
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -59,9 +77,11 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         mViewModel = provider.get(MainActivityViewModel.class);
 
         setupSplashScreen();
-        SharedPreferencesUtil.setDefaults("existing_user", "true", getApplicationContext());
-        SharedPreferencesUtil.loadDefaults(getApplicationContext());
+        SharedPreferencesUtil.setDefaults("existing_user", "true");
+        SharedPreferencesUtil.loadDefaults();
         Utils.setupDarkMode(getApplicationContext());
+        mHoursManager = HoursManager.getInstance();
+        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -125,19 +145,19 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
 //        });
 
         //PreferenceManager.setDefaultValues(this, R.xml.header_preferences, false);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                if(s == getString(R.string.pref_system_mode) ||
-                        s == getString(R.string.pref_dark_mode)){
-                    Utils.setupDarkMode(getApplicationContext());
-                }
-                else if(s == getString(R.string.pref_student_mode)){
-                    Snackbar.make(findViewById(android.R.id.content), "Pressed on student mode", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+//            @Override
+//            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+//                if(s == getString(R.string.pref_system_mode) ||
+//                        s == getString(R.string.pref_dark_mode)){
+//                    Utils.setupDarkMode(getApplicationContext());
+//                }
+//                else if(s == getString(R.string.pref_student_mode)){
+//                    mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(s, false);
+//                }
+//            }
+//        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
     }
@@ -145,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
     private void sendEmail() {
         String[] addresses = new String[1];
         addresses[0] = "xreutx197@gmail.com";
-        String subject = "Issue regarding the Hours app";
+        String subject = "Issue regarding the App app";
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, addresses);
@@ -326,5 +346,16 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener 
         // mDrawer.setDrawerIndicatorEnabled(!enable);
         // ......
         // To re-iterate, the order in which you enable and disable views IS important #dontSimplify.
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if(s == getString(R.string.pref_system_mode) || s == getString(R.string.pref_dark_mode)){
+            Utils.setupDarkMode(getApplicationContext());
+        }
+        else if(s == getString(R.string.pref_student_mode)){
+            boolean isStudent = sharedPreferences.getBoolean(s, false);
+            mHoursManager.info.userInfo.isStudent = isStudent;
+        }
     }
 }

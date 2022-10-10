@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferencesUtil.loadDefaults(getApplicationContext());
-        if(SharedPreferencesUtil.getString("existing_user", getApplicationContext()) == "true"){
+        SharedPreferencesUtil.loadDefaults();
+        if(SharedPreferencesUtil.getString("existing_user") == "true"){
 
         }
         else{
@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        SharedPreferencesUtil.loadDefaults(getApplicationContext());
-        if(SharedPreferencesUtil.getString("existing_user", getApplicationContext()) == "true"){
+        SharedPreferencesUtil.loadDefaults();
+        if(SharedPreferencesUtil.getString("existing_user") == "true"){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

@@ -21,7 +21,7 @@ import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
 import com.example.hours.utils.SharedPreferencesUtil;
-import com.example.hours.utils.Timestamp;
+import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.models.SettingsViewModel;
 
 public class SettingsFragment extends Fragment implements
@@ -219,7 +219,7 @@ public class SettingsFragment extends Fragment implements
                         }
                     });
             Preference myPreference = findPreference(strDefaultTime);
-            SharedPreferencesUtil.setDefaults(strDefaultTime, defaultValue, getActivity());
+            SharedPreferencesUtil.setDefaults(strDefaultTime, defaultValue);
             //PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
             myPreference.setSummary(defaultValue);
             myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {

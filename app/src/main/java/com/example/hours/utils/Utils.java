@@ -8,19 +8,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.hours.R;
+import com.example.hours.calcUtils.Timestamp;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Utils {
     public static void setupDarkMode(Context context) {
-        if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_system_mode), context)){
+        if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_system_mode))){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }else{
-            if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_dark_mode), context)){
+            if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_dark_mode))){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
             else{
@@ -103,7 +105,16 @@ public class Utils {
 
         layout.addView(viewExitRow);
     }
-    public static void removeExitTime(LinearLayout layout) {
+    public static void removeExitTime(LinearLayout layout)
+    {
         layout.removeAllViews();
+    }
+
+
+    public static void updateViewVisibility(View view) {
+        if(((TextView)view).getText().equals(App.getStr(R.string.midnight_timestamp)))
+            ((View)view.getParent()).setVisibility(View.GONE);
+        else
+            ((View)view.getParent()).setVisibility(View.VISIBLE);
     }
 }

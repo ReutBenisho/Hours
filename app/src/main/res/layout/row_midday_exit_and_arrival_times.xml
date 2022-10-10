@@ -45,7 +45,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:maxLines="1"
         android:textColorHint="@color/white"
         app:boxBackgroundMode="outline"
@@ -77,13 +77,13 @@
 
     <ImageView
         android:id="@+id/img_remove_midday"
-        android:layout_width="48dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-12dp"
+        android:background="@drawable/ic_close_background"
         app:layout_constraintBottom_toBottomOf="@+id/txt_midday_arrival_layout"
-        app:layout_constraintEnd_toStartOf="@+id/txt_midday_arrival_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_midday_arrival_layout"
-        app:srcCompat="@drawable/ic_close"/>
+        app:srcCompat="@drawable/ic_close" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

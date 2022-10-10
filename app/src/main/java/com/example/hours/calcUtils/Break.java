@@ -1,4 +1,7 @@
-package com.example.hours.utils;
+package com.example.hours.calcUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class Break {
 
@@ -28,6 +31,11 @@ public class Break {
         tookBreak = aBreak.tookBreak;
     }
 
+    public Break(Timestamp start, Timestamp end) {
+        breakTimes = new BreakTimes(start, end);
+        tookBreak = false;
+    }
+
     public boolean expandBreak(Break other)
     {
         boolean isExpand = false;
@@ -48,4 +56,28 @@ public class Break {
         return isExpand;
     }
 
+    @Override
+    public boolean equals(@Nullable Object object) {
+        Break obj = (Break) object;
+        if(!breakTimes.start.equals(obj.breakTimes.start))
+            return false;
+        if(!breakTimes.end.equals(obj.breakTimes.end))
+            return false;
+        if(tookBreak != obj.tookBreak)
+            return false;
+        return true;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String s = "";
+        s += "start: " + breakTimes.start + " end: " + breakTimes.end + " took: " + tookBreak;
+        return s;
+    }
+
+    public Timestamp duration()
+    {
+        return breakTimes.end.sub(breakTimes.start);
+    }
 }

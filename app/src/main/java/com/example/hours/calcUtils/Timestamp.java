@@ -1,4 +1,4 @@
-package com.example.hours.utils;
+package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
