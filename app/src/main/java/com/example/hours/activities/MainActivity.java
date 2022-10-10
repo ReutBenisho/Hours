@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         mViewModel = provider.get(MainActivityViewModel.class);
 
         setupSplashScreen();
-        SharedPreferencesUtil.setDefaults("existing_user", "true");
+        SharedPreferencesUtil.setDefaults(getString(R.string.pref_existing_user), true);
         SharedPreferencesUtil.loadDefaults();
         Utils.setupDarkMode(getApplicationContext());
         mHoursManager = HoursManager.getInstance();
@@ -163,14 +163,33 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     }
 
     private void sendEmail() {
-        String[] addresses = new String[1];
-        addresses[0] = "xreutx197@gmail.com";
-        String subject = "Issue regarding the App app";
+//        String[] addresses = new String[1];
+//        addresses[0] = "xreutx197@gmail.com";
+        String subject = getString(R.string.email_subject_issue);
         Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+        intent.setData(Uri.parse(getString(R.string.mailto)));
+//        intent.putExtra(Intent.EXTRA_EMAIL, addresses);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         startActivity(intent);
+    }
+
+    private void createIssueInGithub(){
+//        GitHubClient client = new GitHubClient();
+//        client.setOAuth2Token("PUT_YOUR_PERSONAL_ACCESS_TOKEN_HERE"); // Use the token generated above
+//        IssueService issueService = new IssueService(client);
+//        try {
+//            Issue issue = new Issue();
+//            issue.setTitle("Test issue"); // Title of the issue
+//            issue.setBody("Some stuff"); // Body of the issue
+//            // Other stuff can be included in the Issue as you'd expect .. like labels, authors, dates, etc.
+//            // Check out the API per your needs
+//
+//            // In my case, we utilize a private issue-only-repository "RepositoryIssueTracker" that is maintainted under our Organization "MyCompany"
+//            issueService.createIssue("MyCompany", "RepositoryIssueTracker", issue);
+//        } catch (Exception e) {
+//            System.out.println("Failed");
+//            e.printStackTrace();
+//        }
     }
 
     @TargetApi(Build.VERSION_CODES.S)

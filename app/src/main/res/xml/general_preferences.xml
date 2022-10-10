@@ -1,7 +1,9 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Dark mode">
+    <PreferenceCategory android:title="Dark mode"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
         <SwitchPreferenceCompat
             app:key="@string/pref_system_mode"
             app:title="Use system's default mode"
@@ -17,10 +19,15 @@
 
     </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        app:key="@string/pref_student_mode"
-        app:summaryOff="Thank god it's over"
-        app:summaryOn="Don't worry, you're half-way there!"
-        app:title="Student Mode"
-        app:defaultValue="false"/>
+    <PreferenceCategory android:title="Personal Preferences"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_student_mode"
+            app:summaryOff="Thank god it's over"
+            app:summaryOn="Don't worry, you're half-way there!"
+            app:title="Student Mode"
+            app:defaultValue="false"/>
+    </PreferenceCategory>
 </PreferenceScreen>

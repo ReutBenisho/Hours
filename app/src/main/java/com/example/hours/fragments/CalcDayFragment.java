@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import com.example.hours.calcUtils.Break;
 import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
@@ -33,7 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private CalcDayModel mViewModel;
-    public static final String TAG = "CALC_DAY_NO_EXIT_TAG";
+    public static final String TAG = App.getStr(R.string.tag_calc_day_no_exit);
 
     private HoursManager mHoursManager;
     private LinearLayout mLayoutMiddayTimes;

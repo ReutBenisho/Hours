@@ -73,7 +73,7 @@ public class Utils {
                 new TimePickerDialog(context, AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
                         timestamp.getHour(), timestamp.getMinute(),
                         true);
-        timePickerDialog.setTitle("הזן שעה");
+        timePickerDialog.setTitle(App.getStr(R.string.enter_time));
         timePickerDialog.show();
     }
 

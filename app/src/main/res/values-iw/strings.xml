@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Hours</string>
+    <string name="btn_txt_register">הירשם</string>
+    <string name="lbl_txt_register">הרשמה</string>
+    <string name="sign_in">התחבר</string>
+    <string name="nav_header_title">שלום משתמש</string>
+    <string name="menu_gallery">גלריה</string>
+    <string name="confirm_password_hint">אמת סיסמא</string>
+    <string name="sign_in_to_existing_account">התחברות לחשבון קיים</string>
+    <string name="enter_time">הזן שעה</string>
+    <string name="biometric_authentication">הזדהות ביומטרית</string>
+    <string name="login_using_fingerprint">התחבר באמצעות טביעת אצבע</string>
+    <string name="enter_password_instead">הקלד סיסמא</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">חתימה מותאמת אישית</string>
+    <string name="reply_title">מענה ברירת מחדל</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">סנכרן דואר</string>
+    <string name="attachment_title">הורדת קבצים מצורפים</string>
+    <string name="attachment_summary_on">הורד אוטומטית קבצים מצורפים לדואר נכנס</string>
+    <string name="attachment_summary_off">הורד קבצים בבחירה ידנית</string>
+    <string name="menu_settings">הגדרות</string>
+    <string name="general_header">הגדרות כלליות</string>
+    <string name="notifications_header">התראות</string>
+    <string name="times_header">זמני ברירת מחדל</string>
+    <string name="open">סרגל כלים פתוח</string>
+    <string name="close">סרגל כלים סגור</string>
+    <string name="healine_when_to_leave">מתי לצאת?</string>
+</resources>

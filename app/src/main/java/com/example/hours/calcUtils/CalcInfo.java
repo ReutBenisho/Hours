@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class CalcInfo {
     public Timestamp halfDay;
     public Timestamp fullDay;
@@ -67,15 +70,15 @@ public class CalcInfo {
         String s = "";
 
         if(halfDay != null)
-            s += "\nHalf day: " + halfDay.toString();
+            s += App.getStr(R.string.newline_halfDay_colon_space) + halfDay.toString();
         if(fullDay != null)
-            s += "\nFull day: " + fullDay.toString();
+            s += App.getStr(R.string.newline_fullDay_colon_space) + fullDay.toString();
         if(zeroHours != null)
-            s += "\nZero hours: " + zeroHours.toString();
+            s += App.getStr(R.string.newline_zeroHours_colon_space) + zeroHours.toString();
         if(additional3AndHalfHours != null)
-            s += "\nAdditional 3 and half hours: " + additional3AndHalfHours.toString();
+            s += App.getStr(R.string.newline_additional3andhalfHours_colon_space) + additional3AndHalfHours.toString();
         if(additional6Hours != null)
-            s += "\nAdditional 6 hours: " + additional6Hours.toString();
+            s += App.getStr(R.string.newline_additional6hours_colon_space) + additional6Hours.toString();
         s += totalTime.toString();
         s += student.toString();
         return s;

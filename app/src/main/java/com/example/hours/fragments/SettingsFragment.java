@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
 
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
@@ -27,14 +28,15 @@ import com.example.hours.models.SettingsViewModel;
 public class SettingsFragment extends Fragment implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
 
-    public static final String TAG = "SETTINGS_FRAGMENT";
+    public static final String TAG = App.getStr(R.string.tag_settings_fragment);
     private SettingsViewModel mViewModel;
     private static final String TITLE_TAG = "settingsActivityTitle";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 // create ContextThemeWrapper from the original Activity Context with the custom theme
 //        Context context = new ContextThemeWrapper(getActivity(), R.style.Theme_Hours_Settings);
 //        // clone the inflater using the ContextThemeWrapper
@@ -105,7 +107,7 @@ public class SettingsFragment extends Fragment implements
         return true;
     }
     public static class ParentSettingsFragment extends PreferenceFragmentCompat {
-        public String TAG = "Parent Frag";
+        public String TAG = App.getStr(R.string.empty);
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
@@ -124,7 +126,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Settings";
+            TAG = App.getStr(R.string.menu_settings);
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
     }
@@ -133,7 +135,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Message Frag";
+            TAG = App.getStr(R.string.tag_messages_fragment);
             setPreferencesFromResource(R.xml.messages_preferences, rootKey);
         }
     }
@@ -142,7 +144,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Sync Frag";
+            TAG = App.getStr(R.string.tag_sync_fragment);
             setPreferencesFromResource(R.xml.sync_preferences, rootKey);
         }
     }
@@ -151,7 +153,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-            TAG = "General";
+            TAG = App.getStr(R.string.general_header);
             super.onCreate(savedInstanceState);
         }
 
@@ -160,6 +162,7 @@ public class SettingsFragment extends Fragment implements
             setPreferencesFromResource(R.xml.general_preferences, rootKey);
         }
 
+        @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -172,7 +175,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Notifications";
+            TAG = App.getStr(R.string.notifications_header);
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
@@ -181,10 +184,11 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Times";
+            TAG = App.getStr(R.string.times_header);
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 
+        @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
@@ -197,7 +201,7 @@ public class SettingsFragment extends Fragment implements
             findPreference(strDefaultTime)
                     .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                         @Override
-                        public boolean onPreferenceClick(Preference preference) {
+                        public boolean onPreferenceClick(@NonNull Preference preference) {
                             TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                                 @Override
                                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -224,7 +228,7 @@ public class SettingsFragment extends Fragment implements
             myPreference.setSummary(defaultValue);
             myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
                     preference.setSummary(newValue.toString());
                     return false;
                 }

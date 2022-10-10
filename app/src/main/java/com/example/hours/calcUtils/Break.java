@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Break {
 
     public BreakTimes breakTimes;
@@ -72,7 +75,9 @@ public class Break {
     @Override
     public String toString() {
         String s = "";
-        s += "start: " + breakTimes.start + " end: " + breakTimes.end + " took: " + tookBreak;
+        s += App.getStr(R.string.start_colon_space) + breakTimes.start
+                + App.getStr(R.string.space_end_colon_space) + breakTimes.end
+                + App.getStr(R.string.space_took_colon_space) + tookBreak;
         return s;
     }
 

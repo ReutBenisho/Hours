@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class UserInfo {
     public Timestamp arrivalTime;
     public Timestamp exitTime;
@@ -43,11 +46,11 @@ public class UserInfo {
     public String toString() {
         String s = "";
         if(arrivalTime != null)
-            s += "Arrival: " + arrivalTime.toString();
+            s += App.getStr(R.string.arrival_colon_space) + arrivalTime.toString();
         if(exitTime != null)
-            s += "\nExit time: " + exitTime.toString();
-        s += "\nFriday: " + isFriday;
-        s += "\nStudent: " + isStudent;
+            s += App.getStr(R.string.newline_exitTime_colon_space) + exitTime.toString();
+        s += App.getStr(R.string.newline_friday_colon_space) + isFriday;
+        s += App.getStr(R.string.newline_student_colon_space) + isStudent;
         return s;
     }
 }

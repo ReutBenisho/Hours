@@ -2,6 +2,9 @@ package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Totals {
 
     public Timestamp total;
@@ -46,14 +49,14 @@ public class Totals {
     public String toString() {
         String s = "";
 
-        s += "\nTotal time: " + total.toString();
-        s += "\nZero hours: " + zeroHours.toString();
-        s += "\nAdditional hours: " + additionalHours.toString();
-        s += "\nAdditional 125% hours: " + additional125Hours.toString();
-        s += "\nAdditional 150% hours: " + additional150Hours.toString();
-        s += "\nIs full day: " + isFullDay;
-        s += "\nGlobal absence: " + globalAbsence.toString();
-        s += "\nUnpaid absence: " + unpaidAbsence.toString();
+        s += App.getStr(R.string.newline_totalTime_colon_space) + total.toString();
+        s += App.getStr(R.string.newline_totalZeroHours_colon_space) + zeroHours.toString();
+        s += App.getStr(R.string.newline_totalAdditionalHours_colon_space) + additionalHours.toString();
+        s += App.getStr(R.string.newline_totalAdditional125hours_colon_space) + additional125Hours.toString();
+        s += App.getStr(R.string.newline_totalAddtional150hours_colon_space) + additional150Hours.toString();
+        s += App.getStr(R.string.newline_isFullDay_colon_space) + isFullDay;
+        s += App.getStr(R.string.newline_totalGlobalAbsence_colon_space) + globalAbsence.toString();
+        s += App.getStr(R.string.newline_totalUnpaidAbsence_colon_space) + unpaidAbsence.toString();
 
         return s;
     }

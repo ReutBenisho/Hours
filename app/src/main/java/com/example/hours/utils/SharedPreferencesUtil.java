@@ -20,6 +20,13 @@ public class SharedPreferencesUtil {
         editor.commit();
     }
 
+    public static void setDefaults(String key, boolean value) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
     public static String getString(String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         return preferences.getString(key, null);

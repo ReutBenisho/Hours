@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.R;
@@ -21,7 +22,7 @@ import com.example.hours.utils.Utils;
 
 public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
 
-    public static final String TAG = "WITH_EXIT_FRAGMENT";
+    public static final String TAG = App.getStr(R.string.tag_calc_day_with_exit);
     private WithExitViewModel mViewModel;
 
     private TextView mLblTxtFullDay;

@@ -2,6 +2,9 @@ package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Student {
     public Timestamp additional125Hours;
     public Timestamp additional150Hours;
@@ -25,9 +28,9 @@ public class Student {
     public String toString() {
         String s = "";
         if(additional125Hours != null)
-            s += "\nAdditional 125%: " + additional125Hours.toString();
+            s += App.getStr(R.string.newline_additional125_colon_space) + additional125Hours.toString();
         if(additional150Hours != null)
-            s += "\nAdditional 150%: " + additional150Hours.toString();
+            s += App.getStr(R.string.newline_additional150_colon_space) + additional150Hours.toString();
         return s;
     }
 }
