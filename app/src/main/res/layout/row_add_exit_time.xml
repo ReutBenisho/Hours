@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:cursorVisible="false"
             android:focusable="false"
-            android:hint="שעת יציאה סוף היום"
+            android:hint="@string/exit_day"
             android:inputType="none"
             android:textAlignment="center"
             android:textColor="@color/white" />

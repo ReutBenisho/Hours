@@ -31,7 +31,7 @@ public void test1_Arrival_07_49_Exit_22_33() {
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.userInfo.arrivalTime = new Timestamp(7, 49);
         expHoursInfo.userInfo.exitTime = new Timestamp(22, 33);
-        expHoursInfo.calcInfo.totalTime.total = new Timestamp(14, 02);
+        expHoursInfo.calcInfo.totalTime.total = new Timestamp(14, 2);
         expHoursInfo.calcInfo.totalTime.isFullDay = true;
         expHoursInfo.calcInfo.totalTime.additionalHours = new Timestamp(5, 38);
         assertEquals(expHoursInfo.toString(), HoursManager.getInstance().info.toString());
@@ -1397,7 +1397,7 @@ public void test84_Arrival_9_12_Exit_16_31() {
         expHoursInfo.userInfo.exitTime = new Timestamp(16, 31);
         expHoursInfo.calcInfo.totalTime.total = new Timestamp(6, 49);
         expHoursInfo.calcInfo.totalTime.isFullDay = false;
-        expHoursInfo.calcInfo.totalTime.globalAbsence.setTime(01, 35);
+        expHoursInfo.calcInfo.totalTime.globalAbsence.setTime(1, 35);
         assertEquals(expHoursInfo.toString(), resHoursInfo.toString());
     }
 

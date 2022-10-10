@@ -4,7 +4,7 @@ import com.example.hours.utils.Defaults;
 
 public class HoursManager {
     private static HoursManager mInstance = null;
-    public HoursInfo info;
+    public final HoursInfo info;
 
     private HoursManager()
     {
@@ -98,7 +98,7 @@ public class HoursManager {
             return info;
         if(info.userInfo.isFriday)
         {
-            Timestamp additional = removeOvelaps();
+            Timestamp additional = removeOverlaps();
             if(info.userInfo.isStudent){
                 if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
                     info.calcInfo.totalTime.additional125Hours.setTime(additional);
@@ -114,7 +114,7 @@ public class HoursManager {
         }
         else
         {
-            info.calcInfo.totalTime.total = removeOvelaps();
+            info.calcInfo.totalTime.total = removeOverlaps();
             if(info.userInfo.exitTime.isAfter(Defaults.EVENING_BREAK_START)
                     && info.breaks.customBreaks.size() == 0)
                 info.calcInfo.totalTime.total = info.calcInfo.totalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
@@ -151,7 +151,7 @@ public class HoursManager {
         return info;
     }
 
-    private Timestamp removeOvelaps() {
+    private Timestamp removeOverlaps() {
         Timestamp duration = info.userInfo.exitTime.sub(info.userInfo.arrivalTime);
         for(int i = 0; i < info.breaks.allBreaks.size(); i++)
             duration = removeOverlap(info.userInfo.arrivalTime, info.userInfo.exitTime,

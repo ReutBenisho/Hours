@@ -1,33 +1,55 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Dark mode"
+    <PreferenceCategory android:title="@string/dark_mode"
         app:allowDividerBelow="true"
         app:allowDividerAbove="true">
         <SwitchPreferenceCompat
-            app:key="@string/pref_system_mode"
-            app:title="Use system's default mode"
+            app:key="@string/pref_system_dark_mode"
+            app:title="@string/use_system_default_dark_mode"
             app:defaultValue="true"
             app:disableDependentsState="true"/>
 
         <SwitchPreferenceCompat
-            app:dependency="@string/pref_system_mode"
+            app:dependency="@string/pref_system_dark_mode"
             app:key="@string/pref_dark_mode"
-            app:title="Dark Mode"
-            app:summaryOff="You are weak."
-            app:summaryOn="You chose wisely."/>
+            app:title="@string/dark_mode"
+            app:summaryOff="@string/you_are_weak"
+            app:summaryOn="@string/you_chose_wisely"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Personal Preferences"
+
+    <PreferenceCategory android:title="@string/language"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
+        <SwitchPreferenceCompat
+            app:key="@string/pref_system_language"
+            app:title="@string/use_system_default_language"
+            app:defaultValue="true"
+            app:disableDependentsState="true"/>
+
+        <ListPreference
+            app:dependency="@string/pref_system_language"
+            app:defaultValue="english_value"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="@string/pref_language"
+            app:title="@string/language"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/personal_preferences"
         app:allowDividerBelow="true"
         app:allowDividerAbove="true">
 
         <SwitchPreferenceCompat
             app:key="@string/pref_student_mode"
-            app:summaryOff="Thank god it's over"
-            app:summaryOn="Don't worry, you're half-way there!"
-            app:title="Student Mode"
+            app:summaryOff="@string/thank_god_its_over"
+            app:summaryOn="@string/dont_worry_youre_halfway_there"
+            app:title="@string/student_mode"
             app:defaultValue="false"/>
     </PreferenceCategory>
+
 </PreferenceScreen>

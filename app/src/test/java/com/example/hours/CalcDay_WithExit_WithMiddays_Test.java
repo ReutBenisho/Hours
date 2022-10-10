@@ -38,7 +38,7 @@ public void test1_Arrival_08_09_Exit_16_46_Arrival_19_15_Exit_19_51_Arrival_20_4
         expHoursInfo.userInfo.exitTime = new Timestamp(21, 23);
         expHoursInfo.calcInfo.totalTime.total = new Timestamp(9, 26 );
         expHoursInfo.calcInfo.totalTime.isFullDay = true;
-        expHoursInfo.calcInfo.totalTime.additionalHours = new Timestamp(1, 02);
+        expHoursInfo.calcInfo.totalTime.additionalHours = new Timestamp(1, 2);
         expHoursInfo.breaks.customBreaks.add(new Break(16, 46, 19, 15));
         expHoursInfo.breaks.customBreaks.add(new Break(19, 51, 20, 40));
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());

@@ -1,8 +1,8 @@
 package com.example.hours.calcUtils;
 public class BreakTimes {
 
-    public Timestamp start;
-    public Timestamp end;
+    public final Timestamp start;
+    public final Timestamp end;
 
     public BreakTimes(){
         start = new Timestamp();

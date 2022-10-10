@@ -4,8 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,10 +18,12 @@ import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.fragments.SettingsFragment;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
+import com.example.hours.utils.LocaleHelper;
 import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.Utils;
 import com.example.hours.databinding.ActivityMainBinding;
@@ -37,9 +42,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import java.util.Locale;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private HoursManager mHoursManager;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    private void updateViews(String languageCode) {
+        LocaleHelper.setLocale(this, languageCode);
+    }
 
     @Override
     protected void onResume() {
@@ -65,9 +82,38 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     private Toolbar mToolbar;
     private boolean mToolBarNavigationListenerIsRegistered = false;
     private MainActivityViewModel mViewModel;
+//
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+////        String localeCodeLowerCase = "iw_IL";
+////        Resources resources = newBase.getApplicationContext().getResources();
+////        Configuration overrideConfiguration = resources.getConfiguration();
+////        Locale overrideLocale = new Locale(localeCodeLowerCase);
+////
+////        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+////            overrideConfiguration.setLocale(overrideLocale);
+////        } else {
+////            overrideConfiguration.locale = overrideLocale;
+////        }
+////
+////        newBase.createConfigurationContext(overrideConfiguration);
+//        super.attachBaseContext(newBase);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        String localeCodeLowerCase = "iw_IL";
+//        Resources resources = getApplicationContext().getResources();
+//        Configuration overrideConfiguration = resources.getConfiguration();
+//        Locale overrideLocale = new Locale(localeCodeLowerCase);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            overrideConfiguration.setLocale(overrideLocale);
+//        } else {
+//            overrideConfiguration.locale = overrideLocale;
+//        }
+//
+//        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -80,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         SharedPreferencesUtil.setDefaults(getString(R.string.pref_existing_user), true);
         SharedPreferencesUtil.loadDefaults();
         Utils.setupDarkMode(getApplicationContext());
+        //updateViews("iw");
         mHoursManager = HoursManager.getInstance();
         mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -184,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //            // Other stuff can be included in the Issue as you'd expect .. like labels, authors, dates, etc.
 //            // Check out the API per your needs
 //
-//            // In my case, we utilize a private issue-only-repository "RepositoryIssueTracker" that is maintainted under our Organization "MyCompany"
+//            // In my case, we utilize a private issue-only-repository "RepositoryIssueTracker" that is maintained under our Organization "MyCompany"
 //            issueService.createIssue("MyCompany", "RepositoryIssueTracker", issue);
 //        } catch (Exception e) {
 //            System.out.println("Failed");
@@ -301,11 +348,11 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 case ACTION_BAR_TITLE:{
 
                     mViewModel.ActionBarTitle = data.obj.toString();
-                    if(mViewModel.ActionBarTitle.toString().equals("")){
+                    if(mViewModel.ActionBarTitle.equals("")){
                         setActionBarIconToBackArrow(false);
                     }
                     else {
-                        mActionBar.setTitle(mViewModel.ActionBarTitle.toString());
+                        mActionBar.setTitle(mViewModel.ActionBarTitle);
                         setActionBarIconToBackArrow(true);
         //            mDrawer.setDrawerIndicatorEnabled(false);
         //            mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -368,13 +415,42 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        if(s == getString(R.string.pref_system_mode) || s == getString(R.string.pref_dark_mode)){
-            Utils.setupDarkMode(getApplicationContext());
-        }
-        else if(s == getString(R.string.pref_student_mode)){
-            boolean isStudent = sharedPreferences.getBoolean(s, false);
-            mHoursManager.info.userInfo.isStudent = isStudent;
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String pref) {
+        int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
+        switch (pref_id)
+        {
+            case R.string.pref_system_dark_mode:
+            case R.string.pref_dark_mode:
+                Utils.setupDarkMode(getApplicationContext());
+                break;
+            case R.string.pref_student_mode:
+                mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
+                break;
+            case R.string.pref_system_language:
+            case R.string.pref_language:
+//                Utils.setupLanguage();
+                //recreate();
+//                Intent refresh = new Intent(this, MainActivity.class);
+//                finish();
+//                startActivity(refresh);
+                String lang;
+                if(SharedPreferencesUtil.getBoolean(getString(R.string.pref_system_language)))
+                {
+                    Locale loc = Resources.getSystem().getConfiguration().locale;
+                    lang = loc.getLanguage();
+                }
+                else
+                {
+                    lang = SharedPreferencesUtil.getString(getString(R.string.pref_language));
+                }
+
+                if(!Objects.equals(lang, Locale.getDefault().getLanguage())) {
+                    updateViews(lang);
+                    Intent refresh = new Intent(this, MainActivity.class);
+                    finish();
+                    startActivity(refresh);
+                }
+                break;
         }
     }
 }

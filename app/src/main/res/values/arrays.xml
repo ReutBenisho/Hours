@@ -9,4 +9,15 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <!-- Language Preference -->
+    <string-array name="language_entries">
+        <item>@string/english_entry</item>
+        <item>@string/hebrew_entry</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>iw</item>
+    </string-array>
 </resources>

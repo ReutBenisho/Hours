@@ -13,8 +13,8 @@ public class ListenerManager {
         ACTION_BAR_TITLE,
     }
     public static class Data{
-        public ListenerType type;
-        public Object obj;
+        public final ListenerType type;
+        public final Object obj;
 
         public Data(ListenerType _type, Object _obj) {
             type = _type;
@@ -35,8 +35,7 @@ public class ListenerManager {
 
     public static void removeListener(OnUpdateListener listener, ListenerType type) {
         if(mListeners != null
-                && mListeners.get(type) != null
-                && mListeners.get(type).contains(listener))
+                && mListeners.get(type) != null)
             mListeners.get(type).remove(listener);
     }
 

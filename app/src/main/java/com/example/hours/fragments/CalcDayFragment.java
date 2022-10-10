@@ -59,7 +59,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
@@ -93,7 +94,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
                 if(isChecked) {
                     Utils.addExitTimeLayout(getLayoutInflater(), mLayoutExitTime, getContext());
                     EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-                    mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
+                    if(txtExitTime != null)
+                        mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
                 }
                 else
                     Utils.removeExitTime(mLayoutExitTime);
@@ -147,7 +149,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         if(mCkbtn_add_exit_time.isChecked())
         {
             EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-            mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
+            if(txtExitTime != null)
+                mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
         }
         mHoursManager.info.userInfo.isFriday = mCkbtn_friday.isChecked();
         mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
@@ -156,8 +159,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private void openCalcDayFragment(boolean isExitTimeAdded) {
         Fragment fragment = null;
-        Class fragmentClass = null;
-        String tag = "";
+        Class fragmentClass;
+        String tag;
         if(isExitTimeAdded){
             fragmentClass = WithExitFragment.class;
             tag = WithExitFragment.TAG;

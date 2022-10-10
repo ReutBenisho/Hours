@@ -1,8 +1,14 @@
 package com.example.hours.utils;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -14,12 +20,15 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.hours.R;
+import com.example.hours.activities.MainActivity;
 import com.example.hours.calcUtils.Timestamp;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Locale;
+
 public class Utils {
     public static void setupDarkMode(Context context) {
-        if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_system_mode))){
+        if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_system_dark_mode))){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }else{
             if(SharedPreferencesUtil.getBoolean(context.getString(R.string.pref_dark_mode))){
@@ -116,5 +125,22 @@ public class Utils {
             ((View)view.getParent()).setVisibility(View.GONE);
         else
             ((View)view.getParent()).setVisibility(View.VISIBLE);
+    }
+
+    public static void setupLanguage() {
+//        Locale myLocale = new Locale("Hebrew");
+//        Resources res = App.getRes();
+//        DisplayMetrics dm = res.getDisplayMetrics();
+//        Configuration conf = res.getConfiguration();
+////        conf.locale = myLocale;
+////        res.updateConfiguration(conf, dm);
+//        Configuration config = new Configuration(conf);
+//        config.locale = locale;
+        Locale myLocale = new Locale("he");
+        Resources res = App.getRes();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

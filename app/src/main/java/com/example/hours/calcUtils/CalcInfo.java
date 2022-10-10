@@ -46,6 +46,8 @@ public class CalcInfo {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof CalcInfo))
+            return false;
         CalcInfo obj = (CalcInfo) object;
         if(!totalTime.equals(obj.totalTime))
             return false;

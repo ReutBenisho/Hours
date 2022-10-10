@@ -18,6 +18,8 @@ public class UserInfo {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof UserInfo))
+            return false;
         UserInfo obj = (UserInfo) object;
         if(!arrivalTime.equals(obj.arrivalTime))
             return false;
@@ -48,7 +50,7 @@ public class UserInfo {
         if(arrivalTime != null)
             s += App.getStr(R.string.arrival_colon_space) + arrivalTime.toString();
         if(exitTime != null)
-            s += App.getStr(R.string.newline_exitTime_colon_space) + exitTime.toString();
+            s += App.getStr(R.string.newline_exit_colon_space) + exitTime.toString();
         s += App.getStr(R.string.newline_friday_colon_space) + isFriday;
         s += App.getStr(R.string.newline_student_colon_space) + isStudent;
         return s;

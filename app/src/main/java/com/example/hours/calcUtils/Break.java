@@ -8,7 +8,7 @@ import com.example.hours.utils.App;
 
 public class Break {
 
-    public BreakTimes breakTimes;
+    public final BreakTimes breakTimes;
     public Boolean tookBreak;
     public Break(BreakTimes pair, Boolean _tookBreak){
         breakTimes = new BreakTimes(pair);
@@ -61,6 +61,8 @@ public class Break {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof Break))
+            return false;
         Break obj = (Break) object;
         if(!breakTimes.start.equals(obj.breakTimes.start))
             return false;

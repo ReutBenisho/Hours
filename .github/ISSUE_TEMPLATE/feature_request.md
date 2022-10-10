@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: "[FEATURE]:"
-labels: nice 2 have, requirment
+labels: nice 2 have, requirement
 assignees: ReutBenisho
 
 ---

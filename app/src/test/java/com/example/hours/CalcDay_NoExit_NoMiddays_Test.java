@@ -56,7 +56,7 @@ public void test2_Arrival_07_49() {
         mHoursManager.CalcDayNoExit();
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.userInfo.arrivalTime = new Timestamp(7, 49);
-        expHoursInfo.calcInfo.halfDay = new Timestamp(12, 01);
+        expHoursInfo.calcInfo.halfDay = new Timestamp(12, 1);
         expHoursInfo.calcInfo.fullDay = new Timestamp(16, 43);
         expHoursInfo.calcInfo.zeroHours = new Timestamp(17, 43);
         expHoursInfo.calcInfo.additional3AndHalfHours = new Timestamp(20, 25);

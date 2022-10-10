@@ -15,7 +15,7 @@
     <color name="settings_text_secondary_disabled">@color/gray_50_trans_75</color>
 <!--    <color name="settings_icons_tint">@color/settings_text_primary</color>-->
     <color name="settings_switch_checked">@color/background_center_color</color>
-    <color name="settings_switch_ununchecked">@color/gray_20</color>
+    <color name="settings_switch_unchecked">@color/gray_20</color>
     <color name="settings_switch_disabled">@color/gray_90</color>
     <color name="settings_window_background">@color/black</color>
     <color name="calc_labels">@color/blue_10_trans_50</color>

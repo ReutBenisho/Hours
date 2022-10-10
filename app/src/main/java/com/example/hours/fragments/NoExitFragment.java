@@ -52,7 +52,8 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_no_exit, container, false);
 
         initialize();

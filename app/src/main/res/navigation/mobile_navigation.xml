@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_calc_day"
         android:name="com.example.hours.fragments.CalcDayFragment"
-        android:label="חישוב יומי"
+        android:label="@string/daily_calculation"
         tools:layout="@layout/fragment_calc_day"/>
 
     <fragment

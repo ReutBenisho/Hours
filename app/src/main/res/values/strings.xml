@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <resources>
     <string name="app_name">Hours</string>
     <string name="btn_txt_register">Register</string>
@@ -32,13 +34,13 @@
     <string name="pref_default_arrival_time" translatable="false">pref_default_arrival_time</string>
     <string name="pref_default_launch_break_time" translatable="false">pref_default_launch_break_time</string>
     <string name="midnight_timestamp" translatable="false">00:00</string>
-    <string name="pref_system_mode" translatable="false">pref_system_mode</string>
+    <string name="pref_system_dark_mode" translatable="false">pref_system_mode</string>
     <string name="pref_default_evening_break_time" translatable="false">pref_default_evening_break_time</string>
     <string name="notifications_header">Notifications</string>
     <string name="times_header">Default Timestamps</string>
     <string name="open">Navigation open</string>
     <string name="close">Navigation close</string>
-    <string name="healine_when_to_leave">When should I leave?</string>
+    <string name="headline_when_to_leave">When should I leave?</string>
     <string name="pref_default_custom_breaks" translatable="false">pref_default_custom_breaks</string>
     <string name="start_colon_space" translatable="false">\"start: \"</string>
     <string name="space_end_colon_space" translatable="false">\" end: \"</string>
@@ -46,34 +48,75 @@
     <string name="newline_preDefinedBreak_space_hashmark" translatable="false">\"\nPre defined break #\"</string>
     <string name="newline_customBreak_space_hashmark" translatable="false">\nCustom break #</string>
     <string name="newline_tookEveningBreak_colon_space" translatable="false">\"\nTook evening break: \"</string>
-    <string name="tag_calc_day_no_exit">CALC_DAY_NO_EXIT_TAG</string>
-    <string name="newline_halfDay_colon_space">\"\nHalf day: \"</string>
-    <string name="newline_fullDay_colon_space">\"\nFull day: \"</string>
-    <string name="newline_zeroHours_colon_space">\"\nZero hours: \"</string>
-    <string name="newline_additional3andhalfHours_colon_space">\"\nAdditional 3 and half hours: \"</string>
-    <string name="newline_additional6hours_colon_space">\"\nAdditional 6 hours: \"</string>
-    <string name="tag_gallery">GALLERY_TAG</string>
-    <string name="pref_existing_user">pref_existing_user</string>
-    <string name="email_subject_issue">Issue regarding the App app</string>
-    <string name="mailto">mailto:</string>
-    <string name="tag_settings_fragment">SETTINGS_FRAGMENT</string>
-    <string name="empty" />
-    <string name="tag_messages_fragment">Message Fragent</string>
-    <string name="tag_sync_fragment">Sync Fragment</string>
-    <string name="newline_additional125_colon_space">\"\nAdditional 125%: \"</string>
-    <string name="newline_additional150_colon_space">\"\nAdditional 150%: \"</string>
-    <string name="timestamp_format">%02d:%02d</string>
-    <string name="newline_totalTime_colon_space">\"\nTotal time: \"</string>
-    <string name="newline_totalZeroHours_colon_space">\"\nTotal zero hours: \"</string>
-    <string name="newline_totalAdditionalHours_colon_space">\"\nTotal additional hours: \"</string>
-    <string name="newline_totalAdditional125hours_colon_space">\"\nTotal additional 125% hours: \"</string>
-    <string name="newline_totalAddtional150hours_colon_space">\"\nTotal additional 150% hours: \"</string>
-    <string name="newline_isFullDay_colon_space">\"\nIs full day: \"</string>
-    <string name="newline_totalGlobalAbsence_colon_space">\"\nTotal global absence: \"</string>
-    <string name="newline_totalUnpaidAbsence_colon_space">\"\nTotal unpaid absence: \"</string>
-    <string name="arrival_colon_space">\"Arrival: \"</string>
-    <string name="newline_exitTime_colon_space">\"\nExit time: \"</string>
-    <string name="newline_friday_colon_space">\"\nFriday: \"</string>
-    <string name="newline_student_colon_space">\"\nStudent: \"</string>
-    <string name="tag_calc_day_with_exit">WITH_EXIT_FRAGMENT</string>
+    <string name="tag_calc_day_no_exit" translatable="false">CALC_DAY_NO_EXIT_TAG</string>
+    <string name="halfDay_colon">Half day:</string>
+    <string name="newline_halfDay_colon_space" translatable="false">\n${halfDay_colon} </string>
+    <string name="fullDay_colon">Full day:</string>
+    <string name="newline_fullDay_colon_space" translatable="false">\n${fullDay_colon} </string>
+    <string name="zeroHours_colon">Unpaid hours:</string>
+    <string name="newline_zeroHours_colon_space" translatable="false">\n${zeroHours_colon} </string>
+    <string name="additional3andhalfHours_colon">Additional 3 and half hours:</string>
+    <string name="newline_additional3andhalfHours_colon_space" translatable="false">\n${additional3andhalfHours_colon} </string>
+    <string name="additional6hours_colon">Additional 6 hours:</string>
+    <string name="newline_additional6hours_colon_space" translatable="false">\n${additional6hours_colon} </string>
+    <string name="tag_gallery" translatable="false">GALLERY_TAG</string>
+    <string name="pref_existing_user" translatable="false">pref_existing_user</string>
+    <string name="email_subject_issue">Issue regarding the Hours app</string>
+    <string name="mailto" translatable="false">mailto:</string>
+    <string name="tag_settings_fragment" translatable="false">SETTINGS_FRAGMENT</string>
+    <string name="empty" translatable="false" />
+    <string name="tag_messages_fragment" translatable="false">Message Fragment</string>
+    <string name="tag_sync_fragment" translatable="false">Sync Fragment</string>
+    <string name="additional125_colon">Additional 125%:</string>
+    <string name="newline_additional125_colon_space" translatable="false">\n${additional125_colon} </string>
+    <string name="additional150_colon">Additional 150%:</string>
+    <string name="newline_additional150_colon_space" translatable="false">\n${additional150_colon} </string>
+    <string name="timestamp_format" translatable="false">%02d:%02d</string>
+    <string name="totalTime_colon">Total time:</string>
+    <string name="newline_totalTime_colon_space" translatable="false">\n${totalTime_colon} </string>
+    <string name="totalZeroHours_colon">Total zero hours:</string>
+    <string name="newline_totalZeroHours_colon_space" translatable="false">\n${totalZeroHours_colon} </string>
+    <string name="totalAdditionalHours_colon">Total additional hours:</string>
+    <string name="newline_totalAdditionalHours_colon_space" translatable="false">\n${totalAdditionalHours_colon} </string>
+    <string name="totalAdditional125hours_colon">Total additional 125% hours:"</string>
+    <string name="newline_totalAdditional125hours_colon_space" translatable="false">\n${totalAdditional125hours_colon} </string>
+    <string name="totalAdditional150hours_colon">Total additional 150% hours:</string>
+    <string name="newline_totalAdditional150hours_colon_space" translatable="false">\n${totalAdditional150hours_colon} </string>
+    <string name="isFullDay_colon">Is full day:</string>
+    <string name="newline_isFullDay_colon_space" translatable="false">\n{isFullDay_colon} </string>
+    <string name="totalGlobalAbsence_colon">Total global absence:</string>
+    <string name="newline_totalGlobalAbsence_colon_space" translatable="false">\n{totalGlobalAbsence_colon} </string>
+    <string name="totalUnpaidAbsence_colon">Total unpaid absence:</string>
+    <string name="newline_totalUnpaidAbsence_colon_space" translatable="false">\n{totalUnpaidAbsence_colon} </string>
+    <string name="arrival_colon">Arrival:</string>
+    <string name="arrival_colon_space" translatable="false">{arrival_colon} </string>
+    <string name="exit_colon">Exit:</string>
+    <string name="newline_exit_colon_space" translatable="false">\n${exit_colon} </string>
+    <string name="friday">Friday</string>
+    <string name="newline_friday_colon_space" translatable="false">\n${friday}: </string>
+    <string name="student">Student</string>
+    <string name="newline_student_colon_space" translatable="false">\n${student}: </string>
+    <string name="tag_calc_day_with_exit" translatable="false">WITH_EXIT_FRAGMENT</string>
+    <string name="exit">Exit</string>
+    <string name="arrival">Arrival</string>
+    <string name="exit_day">Exit at the end of the day:</string>
+    <string name="hours_calculation">Hours Calculation</string>
+    <string name="exit_time">Exit time</string>
+    <string name="arrival_day">Arrival at the beginning of the day:</string>
+    <string name="daily_calculation">Daily calculation</string>
+    <string name="total_hours">Total Hours</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="use_system_default_dark_mode">Use system\'s default mode</string>
+    <string name="you_are_weak">You are weak.</string>
+    <string name="you_chose_wisely">You chose wisely.</string>
+    <string name="personal_preferences">Personal Preferences</string>
+    <string name="thank_god_its_over">Thank god it\'s over</string>
+    <string name="dont_worry_youre_halfway_there">Don\'t worry, you\'re half-way there!</string>
+    <string name="student_mode">Student Mode</string>
+    <string name="language">Language</string>
+    <string name="pref_system_language" translatable="false">pref_system_language</string>
+    <string name="use_system_default_language">Use system\'s default language</string>
+    <string name="pref_language" translatable="false">pref_language</string>
+    <string name="hebrew_entry">Hebrew</string>
+    <string name="english_entry">English</string>
 </resources>

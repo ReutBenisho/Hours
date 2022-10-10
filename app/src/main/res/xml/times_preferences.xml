@@ -35,7 +35,7 @@
 
         <Preference
             app:dependency="@string/pref_default_system_time"
-            app:title="Default eveing break time"
+            app:title="Default evening break time"
             app:key="@string/pref_default_evening_break_time"
             app:useSimpleSummaryProvider="true"/>
 

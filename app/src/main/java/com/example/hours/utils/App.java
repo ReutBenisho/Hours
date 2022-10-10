@@ -13,6 +13,11 @@ public class App extends Application {
         mContext = this;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+    }
+
     public static Context getContext(){
         return mContext;
     }
@@ -21,7 +26,7 @@ public class App extends Application {
         return mContext.getResources();
     }
 
-    public static String getStr(int id){
+    public static final String getStr(int id){
         return mContext.getResources().getString(id);
     }
 }

@@ -53,7 +53,7 @@ public class Totals {
         s += App.getStr(R.string.newline_totalZeroHours_colon_space) + zeroHours.toString();
         s += App.getStr(R.string.newline_totalAdditionalHours_colon_space) + additionalHours.toString();
         s += App.getStr(R.string.newline_totalAdditional125hours_colon_space) + additional125Hours.toString();
-        s += App.getStr(R.string.newline_totalAddtional150hours_colon_space) + additional150Hours.toString();
+        s += App.getStr(R.string.newline_totalAdditional150hours_colon_space) + additional150Hours.toString();
         s += App.getStr(R.string.newline_isFullDay_colon_space) + isFullDay;
         s += App.getStr(R.string.newline_totalGlobalAbsence_colon_space) + globalAbsence.toString();
         s += App.getStr(R.string.newline_totalUnpaidAbsence_colon_space) + unpaidAbsence.toString();
