@@ -419,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         if(pref == LocaleHelper.SELECTED_LANGUAGE)
             return;
         int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
-        String prefType = SettingsFragment.GeneralFragment.keyTypes.get(pref_id);
+        String prefType = SettingsFragment.keyTypes.get(pref_id);
         switch (prefType)
         {
             case "boolean":

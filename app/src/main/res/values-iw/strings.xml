@@ -86,5 +86,8 @@
     <string name="custom_breaks">הפסקות מותאמות אישית</string>
     <string name="system_times">זמני מערכת</string>
     <string name="use_default_system_times">השתמש בזמני ברירת המחדל</string>
+    <string name="launch_break_duration">משך הפסקת צהריים</string>
+    <string name="evening_break_duration">משך הפסקת ערב</string>
+    <string name="night_break_duration">משך הפסקת לילה</string>
 
 </resources>

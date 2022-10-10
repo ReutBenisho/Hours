@@ -143,4 +143,12 @@
     <string name="custom_breaks">Custom Breaks</string>
     <string name="system_times">System Times</string>
     <string name="use_default_system_times">Use default time settings</string>
+    <string name="pref_default_exit_time" translatable="false">pref_default_exit_time</string>
+    <string name="launch_break_duration">Launch break duration</string>
+    <string name="pref_default_launch_break_duration" translatable="false">pref_default_launch_break_duration</string>
+    <string name="evening_break_duration">Evening break duration</string>
+    <string name="pref_default_evening_break_duration" translatable="false">pref_default_evening_break_duration</string>
+    <string name="pref_default_night_break_time" translatable="false">pref_default_night_break_time</string>
+    <string name="night_break_duration">Night break duration</string>
+    <string name="pref_default_night_break_duration" translatable="false">pref_default_night_break_duration</string>
 </resources>

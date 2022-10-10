@@ -30,6 +30,42 @@ import java.util.Map;
 
 public class SettingsFragment extends Fragment implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
+    public static Map<Integer, String> keyTypes = initMap();
+
+    private static Map<Integer, String> initMap() {
+        HashMap<Integer, String> map = new HashMap<>();
+        //general
+        map.put(R.string.pref_system_dark_mode, "boolean");
+        map.put(R.string.pref_dark_mode, "boolean");
+        map.put(R.string.pref_system_language, "boolean");
+        map.put(R.string.pref_language, "String");
+        map.put(R.string.pref_student_mode, "boolean");
+        //notifications
+        map.put(R.string.pref_all_notifications, "boolean");
+        map.put(R.string.pref_notify_launch_break, "boolean");
+        map.put(R.string.pref_notify_evening_break, "boolean");
+        map.put(R.string.pref_notify_night_break, "boolean");
+        map.put(R.string.pref_notify_mothers_transportation, "boolean");
+        map.put(R.string.pref_notify_afternoon_transportation, "boolean");
+        map.put(R.string.pref_notify_evening_transportation, "boolean");
+        map.put(R.string.pref_notify_night_transportation, "boolean");
+        map.put(R.string.pref_reminder_time, "String");
+        //times
+        map.put(R.string.pref_default_system_time, "boolean");
+        map.put(R.string.pref_default_arrival_time, "String");
+        map.put(R.string.pref_default_exit_time, "String");
+        map.put(R.string.pref_default_custom_breaks, "String");
+        map.put(R.string.use_default_system_times, "boolean");
+        map.put(R.string.pref_default_launch_break_time, "String");
+        map.put(R.string.pref_default_launch_break_duration, "String");
+        map.put(R.string.pref_default_evening_break_time, "String");
+        map.put(R.string.pref_default_evening_break_duration, "String");
+        map.put(R.string.pref_default_night_break_time, "String");
+        map.put(R.string.pref_default_night_break_duration, "String");
+
+
+        return map;
+    }
 
     public static final String TAG = App.getStr(R.string.tag_settings_fragment);
     private SettingsViewModel mViewModel;
@@ -153,17 +189,6 @@ public class SettingsFragment extends Fragment implements
     }
 
     public static class GeneralFragment extends ParentSettingsFragment {
-        public static Map<Integer, String> keyTypes = initMap();
-
-        private static Map<Integer, String> initMap() {
-            HashMap<Integer, String> map = new HashMap<>();
-            map.put(R.string.pref_system_dark_mode, "boolean");
-            map.put(R.string.pref_dark_mode, "boolean");
-            map.put(R.string.pref_system_language, "boolean");
-            map.put(R.string.pref_language, "String");
-            map.put(R.string.pref_student_mode, "boolean");
-            return map;
-        }
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -206,7 +231,13 @@ public class SettingsFragment extends Fragment implements
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
+            setDefaultTime(R.string.pref_default_exit_time, Defaults.ARRIVAL_TIME.add(Defaults.FULL_DAY).add(Defaults.LAUNCH_BREAK_DURATION).toString());
             setDefaultTime(R.string.pref_default_launch_break_time, Defaults.LAUNCH_BREAK_START.toString());
+            setDefaultTime(R.string.pref_default_launch_break_duration, Defaults.LAUNCH_BREAK_DURATION.toString());
+            setDefaultTime(R.string.pref_default_evening_break_time, Defaults.EVENING_BREAK_START.toString());
+            setDefaultTime(R.string.pref_default_evening_break_duration, Defaults.EVENING_BREAK_DURATION.toString());
+            setDefaultTime(R.string.pref_default_night_break_time, Defaults.NIGHT_BREAK_START.toString());
+            setDefaultTime(R.string.pref_default_night_break_duration, Defaults.NIGHT_BREAK_DURATION.toString());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 
