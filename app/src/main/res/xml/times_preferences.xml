@@ -1,41 +1,41 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="User Times"
+    <PreferenceCategory app:title="@string/user_times"
         app:allowDividerBelow="true"
         app:allowDividerAbove="true">
         <Preference
-            app:title="Arrival time"
+            app:title="@string/arrival_time"
             app:key="@string/pref_default_arrival_time"
             app:useSimpleSummaryProvider="true"/>
         <Preference
-            app:title="Exit time"
+            app:title="@string/exit_time"
             app:key="@string/pref_default_arrival_time"
             app:useSimpleSummaryProvider="true"/>
         <MultiSelectListPreference
-            app:title="Custom Breaks"
+            app:title="@string/custom_breaks"
             app:key="@string/pref_default_custom_breaks"
             app:useSimpleSummaryProvider="true"
             />
 
     </PreferenceCategory>
-    <PreferenceCategory app:title="System Times"
+    <PreferenceCategory app:title="@string/system_times"
         app:allowDividerBelow="true"
         app:allowDividerAbove="true">
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="@string/pref_default_system_time"
-            app:title="Use default time settings"
+            app:title="@string/use_default_system_times"
             app:disableDependentsState="true"/>
 
         <Preference
             app:dependency="@string/pref_default_system_time"
-            app:title="Default launch break time"
+            app:title="@string/launch_break"
             app:key="@string/pref_default_launch_break_time"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
             app:dependency="@string/pref_default_system_time"
-            app:title="Default evening break time"
+            app:title="@string/evening_break"
             app:key="@string/pref_default_evening_break_time"
             app:useSimpleSummaryProvider="true"/>
 

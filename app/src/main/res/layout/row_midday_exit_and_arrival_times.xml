@@ -11,7 +11,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:maxLines="1"
         android:textColorHint="@color/white"
         app:boxBackgroundMode="outline"
@@ -21,9 +21,9 @@
         app:boxCornerRadiusTopStart="16dp"
         app:boxStrokeColor="@color/white"
         app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txt_midday_arrival_layout"
+        app:layout_constraintEnd_toStartOf="@+id/txt_midday_arrival_layout"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,7 +45,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:maxLines="1"
         android:textColorHint="@color/white"
         app:boxBackgroundMode="outline"
@@ -56,9 +56,9 @@
         app:boxStrokeColor="@color/white"
         app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="@+id/txt_midday_exit_layout"
-        app:layout_constraintEnd_toStartOf="@+id/txt_midday_exit_layout"
+        app:layout_constraintStart_toEndOf="@+id/txt_midday_exit_layout"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/img_remove_midday"
+        app:layout_constraintEnd_toStartOf="@+id/img_remove_midday"
         app:layout_constraintTop_toTopOf="@+id/txt_midday_exit_layout"
         app:layout_constraintVertical_bias="1.0">
 
@@ -82,7 +82,7 @@
         android:layout_marginTop="-12dp"
         android:background="@drawable/ic_close_background"
         app:layout_constraintBottom_toBottomOf="@+id/txt_midday_arrival_layout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_midday_arrival_layout"
         app:srcCompat="@drawable/ic_close" />
 

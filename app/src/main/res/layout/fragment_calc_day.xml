@@ -32,8 +32,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginStart="32dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_radio_btn"
                 android:button="@drawable/btn_transparent"
@@ -42,19 +42,19 @@
                 android:textAlignment="center"
                 android:textColor="@color/color_radio_selected"
                 app:layout_constraintBottom_toBottomOf="@+id/ckbtn_add_exit_time"
-                app:layout_constraintEnd_toStartOf="@+id/ckbtn_add_exit_time"
+                app:layout_constraintStart_toEndOf="@+id/ckbtn_add_exit_time"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ckbtn_add_exit_time" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/ckbtn_add_exit_time"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="70dp"
+                android:layout_marginStart="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_radio_btn"
                 android:button="@drawable/btn_transparent"
@@ -64,9 +64,9 @@
                 android:text="@string/exit_time"
                 android:textAlignment="center"
                 android:textColor="@color/color_radio_selected"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ckbtn_day_friday"
+                app:layout_constraintEnd_toStartOf="@+id/ckbtn_day_friday"
                 app:layout_constraintTop_toBottomOf="@id/lbl_calc_time" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,11 +108,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-50dp"
-                android:layout_marginEnd="-30dp"
+                android:layout_marginStart="-30dp"
                 android:src="@drawable/ic_clock_add"
                 app:tint="@color/white"
                 app:fabSize="mini"
-                app:layout_constraintEnd_toStartOf="@id/txt_arrival_layout"
+                app:layout_constraintStart_toEndOf="@id/txt_arrival_layout"
                 app:layout_constraintTop_toBottomOf="@id/txt_arrival_layout" />
 
             <LinearLayout

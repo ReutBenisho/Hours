@@ -25,6 +25,9 @@ import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.models.SettingsViewModel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SettingsFragment extends Fragment implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
 
@@ -78,7 +81,7 @@ public class SettingsFragment extends Fragment implements
 //
 //            }
 //        });
-        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.menu_settings);
         return view;
     }
 
@@ -101,13 +104,13 @@ public class SettingsFragment extends Fragment implements
         // Replace the existing Fragment with the new Fragment
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.settings_fragment_container, fragment)
-                .addToBackStack(fragment.TAG)
+                .addToBackStack(getString(fragment.TAG))
                 .commit();
         getActivity().setTitle(pref.getTitle());
         return true;
     }
     public static class ParentSettingsFragment extends PreferenceFragmentCompat {
-        public String TAG = App.getStr(R.string.empty);
+        public int TAG = R.string.empty;
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
@@ -126,7 +129,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = App.getStr(R.string.menu_settings);
+            TAG = R.string.menu_settings;
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
     }
@@ -135,7 +138,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = App.getStr(R.string.tag_messages_fragment);
+            TAG = R.string.tag_messages_fragment;
             setPreferencesFromResource(R.xml.messages_preferences, rootKey);
         }
     }
@@ -144,16 +147,27 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = App.getStr(R.string.tag_sync_fragment);
+            TAG = R.string.tag_sync_fragment;
             setPreferencesFromResource(R.xml.sync_preferences, rootKey);
         }
     }
 
     public static class GeneralFragment extends ParentSettingsFragment {
+        public static Map<Integer, String> keyTypes = initMap();
+
+        private static Map<Integer, String> initMap() {
+            HashMap<Integer, String> map = new HashMap<>();
+            map.put(R.string.pref_system_dark_mode, "boolean");
+            map.put(R.string.pref_dark_mode, "boolean");
+            map.put(R.string.pref_system_language, "boolean");
+            map.put(R.string.pref_language, "String");
+            map.put(R.string.pref_student_mode, "boolean");
+            return map;
+        }
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-            TAG = App.getStr(R.string.general_header);
+            TAG = R.string.general_header;
             super.onCreate(savedInstanceState);
         }
 
@@ -175,7 +189,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = App.getStr(R.string.notifications_header);
+            TAG = R.string.notifications_header;
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
@@ -184,7 +198,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = App.getStr(R.string.times_header);
+            TAG = R.string.times_header;
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 

@@ -120,7 +120,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onResume() {
         super.onResume();
-        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, "");
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 
     @Override

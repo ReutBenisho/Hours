@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //            }
 //        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
-        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, mViewModel.ActionBarTitle);
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 
     private void sendEmail() {
@@ -346,8 +346,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
                 case ACTION_BAR_TITLE:{
-
-                    mViewModel.ActionBarTitle = data.obj.toString();
+                    int strId = (int)data.obj;
+                    mViewModel.ActionBarTitle = getString(strId);
                     if(mViewModel.ActionBarTitle.equals("")){
                         setActionBarIconToBackArrow(false);
                     }
@@ -416,7 +416,19 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String pref) {
+        if(pref == LocaleHelper.SELECTED_LANGUAGE)
+            return;
         int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
+        String prefType = SettingsFragment.GeneralFragment.keyTypes.get(pref_id);
+        switch (prefType)
+        {
+            case "boolean":
+                SharedPreferencesUtil.setDefaults(pref, sharedPreferences.getBoolean(pref, false));
+                break;
+            case "String":
+                SharedPreferencesUtil.setDefaults(pref, sharedPreferences.getString(pref, ""));
+                break;
+        }
         switch (pref_id)
         {
             case R.string.pref_system_dark_mode:
