@@ -141,7 +141,7 @@ public class HoursManager {
             }
             else {
                 info.calcInfo.totalTime.isFullDay = false;
-                if(info.calcInfo.totalTime.total.lessThan(Defaults.HALF_DAY))
+                if(info.calcInfo.totalTime.total.lessThan(Defaults.HALF_DAY) || info.userInfo.isStudent)
                     info.calcInfo.totalTime.unpaidAbsence.setTime(Defaults.FULL_DAY.sub(info.calcInfo.totalTime.total));
                 else
                     info.calcInfo.totalTime.globalAbsence.setTime(Defaults.FULL_DAY.sub(info.calcInfo.totalTime.total));

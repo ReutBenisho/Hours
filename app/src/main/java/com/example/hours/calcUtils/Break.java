@@ -75,4 +75,9 @@ public class Break {
         s += "start: " + breakTimes.start + " end: " + breakTimes.end + " took: " + tookBreak;
         return s;
     }
+
+    public Timestamp duration()
+    {
+        return breakTimes.end.sub(breakTimes.start);
+    }
 }
