@@ -28,9 +28,9 @@ public class Student {
     public String toString() {
         String s = "";
         if(additional125Hours != null)
-            s += App.getStr(R.string.newline_additional125_colon_space) + additional125Hours.toString();
+            s += "Additional 125%: " + additional125Hours.toString();
         if(additional150Hours != null)
-            s += App.getStr(R.string.newline_additional150_colon_space) + additional150Hours.toString();
+            s += "Additional 150%: " + additional150Hours.toString();
         return s;
     }
 }

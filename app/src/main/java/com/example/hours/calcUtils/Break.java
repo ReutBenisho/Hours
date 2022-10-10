@@ -77,9 +77,9 @@ public class Break {
     @Override
     public String toString() {
         String s = "";
-        s += App.getStr(R.string.start_colon_space) + breakTimes.start
-                + App.getStr(R.string.space_end_colon_space) + breakTimes.end
-                + App.getStr(R.string.space_took_colon_space) + tookBreak;
+        s += "Start: " + breakTimes.start
+                + "End: " + breakTimes.end
+                + "Took: " + tookBreak;
         return s;
     }
 

@@ -65,17 +65,17 @@ public class Breaks {
         StringBuilder s = new StringBuilder();
 
         for(int i = 0; i < preDefinedBreaks.size(); i++){
-            s.append(App.getStr(R.string.newline_preDefinedBreak_space_hashmark)).append(i).append(" ").append(preDefinedBreaks.get(i).toString());
+            s.append("Pre defined break #").append(i).append(" ").append(preDefinedBreaks.get(i).toString());
         }
 
         for(int i = 0; i < customBreaks.size(); i++){
-            s.append(App.getStr(R.string.newline_customBreak_space_hashmark)).append(i).append(" ").append(customBreaks.get(i).toString());
+            s.append("Custom break #").append(i).append(" ").append(customBreaks.get(i).toString());
         }
 
 //        for(int i = 0; i < allBreaks.size(); i++){
 //            s += "\nAll breaks #" + i + allBreaks.get(i).toString();
 //        }
-        s.append(App.getStr(R.string.newline_tookEveningBreak_colon_space)).append(tookEveningBreak);
+        s.append("Took evening break: ").append(tookEveningBreak);
 
         return s.toString();
     }

@@ -49,14 +49,14 @@ public class Totals {
     public String toString() {
         String s = "";
 
-        s += App.getStr(R.string.newline_totalTime_colon_space) + total.toString();
-        s += App.getStr(R.string.newline_totalZeroHours_colon_space) + zeroHours.toString();
-        s += App.getStr(R.string.newline_totalAdditionalHours_colon_space) + additionalHours.toString();
-        s += App.getStr(R.string.newline_totalAdditional125hours_colon_space) + additional125Hours.toString();
-        s += App.getStr(R.string.newline_totalAdditional150hours_colon_space) + additional150Hours.toString();
-        s += App.getStr(R.string.newline_isFullDay_colon_space) + isFullDay;
-        s += App.getStr(R.string.newline_totalGlobalAbsence_colon_space) + globalAbsence.toString();
-        s += App.getStr(R.string.newline_totalUnpaidAbsence_colon_space) + unpaidAbsence.toString();
+        s += "Total time: " + total.toString();
+        s += "Total zero hours: " + zeroHours.toString();
+        s += "Total additional hours: " + additionalHours.toString();
+        s += "Total additional 125% hours: " + additional125Hours.toString();
+        s += "Total additional 150% hours: " + additional150Hours.toString();
+        s += "Is full day: " + isFullDay;
+        s += "Total global absence hours: " + globalAbsence.toString();
+        s += "Total unpaid absence hours: " + unpaidAbsence.toString();
 
         return s;
     }

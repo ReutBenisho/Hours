@@ -48,11 +48,11 @@ public class UserInfo {
     public String toString() {
         String s = "";
         if(arrivalTime != null)
-            s += App.getStr(R.string.arrival_colon_space) + arrivalTime.toString();
+            s += "Arrival: " + arrivalTime.toString();
         if(exitTime != null)
-            s += App.getStr(R.string.newline_exit_colon_space) + exitTime.toString();
-        s += App.getStr(R.string.newline_friday_colon_space) + isFriday;
-        s += App.getStr(R.string.newline_student_colon_space) + isStudent;
+            s += "Exit: " + exitTime.toString();
+        s += "Friday: " + isFriday;
+        s += "Student: " + isStudent;
         return s;
     }
 }

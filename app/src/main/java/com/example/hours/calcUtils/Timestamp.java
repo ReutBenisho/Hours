@@ -89,7 +89,7 @@ public class Timestamp {
 
     @NonNull
     public String toString(){
-        return String.format(Locale.getDefault(), App.getStr(R.string.timestamp_format), mTime.getHour(), mTime.getMinute());
+        return String.format(Locale.getDefault(), "%02d:%02d", mTime.getHour(), mTime.getMinute());
     }
 
     public void setTime(String str){
