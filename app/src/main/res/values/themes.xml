@@ -17,7 +17,7 @@
         <item name="android:windowBackground">@drawable/background_app</item>
         <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="31">5000</item>
         <item name="colorControlActivated">@color/settings_switch_checked</item>
-        <item name="colorSwitchThumbNormal">@color/gray_50</item>
+        <item name="colorSwitchThumbNormal">@color/gray_50_trans_75</item>
 
         <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
         <item name="android:textColorSecondary">@color/secondary_text_color_selector</item>
