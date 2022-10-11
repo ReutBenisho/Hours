@@ -19,8 +19,8 @@ public class CalcDay_NoExit_NoMiddays_Test {
 //        assertEquals("Different zero hours", expHoursInfo.mZeroHours.toString(), resHoursInfo.mZeroHours.toString());
 //        assertEquals("Different 3 and a half hours ", expHoursInfo.m3AndHalfHours.toString(), resHoursInfo.m3AndHalfHours.toString());
 //        assertEquals("Different 6 hours", expHoursInfo.m6Hours.toString(), resHoursInfo.m6Hours.toString());
-//        assertEquals("Different took launch break", expHoursInfo.mIsArrivalDuringLaunchBreak, resHoursInfo.mIsArrivalDuringLaunchBreak);
-//        assertEquals("Different took launch break", expHoursInfo.mTookLaunchBreak, resHoursInfo.mTookLaunchBreak);
+//        assertEquals("Different took lunch break", expHoursInfo.mIsArrivalDuringLunchBreak, resHoursInfo.mIsArrivalDuringLunchBreak);
+//        assertEquals("Different took lunch break", expHoursInfo.mTookLunchBreak, resHoursInfo.mTookLunchBreak);
 //        assertEquals("Different took evening break", expHoursInfo.mTookEveningBreak, resHoursInfo.mTookEveningBreak);
 //        assertEquals("Different took night break", expHoursInfo.mTookNightBreak, resHoursInfo.mTookNightBreak);
 //    }

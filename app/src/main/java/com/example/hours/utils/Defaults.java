@@ -7,9 +7,9 @@ public class Defaults {
     public static final Timestamp ARRIVAL_TIME = new Timestamp(7, 30);
     public static final Timestamp HALF_DAY = new Timestamp(4, 12);
     public static final Timestamp FULL_DAY = HALF_DAY.add(HALF_DAY);
-    public static final Timestamp LAUNCH_BREAK_START = new Timestamp(13, 30);
-    public static final Timestamp LAUNCH_BREAK_DURATION = new Timestamp(0, 30);
-    public static final Timestamp LAUNCH_BREAK_END = LAUNCH_BREAK_START.add(LAUNCH_BREAK_DURATION);
+    public static final Timestamp LUNCH_BREAK_START = new Timestamp(13, 30);
+    public static final Timestamp LUNCH_BREAK_DURATION = new Timestamp(0, 30);
+    public static final Timestamp LUNCH_BREAK_END = LUNCH_BREAK_START.add(LUNCH_BREAK_DURATION);
 
     public static final Timestamp ZERO_HOURS = new Timestamp(1, 0);
     public static final Timestamp ADDITIONAL_HOURS = new Timestamp(2, 30);

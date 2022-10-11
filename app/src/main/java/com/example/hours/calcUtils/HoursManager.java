@@ -34,7 +34,7 @@ public class HoursManager {
 
         }
         else {
-            adjustArrivalToLaunchBreak();
+            adjustArrivalToLunchBreak();
             info.calcInfo.halfDay = info.userInfo.arrivalTime.add(Defaults.HALF_DAY);
             info.calcInfo.halfDay = adjustBreaks(info.calcInfo.halfDay);
             info.calcInfo.fullDay = info.calcInfo.halfDay.add(Defaults.HALF_DAY);
@@ -199,9 +199,9 @@ public class HoursManager {
         return exitTime;
     }
 
-    private void adjustArrivalToLaunchBreak() {
-        if(info.userInfo.arrivalTime.isBetween(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END)){
-            info.userInfo.arrivalTime = Defaults.LAUNCH_BREAK_END;
+    private void adjustArrivalToLunchBreak() {
+        if(info.userInfo.arrivalTime.isBetween(Defaults.LUNCH_BREAK_START, Defaults.LUNCH_BREAK_END)){
+            info.userInfo.arrivalTime = Defaults.LUNCH_BREAK_END;
         }
     }
 

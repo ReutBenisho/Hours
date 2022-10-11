@@ -1,11 +1,8 @@
 package com.example.hours.utils;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
@@ -20,7 +17,6 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.hours.R;
-import com.example.hours.activities.MainActivity;
 import com.example.hours.calcUtils.Timestamp;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -110,7 +106,7 @@ public class Utils {
         };
         EditText txtExitTime = viewExitRow.findViewById(R.id.txt_exit_time);
         txtExitTime.setOnClickListener(listener);
-        txtExitTime.setText(Defaults.ARRIVAL_TIME.add(Defaults.FULL_DAY).add(Defaults.LAUNCH_BREAK_DURATION).toString());
+        txtExitTime.setText(Defaults.ARRIVAL_TIME.add(Defaults.FULL_DAY).add(Defaults.LUNCH_BREAK_DURATION).toString());
 
         layout.addView(viewExitRow);
     }

@@ -32,7 +32,7 @@
     <string name="pref_all_notifications" translatable="false">pref_all_notifications</string>
     <string name="pref_default_system_time" translatable="false">pref_default_system_time</string>
     <string name="pref_default_arrival_time" translatable="false">pref_default_arrival_time</string>
-    <string name="pref_default_launch_break_time" translatable="false">pref_default_launch_break_time</string>
+    <string name="pref_default_lunch_break_time" translatable="false">pref_default_lunch_break_time</string>
     <string name="midnight_timestamp" translatable="false">00:00</string>
     <string name="pref_system_dark_mode" translatable="false">pref_system_dark_mode</string>
     <string name="pref_default_evening_break_time" translatable="false">pref_default_evening_break_time</string>
@@ -120,8 +120,8 @@
     <string name="hebrew_entry">Hebrew</string>
     <string name="english_entry">English</string>
     <string name="notify_before_breaks">Notify Before Breaks</string>
-    <string name="pref_notify_launch_break" translatable="false">pref_notify_launch_break</string>
-    <string name="launch_break">Launch break</string>
+    <string name="pref_notify_lunch_break" translatable="false">pref_notify_lunch_break</string>
+    <string name="lunch_break">Lunch break</string>
     <string name="pref_notify_evening_break" translatable="false">pref_notify_evening_break</string>
     <string name="evening_break">Evening break</string>
     <string name="pref_notify_night_break" translatable="false">pref_notify_night_break</string>
@@ -144,8 +144,8 @@
     <string name="system_times">System Times</string>
     <string name="use_default_system_times">Use default time settings</string>
     <string name="pref_default_exit_time" translatable="false">pref_default_exit_time</string>
-    <string name="launch_break_duration">Launch break duration</string>
-    <string name="pref_default_launch_break_duration" translatable="false">pref_default_launch_break_duration</string>
+    <string name="lunch_break_duration">Lunch break duration</string>
+    <string name="pref_default_lunch_break_duration" translatable="false">pref_default_lunch_break_duration</string>
     <string name="evening_break_duration">Evening break duration</string>
     <string name="pref_default_evening_break_duration" translatable="false">pref_default_evening_break_duration</string>
     <string name="pref_default_night_break_time" translatable="false">pref_default_night_break_time</string>

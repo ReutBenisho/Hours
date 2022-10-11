@@ -29,13 +29,13 @@
 
         <Preference
             app:dependency="@string/pref_default_system_time"
-            app:title="@string/launch_break"
-            app:key="@string/pref_default_launch_break_time"
+            app:title="@string/lunch_break"
+            app:key="@string/pref_default_lunch_break_time"
             app:useSimpleSummaryProvider="true"/>
         <Preference
             app:dependency="@string/pref_default_system_time"
-            app:title="@string/launch_break_duration"
-            app:key="@string/pref_default_launch_break_duration"
+            app:title="@string/lunch_break_duration"
+            app:key="@string/pref_default_lunch_break_duration"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference

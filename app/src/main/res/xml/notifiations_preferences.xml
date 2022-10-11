@@ -6,8 +6,8 @@
         app:allowDividerAbove="true">
 
         <SwitchPreferenceCompat
-            app:key="@string/pref_notify_launch_break"
-            app:title="@string/launch_break" />
+            app:key="@string/pref_notify_lunch_break"
+            app:title="@string/lunch_break" />
         <SwitchPreferenceCompat
             app:key="@string/pref_notify_evening_break"
             app:title="@string/evening_break" />

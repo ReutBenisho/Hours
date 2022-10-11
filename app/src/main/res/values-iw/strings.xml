@@ -71,7 +71,7 @@
     <string name="hebrew_entry">עברית</string>
     <string name="english_entry">אנגלית</string>
     <string name="notify_before_breaks">התראות לפני הפסקות</string>
-    <string name="launch_break">הפסקת צהריים</string>
+    <string name="lunch_break">הפסקת צהריים</string>
     <string name="evening_break">הפסקת ערב</string>
     <string name="night_break">הפסקת לילה</string>
     <string name="notify_before_transportation">התראות לפני היסעים</string>
@@ -86,7 +86,7 @@
     <string name="custom_breaks">הפסקות מותאמות אישית</string>
     <string name="system_times">זמני מערכת</string>
     <string name="use_default_system_times">השתמש בזמני ברירת המחדל</string>
-    <string name="launch_break_duration">משך הפסקת צהריים</string>
+    <string name="lunch_break_duration">משך הפסקת צהריים</string>
     <string name="evening_break_duration">משך הפסקת ערב</string>
     <string name="night_break_duration">משך הפסקת לילה</string>
     <string name="email">כתובת מייל</string>
