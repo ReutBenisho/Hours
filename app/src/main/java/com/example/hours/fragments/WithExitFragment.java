@@ -2,6 +2,7 @@ package com.example.hours.fragments;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -92,11 +93,14 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcD
         if(mHoursManager.info.calcInfo.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
+            mLblTxtFullDay.setTypeface(Typeface.DEFAULT);
+
         }
         else
         {
             mLblTxtFullDay.setText(mHoursManager.info.calcInfo.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
+            mLblTxtFullDay.setTypeface(null, Typeface.BOLD);
         }
         mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.totalTime.zeroHours.toString());
         mLblTxtAdditionalHours.setText(mHoursManager.info.calcInfo.totalTime.additionalHours.toString());
