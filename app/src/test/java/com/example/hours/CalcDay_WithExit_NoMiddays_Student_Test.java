@@ -74,7 +74,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test4_Arrival_07_26_Exit_19_29() {
+    public void test_ignored_4_Arrival_07_26_Exit_19_29() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 26);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 29);
@@ -92,7 +92,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test5_Arrival_07_16_Exit_19_28() {
+    public void test_ignored_5_Arrival_07_16_Exit_19_28() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 16);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 28);
@@ -110,7 +110,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test6_Arrival_07_21_Exit_19_28() {
+    public void test_ignored_6_Arrival_07_21_Exit_19_28() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 21);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 28);
@@ -128,7 +128,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test7_Arrival_07_26_Exit_19_28() {
+    public void test_ignored_7_Arrival_07_26_Exit_19_28() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 26);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 28);
@@ -146,7 +146,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test8_Arrival_07_34_Exit_19_28() {
+    public void test_ignored_8_Arrival_07_34_Exit_19_28() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 34);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 28);
@@ -164,7 +164,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test9_Arrival_07_29_Exit_19_28() {
+    public void test_ignored_9_Arrival_07_29_Exit_19_28() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 29);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 28);
@@ -230,7 +230,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test13_Arrival_7_53_Exit_19_03() {
+    public void test_ignored_13_Arrival_7_53_Exit_19_03() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 53);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 3);
@@ -248,7 +248,7 @@ public class CalcDay_WithExit_NoMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test14_Arrival_7_43_Exit_19_03() {
+    public void test_ignored_14_Arrival_7_43_Exit_19_03() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 43);
         mHoursManager.info.userInfo.exitTime = new Timestamp(19, 10);

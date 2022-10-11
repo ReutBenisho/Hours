@@ -77,9 +77,9 @@ public class Break {
     @Override
     public String toString() {
         String s = "";
-        s += "Start: " + breakTimes.start
-                + "End: " + breakTimes.end
-                + "Took: " + tookBreak;
+        s += " Start: " + breakTimes.start
+                + " End: " + breakTimes.end
+                + " Took: " + tookBreak;
         return s;
     }
 

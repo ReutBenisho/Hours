@@ -72,15 +72,15 @@ public class CalcInfo {
         String s = "";
 
         if(halfDay != null)
-            s += "Hald day: " + halfDay.toString();
+            s += "\nHalf day: " + halfDay.toString();
         if(fullDay != null)
-            s += "Full day: " + fullDay.toString();
+            s += "\nFull day: " + fullDay.toString();
         if(zeroHours != null)
-            s += "Zero hours: " + zeroHours.toString();
+            s += "\nZero hours: " + zeroHours.toString();
         if(additional3AndHalfHours != null)
-            s += "Additional 3.5: " + additional3AndHalfHours.toString();
+            s += "\nAdditional 3.5: " + additional3AndHalfHours.toString();
         if(additional6Hours != null)
-            s += "Additional 6: " + additional6Hours.toString();
+            s += "\nAdditional 6: " + additional6Hours.toString();
         s += totalTime.toString();
         s += student.toString();
         return s;

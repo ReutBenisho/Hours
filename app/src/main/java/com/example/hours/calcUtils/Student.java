@@ -28,9 +28,9 @@ public class Student {
     public String toString() {
         String s = "";
         if(additional125Hours != null)
-            s += "Additional 125%: " + additional125Hours.toString();
+            s += "\nAdditional 125%: " + additional125Hours.toString();
         if(additional150Hours != null)
-            s += "Additional 150%: " + additional150Hours.toString();
+            s += "\nAdditional 150%: " + additional150Hours.toString();
         return s;
     }
 }

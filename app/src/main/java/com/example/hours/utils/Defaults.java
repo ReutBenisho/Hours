@@ -10,6 +10,7 @@ public class Defaults {
     public static final Timestamp LUNCH_BREAK_START = new Timestamp(13, 30);
     public static final Timestamp LUNCH_BREAK_DURATION = new Timestamp(0, 30);
     public static final Timestamp LUNCH_BREAK_END = LUNCH_BREAK_START.add(LUNCH_BREAK_DURATION);
+    public static final Timestamp FULL_DAY_WITH_LUNCH_BREAK = FULL_DAY.add(LUNCH_BREAK_DURATION);
 
     public static final Timestamp ZERO_HOURS = new Timestamp(1, 0);
     public static final Timestamp ADDITIONAL_HOURS = new Timestamp(2, 30);

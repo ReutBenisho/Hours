@@ -96,27 +96,41 @@ public class HoursManager {
         sumAllBreaks();
         if(info.userInfo.arrivalTime.isAfter(info.userInfo.exitTime))
             return info;
+
+        //check what's the total if exiting at evening break -
+        //if it's less than a full day - there's no break
+        Timestamp exitTime = info.userInfo.exitTime;
+        info.userInfo.exitTime = Defaults.EVENING_BREAK_START;
+        Timestamp totalIfExitingAtBreak = removeOverlaps();
+        info.userInfo.exitTime = exitTime;
+        info.clearCalculatedInfo();
+        sumAllBreaks();
+
+        Timestamp totalNoOverlaps = removeOverlaps();
         if(info.userInfo.isFriday)
         {
-            Timestamp additional = removeOverlaps();
             if(info.userInfo.isStudent){
-                if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
-                    info.calcInfo.totalTime.additional125Hours.setTime(additional);
+                if(totalNoOverlaps.lessThan(Defaults.ADDITIONAL_125_HOURS)){
+                    info.calcInfo.totalTime.additional125Hours.setTime(totalNoOverlaps);
                 }
                 else {
                     info.calcInfo.totalTime.additional125Hours.setTime(Defaults.ADDITIONAL_125_HOURS);
-                    info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.ADDITIONAL_125_HOURS));
+                    info.calcInfo.totalTime.additional150Hours.setTime(totalNoOverlaps.sub(Defaults.ADDITIONAL_125_HOURS));
                 }
             }
             else{
-                info.calcInfo.totalTime.additionalHours.setTime(additional);
+                info.calcInfo.totalTime.additionalHours.setTime(totalNoOverlaps);
             }
         }
         else
         {
-            info.calcInfo.totalTime.total = removeOverlaps();
+            info.calcInfo.totalTime.total = totalNoOverlaps;
+
             if(info.userInfo.exitTime.isAfter(Defaults.EVENING_BREAK_START)
-                    && info.breaks.customBreaks.size() == 0)
+//                    && info.breaks.customBreaks.size() == 0
+            //&&info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)
+                    && totalIfExitingAtBreak.equalsOrGreaterThan(Defaults.FULL_DAY_WITH_LUNCH_BREAK)
+            )
                 info.calcInfo.totalTime.total = info.calcInfo.totalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
 
             if(info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){

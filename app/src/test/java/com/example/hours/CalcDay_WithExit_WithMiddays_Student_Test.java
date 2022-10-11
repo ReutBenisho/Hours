@@ -27,7 +27,7 @@ public class CalcDay_WithExit_WithMiddays_Student_Test {
 
     @Ignore("disabled until implementation is finished")
     @Test
-    public void test1_Arrival_07_38_Exit_13_35_Arrival_13_54_Exit_21_24() {
+    public void test_ignored_1_Arrival_07_38_Exit_13_35_Arrival_13_54_Exit_21_24() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 38);
         mHoursManager.info.breaks.customBreaks.add(new Break(13, 35, 13, 54));
@@ -45,9 +45,9 @@ public class CalcDay_WithExit_WithMiddays_Student_Test {
         assertEquals(expHoursInfo.toString(), HoursManager.getInstance().info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
-    public void test2_Arrival_09_30_Exit_13_29_Arrival_14_12_Exit_18_06_Arrival_18_31_Exit_21_19() {
+    public void test_ignored_2_Arrival_09_30_Exit_13_29_Arrival_14_12_Exit_18_06_Arrival_18_31_Exit_21_19() {
         mHoursManager.info.userInfo.isStudent = true;
         mHoursManager.info.userInfo.arrivalTime = new Timestamp(9, 30);
         mHoursManager.info.breaks.customBreaks.add(new Break(13, 29, 14, 12));

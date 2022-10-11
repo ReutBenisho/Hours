@@ -61,7 +61,7 @@ public void test2_Arrival_8_44_Exit_16_48_Arrival_19_15_Exit_20_13() {
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
     public void test_ignored_3_Arrival_8_16_Exit_13_41_Arrival_15_55_Exit_20_11() {
 
@@ -130,7 +130,7 @@ public void test6_Arrival_8_23_Exit_16_48_Arrival_19_15_Exit_20_09() {
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
     public void test_ignored_7_Arrival_8_3_Exit_12_49_Arrival_19_26_Exit_21_38() {
 
@@ -142,7 +142,7 @@ public void test6_Arrival_8_23_Exit_16_48_Arrival_19_15_Exit_20_09() {
         expHoursInfo.userInfo.arrivalTime = new Timestamp(8, 3);
         expHoursInfo.breaks.customBreaks.add(new Break(12, 49, 19, 26));
         expHoursInfo.userInfo.exitTime = new Timestamp(21, 38);
-        expHoursInfo.calcInfo.totalTime.total = new Timestamp(7, 8);
+        expHoursInfo.calcInfo.totalTime.total = new Timestamp(6, 58);
         expHoursInfo.calcInfo.totalTime.isFullDay = false;
         expHoursInfo.calcInfo.totalTime.globalAbsence.setTime(1, 26);
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
@@ -199,7 +199,7 @@ public void test10_Arrival_8_44_Exit_13_29_Arrival_15_34_Exit_18_47() {
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
     public void test_ignored_11_Arrival_8_38_Exit_12_35_Arrival_14_15_Exit_21_24() {
 
@@ -251,7 +251,7 @@ public void test13_Arrival_8_33_Exit_13_29_Arrival_14_12_Exit_18_39() {
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
     public void test_ignored_14_Arrival_8_18_Exit_11_15_Arrival_11_50_Exit_19_48() {
 
@@ -388,7 +388,7 @@ public void test21_Arrival_8_26_Exit_16_36_Arrival_20_37_Exit_22_16() {
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }
 
-    @Ignore("disabled until implementation is finished")
+    //@Ignore("disabled until implementation is finished")
     @Test
     public void test_ignored_22_Arrival_8_9_Exit_18_6_Arrival_18_32_Exit_19_23_Arrival_19_28_Exit_21_14() {
 
