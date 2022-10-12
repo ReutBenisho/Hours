@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.example.hours.calcUtils.HoursInfo;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.utils.Defaults;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -37,15 +38,23 @@ public class CalcDay_NoExit_NoMiddays_Test {
     }
     @Test
 public void test1_Arrival_07_30() {
-        mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 30);
+        mHoursManager.info.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
         mHoursManager.CalcDayNoExit();
         HoursInfo expHoursInfo = new HoursInfo();
-        expHoursInfo.userInfo.arrivalTime = new Timestamp(7, 30);
-        expHoursInfo.calcInfo.halfDay = new Timestamp(11, 42);
-        expHoursInfo.calcInfo.fullDay = new Timestamp(16, 24);
-        expHoursInfo.calcInfo.zeroHours = new Timestamp(17, 24);
-        expHoursInfo.calcInfo.additional3AndHalfHours = new Timestamp(20, 6);
-        expHoursInfo.calcInfo.additional6Hours = new Timestamp(22, 36);
+        expHoursInfo.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
+        expHoursInfo.calcInfo.halfDay = new Timestamp(Defaults.getHalfDay());
+        expHoursInfo.calcInfo.fullDay = Defaults.getFullDayWithLunchBreak();
+        expHoursInfo.calcInfo.zeroHours = Defaults.getFullDayWithLunchBreak().add(Defaults.getZeroHours());
+        expHoursInfo.calcInfo.additional3AndHalfHours =
+                Defaults.getFullDayWithLunchBreak()
+                        .add(Defaults.getZeroHours())
+                        .add(Defaults.getAdditionalHours())
+                        .add(Defaults.getLunchDuration());
+        expHoursInfo.calcInfo.additional6Hours =
+                Defaults.getFullDayWithLunchBreak()
+                        .add(Defaults.getZeroHours())
+                        .add(Defaults.getMaxAdditionalHours())
+                        .add(Defaults.getLunchDuration());
         expHoursInfo.breaks.tookEveningBreak = true;
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }

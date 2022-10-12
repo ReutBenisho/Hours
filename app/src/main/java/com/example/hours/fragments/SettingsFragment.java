@@ -227,17 +227,19 @@ public class SettingsFragment extends Fragment implements
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 
+//        לתקן ככה שהערכים יטענו רק פעם אחת בדיפולט
+//                ואז יישאב מהערך הקיים
         @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
-            setDefaultTime(R.string.pref_default_exit_time, Defaults.ARRIVAL_TIME.add(Defaults.FULL_DAY).add(Defaults.LUNCH_BREAK_DURATION).toString());
-            setDefaultTime(R.string.pref_default_lunch_break_time, Defaults.LUNCH_BREAK_START.toString());
-            setDefaultTime(R.string.pref_default_lunch_break_duration, Defaults.LUNCH_BREAK_DURATION.toString());
-            setDefaultTime(R.string.pref_default_evening_break_time, Defaults.EVENING_BREAK_START.toString());
-            setDefaultTime(R.string.pref_default_evening_break_duration, Defaults.EVENING_BREAK_DURATION.toString());
-            setDefaultTime(R.string.pref_default_night_break_time, Defaults.NIGHT_BREAK_START.toString());
-            setDefaultTime(R.string.pref_default_night_break_duration, Defaults.NIGHT_BREAK_DURATION.toString());
+//            setDefaultTime(R.string.pref_default_arrival_time, Defaults.getArrival().toString());
+//            setDefaultTime(R.string.pref_default_exit_time, Defaults.getExit().toString());
+//            setDefaultTime(R.string.pref_default_lunch_break_time, Defaults.getLunchStart().toString());
+//            setDefaultTime(R.string.pref_default_lunch_break_duration, Defaults.getLunchDuration().toString());
+//            setDefaultTime(R.string.pref_default_evening_break_time, Defaults.getEveningStart().toString());
+//            setDefaultTime(R.string.pref_default_evening_break_duration, Defaults.getEveningDuration().toString());
+//            setDefaultTime(R.string.pref_default_night_break_time, Defaults.getNightStart().toString());
+//            setDefaultTime(R.string.pref_default_night_break_duration, Defaults.getNightDuration().toString());
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 

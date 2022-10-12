@@ -91,7 +91,7 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcD
         mHoursManager.CalcDayWithExit();
 
         if(mHoursManager.info.calcInfo.totalTime.isFullDay){
-            mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
+            mLblTxtFullDay.setText(Defaults.getFullDay().toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
             mLblTxtFullDay.setTypeface(Typeface.DEFAULT);
 

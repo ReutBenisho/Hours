@@ -19,6 +19,7 @@ import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.fragments.SettingsFragment;
+import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
 import com.example.hours.interfaces.OnUpdateListener;
@@ -462,6 +463,33 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                     finish();
                     startActivity(refresh);
                 }
+                break;
+            case R.string.pref_default_arrival_time:
+                Defaults.User.ARRIVAL_TIME.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_exit_time:
+                Defaults.User.EXIT_TIME.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_custom_breaks:
+                //TODO: do stuff
+                break;
+            case R.string.pref_default_lunch_break_time:
+                Defaults.User.LUNCH_BREAK_START.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_lunch_break_duration:
+                Defaults.User.LUNCH_BREAK_DURATION.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_evening_break_time:
+                Defaults.User.EVENING_BREAK_START.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_evening_break_duration:
+                Defaults.User.EVENING_BREAK_DURATION.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_night_break_time:
+                Defaults.User.NIGHT_BREAK_START.setTime(sharedPreferences.getString(pref, ""));
+                break;
+            case R.string.pref_default_night_break_duration:
+                Defaults.User.NIGHT_BREAK_DURATION.setTime(sharedPreferences.getString(pref, ""));
                 break;
         }
     }

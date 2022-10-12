@@ -106,7 +106,7 @@ public class Utils {
         };
         EditText txtExitTime = viewExitRow.findViewById(R.id.txt_exit_time);
         txtExitTime.setOnClickListener(listener);
-        txtExitTime.setText(Defaults.ARRIVAL_TIME.add(Defaults.FULL_DAY).add(Defaults.LUNCH_BREAK_DURATION).toString());
+        txtExitTime.setText(Defaults.getExit().toString());
 
         layout.addView(viewExitRow);
     }

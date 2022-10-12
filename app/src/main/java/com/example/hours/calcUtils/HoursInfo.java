@@ -24,7 +24,7 @@ public class HoursInfo {
         userInfo.clear();
         calcInfo.clear();
         breaks.clear();
-        breaks.preDefinedBreaks.add(new Break(Defaults.LUNCH_BREAK_START, Defaults.LUNCH_BREAK_END));
+        breaks.preDefinedBreaks.add(new Break(Defaults.getLunchStart(), Defaults.getLunchEnd()));
 
         //Not really a breaks - if you reach 19:36, they'll subtract automatically 12 minutes of your time.
         //it doesn't matter if you left a minute later...

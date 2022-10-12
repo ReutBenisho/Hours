@@ -8,10 +8,10 @@ import com.example.hours.R;
 
 public class SharedPreferencesUtil {
     public static void loadDefaults(){
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.header_preferences, false);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.general_preferences, false);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.notifiations_preferences, false);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.times_preferences, false);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.header_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.general_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.notifiations_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.times_preferences, true);
     }
     public static void setDefaults(String key, String value) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());

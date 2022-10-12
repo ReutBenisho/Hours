@@ -22,6 +22,7 @@ import com.example.hours.calcUtils.Break;
 import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.utils.App;
+import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
@@ -76,7 +77,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         });
 
         mHoursManager = HoursManager.getInstance();
-        mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 30);
+        mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
         mTxtArrivalTime.setText(mHoursManager.info.userInfo.arrivalTime.toString());
         View.OnClickListener listener = new View.OnClickListener() {
