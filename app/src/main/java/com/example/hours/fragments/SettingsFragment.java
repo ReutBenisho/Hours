@@ -227,23 +227,21 @@ public class SettingsFragment extends Fragment implements
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 
-//        לתקן ככה שהערכים יטענו רק פעם אחת בדיפולט
-//                ואז יישאב מהערך הקיים
         @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//            setDefaultTime(R.string.pref_default_arrival_time, Defaults.getArrival().toString());
-//            setDefaultTime(R.string.pref_default_exit_time, Defaults.getExit().toString());
-//            setDefaultTime(R.string.pref_default_lunch_break_time, Defaults.getLunchStart().toString());
-//            setDefaultTime(R.string.pref_default_lunch_break_duration, Defaults.getLunchDuration().toString());
-//            setDefaultTime(R.string.pref_default_evening_break_time, Defaults.getEveningStart().toString());
-//            setDefaultTime(R.string.pref_default_evening_break_duration, Defaults.getEveningDuration().toString());
-//            setDefaultTime(R.string.pref_default_night_break_time, Defaults.getNightStart().toString());
-//            setDefaultTime(R.string.pref_default_night_break_duration, Defaults.getNightDuration().toString());
+            setDefaultTime(R.string.pref_default_arrival_time);
+            setDefaultTime(R.string.pref_default_exit_time);
+            setDefaultTime(R.string.pref_default_lunch_break_time);
+            setDefaultTime(R.string.pref_default_lunch_break_duration);
+            setDefaultTime(R.string.pref_default_evening_break_time);
+            setDefaultTime(R.string.pref_default_evening_break_duration);
+            setDefaultTime(R.string.pref_default_night_break_time);
+            setDefaultTime(R.string.pref_default_night_break_duration);
             return super.onCreateView(inflater, container, savedInstanceState);
         }
 
-        private void setDefaultTime(int idDefaultTime, String defaultValue) {
+        private void setDefaultTime(int idDefaultTime) {
             String strDefaultTime = getString(idDefaultTime);
             findPreference(strDefaultTime)
                     .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -270,16 +268,7 @@ public class SettingsFragment extends Fragment implements
                         }
                     });
             Preference myPreference = findPreference(strDefaultTime);
-            SharedPreferencesUtil.setDefaults(strDefaultTime, defaultValue);
             //PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
-            myPreference.setSummary(defaultValue);
-            myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
-                    preference.setSummary(newValue.toString());
-                    return false;
-                }
-            });
         }
 
         private void ResetGeneralSettings() {

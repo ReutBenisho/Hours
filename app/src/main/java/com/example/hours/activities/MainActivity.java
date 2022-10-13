@@ -424,10 +424,12 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         switch (prefType)
         {
             case "boolean":
-                SharedPreferencesUtil.setDefaults(pref, sharedPreferences.getBoolean(pref, false));
+                boolean boolValue = sharedPreferences.getBoolean(pref, false);
+                SharedPreferencesUtil.setDefaults(pref,boolValue);
                 break;
             case "String":
-                SharedPreferencesUtil.setDefaults(pref, sharedPreferences.getString(pref, ""));
+                String strValue = sharedPreferences.getString(pref, "");
+                SharedPreferencesUtil.setDefaults(pref, strValue);
                 break;
         }
         switch (pref_id)

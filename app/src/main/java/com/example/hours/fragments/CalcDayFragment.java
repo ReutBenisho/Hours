@@ -28,6 +28,7 @@ import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.utils.SharedPreferencesUtil;
+import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
 import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -86,7 +87,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
                 Utils.popTimePicker(view, getContext());
             }
         };
-        mTxtArrivalTime.setOnClickListener(listener);
+        mTxtArrivalTime.addTextChangedListener(new TimestampTextWatcher(mTxtArrivalTime));
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
         mCkbtn_add_exit_time.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
