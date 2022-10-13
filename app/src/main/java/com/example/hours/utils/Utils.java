@@ -38,16 +38,10 @@ public class Utils {
 
     public static void addMiddayRowToLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
         View viewMiddayRow = layoutInflater.inflate(R.layout.row_midday_exit_and_arrival_times, null, false);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popTimePicker(view, context);
-            }
-        };
         TextInputEditText txtMiddayExit = viewMiddayRow.findViewById(R.id.txt_midday_exit_time);
-        txtMiddayExit.setOnClickListener(listener);
+        txtMiddayExit.addTextChangedListener(new TimestampTextWatcher(txtMiddayExit));
         TextInputEditText txtMiddayArrival = viewMiddayRow.findViewById(R.id.txt_midday_arrival_time);
-        txtMiddayArrival.setOnClickListener(listener);
+        txtMiddayArrival.addTextChangedListener(new TimestampTextWatcher(txtMiddayArrival));
 
         ImageView imgRemoveMiddayRow = viewMiddayRow.findViewById(R.id.img_remove_midday);
         imgRemoveMiddayRow.setOnClickListener(new View.OnClickListener() {
@@ -58,29 +52,29 @@ public class Utils {
         });
         layout.addView(viewMiddayRow);
     }
-
-    public static void popTimePicker(View view, Context context) {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
-                ((EditText)view).setText(viewTimestamp.toString());
-                if(view.getId() == R.id.txt_midday_exit_time){
-                    ((EditText)(view.getRootView().findViewById(R.id.txt_midday_arrival_time))).setText(viewTimestamp.toString());
-                }
-
-                ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
-            }
-        };
-        Timestamp timestamp = new Timestamp();
-        timestamp.setTime(((EditText)view).getText().toString());
-        TimePickerDialog timePickerDialog =
-                new TimePickerDialog(context, AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
-                        timestamp.getHour(), timestamp.getMinute(),
-                        true);
-        timePickerDialog.setTitle(App.getStr(R.string.enter_time));
-        timePickerDialog.show();
-    }
+//
+//    public static void popTimePicker(View view, Context context) {
+//        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
+//                ((EditText)view).setText(viewTimestamp.toString());
+//                if(view.getId() == R.id.txt_midday_exit_time){
+//                    ((EditText)(view.getRootView().findViewById(R.id.txt_midday_arrival_time))).setText(viewTimestamp.toString());
+//                }
+//
+//                ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
+//            }
+//        };
+//        Timestamp timestamp = new Timestamp();
+//        timestamp.setTime(((EditText)view).getText().toString());
+//        TimePickerDialog timePickerDialog =
+//                new TimePickerDialog(context, AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
+//                        timestamp.getHour(), timestamp.getMinute(),
+//                        true);
+//        timePickerDialog.setTitle(App.getStr(R.string.enter_time));
+//        timePickerDialog.show();
+//    }
 
     public static void GetTimestampsFromViewIndex(LinearLayout layout, int i, Timestamp exit, Timestamp arrival){
         View middayView = layout.getChildAt(i);
@@ -98,14 +92,8 @@ public class Utils {
 
     public static void addExitTimeLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
         View viewExitRow = layoutInflater.inflate(R.layout.row_add_exit_time, null, false);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popTimePicker(view, context);
-            }
-        };
         EditText txtExitTime = viewExitRow.findViewById(R.id.txt_exit_time);
-        txtExitTime.setOnClickListener(listener);
+        txtExitTime.addTextChangedListener(new TimestampTextWatcher(txtExitTime));
         txtExitTime.setText(Defaults.getExit().toString());
 
         layout.addView(viewExitRow);

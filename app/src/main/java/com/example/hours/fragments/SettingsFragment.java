@@ -1,29 +1,28 @@
 package com.example.hours.fragments;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 
 import com.example.hours.utils.App;
-import com.example.hours.utils.Defaults;
+//import com.example.hours.utils.EditTimeDialog;
+//import com.example.hours.utils.EditTimePreference;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
-import com.example.hours.utils.SharedPreferencesUtil;
-import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.models.SettingsViewModel;
+import com.example.hours.utils.TimeBindEditTextListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -220,6 +219,7 @@ public class SettingsFragment extends Fragment implements
     }
 
     public static class TimesFragment extends ParentSettingsFragment {
+        View mView;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -230,6 +230,8 @@ public class SettingsFragment extends Fragment implements
         @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            mView =  super.onCreateView(inflater, container, savedInstanceState);
+
             setDefaultTime(R.string.pref_default_arrival_time);
             setDefaultTime(R.string.pref_default_exit_time);
             setDefaultTime(R.string.pref_default_lunch_break_time);
@@ -238,37 +240,12 @@ public class SettingsFragment extends Fragment implements
             setDefaultTime(R.string.pref_default_evening_break_duration);
             setDefaultTime(R.string.pref_default_night_break_time);
             setDefaultTime(R.string.pref_default_night_break_duration);
-            return super.onCreateView(inflater, container, savedInstanceState);
+            return mView;
         }
 
-        private void setDefaultTime(int idDefaultTime) {
-            String strDefaultTime = getString(idDefaultTime);
-            findPreference(strDefaultTime)
-                    .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                        @Override
-                        public boolean onPreferenceClick(@NonNull Preference preference) {
-                            TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                    Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
-                                    preference.setDefaultValue(viewTimestamp.toString());
-                                    preference.setSummary(viewTimestamp.toString());
-                                }
-                            };
-                            Timestamp timestamp = new Timestamp();
-                            String value = preference.getSummary().toString();
-                            timestamp.setTime(value);
-                            TimePickerDialog timePickerDialog =
-                                    new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
-                                            timestamp.getHour(), timestamp.getMinute(),
-                                            true);
-                            timePickerDialog.setTitle(R.string.enter_time);
-                            timePickerDialog.show();
-                            return true;
-                        }
-                    });
-            Preference myPreference = findPreference(strDefaultTime);
-            //PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
+        private void setDefaultTime(int prefId) {
+            EditTextPreference pref = findPreference(getString(prefId));
+            pref.setOnBindEditTextListener(new TimeBindEditTextListener());
         }
 
         private void ResetGeneralSettings() {

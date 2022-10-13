@@ -30,13 +30,13 @@
             android:id="@+id/txt_midday_exit_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false"
-            android:focusable="false"
             android:hint="@string/exit"
-            android:inputType="none"
+            android:inputType="number"
             android:text="@string/midnight_timestamp"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textDirection="anyRtl"
+            android:digits="0123456789:" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

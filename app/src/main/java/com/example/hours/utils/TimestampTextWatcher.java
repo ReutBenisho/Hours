@@ -10,7 +10,6 @@ public class TimestampTextWatcher implements TextWatcher {
     private final EditText mEditText;
     private String current = "";
     private String hhmm = "HHMM";
-    private Calendar cal = Calendar.getInstance();
 
     public TimestampTextWatcher(EditText editTextView){
         mEditText = editTextView;

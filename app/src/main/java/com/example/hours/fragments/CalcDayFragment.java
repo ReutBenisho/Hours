@@ -81,12 +81,6 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
         mTxtArrivalTime.setText(mHoursManager.info.userInfo.arrivalTime.toString());
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.popTimePicker(view, getContext());
-            }
-        };
         mTxtArrivalTime.addTextChangedListener(new TimestampTextWatcher(mTxtArrivalTime));
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
