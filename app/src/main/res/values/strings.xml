@@ -157,5 +157,6 @@
     <string name="create_new_account">Create new account</string>
     <string name="sign_in_as_guest">Sign in as guest</string>
     <string name="sign_in_via_google">Sign in with google</string>
-    <string name="or">או</string>
+    <string name="or">or</string>
+    <string name="invalidTime">Invalid time</string>
 </resources>

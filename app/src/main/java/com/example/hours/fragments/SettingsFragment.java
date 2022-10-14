@@ -12,9 +12,11 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.hours.utils.App;
 //import com.example.hours.utils.EditTimeDialog;
@@ -22,7 +24,8 @@ import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
 import com.example.hours.models.SettingsViewModel;
-import com.example.hours.utils.TimeBindEditTextListener;
+//import com.example.hours.utils.TimeBindEditTextListener;
+import com.example.hours.utils.TimestampTextWatcher;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -245,7 +248,14 @@ public class SettingsFragment extends Fragment implements
 
         private void setDefaultTime(int prefId) {
             EditTextPreference pref = findPreference(getString(prefId));
-            pref.setOnBindEditTextListener(new TimeBindEditTextListener());
+            pref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
+                @Override
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    editText.addTextChangedListener(new TimestampTextWatcher(editText));
+                }
+            });
+
         }
 
         private void ResetGeneralSettings() {

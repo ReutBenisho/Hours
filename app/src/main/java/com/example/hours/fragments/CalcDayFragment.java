@@ -80,7 +80,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         mHoursManager = HoursManager.getInstance();
         mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
-        mTxtArrivalTime.setText(mHoursManager.info.userInfo.arrivalTime.toString());
+        mTxtArrivalTime.setText(Defaults.getArrival().toString());
         mTxtArrivalTime.addTextChangedListener(new TimestampTextWatcher(mTxtArrivalTime));
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
@@ -116,6 +116,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onResume() {
         super.onResume();
+        mTxtArrivalTime.setText(Defaults.getArrival().toString());
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 
