@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class TimestampTextWatcher implements TextWatcher {
     private final EditText mEditText;
     private String current = "";
-    private String hhmm = "HHMM";
+    private String hhmm = "HH:MM";
 
     public TimestampTextWatcher(EditText editTextView){
         mEditText = editTextView;
@@ -25,7 +25,7 @@ public class TimestampTextWatcher implements TextWatcher {
         if (!s.toString().equals(current)) {
             String currentString = s.toString();
             int sel = currentString.length();
-            if(current != "") {
+            //if(current != "") {
                 String clean = s.toString().replaceAll(":", "");
 
                 int cursorSelection = start;
@@ -33,7 +33,7 @@ public class TimestampTextWatcher implements TextWatcher {
                 //Fix for pressing delete next to a forward slash
                 //if (clean.equals(cleanC))
                 //  sel--;
-                if(start == 0 && before == 5 && count == 5 && currentString.matches("^([0-9][0-9]):([0-9][0-9])$"))
+                if(start == 0 && (before == 5 || before == 0) && count == 5 && currentString.matches("^([0-9][0-9]):([0-9][0-9])$"))
                     current = currentString;
                 else if (start >= 0) {
                     if(start <= 4) {
@@ -142,12 +142,12 @@ public class TimestampTextWatcher implements TextWatcher {
                     }
                 }
 
-            }
-            else
-            {
-                current = currentString;
-
-            }
+//            }
+//            else
+//            {
+//                current = currentString;
+//
+//            }
             mEditText.setText(current);
             mEditText.setSelection(sel < current.length() ? sel : current.length());
 
@@ -155,7 +155,10 @@ public class TimestampTextWatcher implements TextWatcher {
             {
                 TextInputLayout textLayout = (TextInputLayout) mEditText.getParent().getParent();
                 if (current.matches("^([01][0-9]|2[0-3]):([0-5][0-9])$"))
+                {
                     textLayout.setError("");
+                    ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
+                }
                 else
                     textLayout.setError(App.getStr(R.string.invalidTime));
             }

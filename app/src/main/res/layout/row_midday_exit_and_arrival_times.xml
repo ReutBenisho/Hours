@@ -66,13 +66,13 @@
             android:id="@+id/txt_midday_arrival_time"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false"
-            android:focusable="false"
             android:hint="@string/arrival"
-            android:inputType="none"
             android:text="@string/midnight_timestamp"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textDirection="anyRtl"
+            android:digits="0123456789:"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
