@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    private void updateViews(String languageCode) {
-        LocaleHelper.setLocale(this, languageCode);
-    }
 
     @Override
     protected void onResume() {
@@ -124,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         mViewModel = provider.get(MainActivityViewModel.class);
 
         setupSplashScreen();
-        SharedPreferencesUtil.setDefaults(getString(R.string.pref_existing_user), true);
-        SharedPreferencesUtil.loadDefaults();
-        Utils.setupDarkMode(getApplicationContext());
-        //updateViews("iw");
+//        SharedPreferencesUtil.setDefaults(getString(R.string.pref_existing_user), true);
+//        SharedPreferencesUtil.loadDefaults();
+//        Utils.setupDarkMode(getApplicationContext());
+//        updateViews(SharedPreferencesUtil.getString(getString(R.string.pref_language)));
         mHoursManager = HoursManager.getInstance();
         mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -460,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 }
 
                 if(!Objects.equals(lang, Locale.getDefault().getLanguage())) {
-                    updateViews(lang);
+                    LocaleHelper.setLocale(this, lang);
                     Intent refresh = new Intent(this, MainActivity.class);
                     finish();
                     startActivity(refresh);
