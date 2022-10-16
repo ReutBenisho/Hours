@@ -6,17 +6,16 @@
         app:allowDividerAbove="true">
         <EditTextPreference
             app:title="@string/arrival_time"
-            app:key="@string/pref_default_arrival_time"
-            app:useSimpleSummaryProvider="true" />
+            app:key="@string/pref_default_arrival_time"/>
         <EditTextPreference
             app:title="@string/exit_time"
-            app:key="@string/pref_default_exit_time"
-            app:useSimpleSummaryProvider="true"/>
-        <MultiSelectListPreference
-            app:title="@string/custom_breaks"
-            app:key="@string/pref_default_custom_breaks"
-            app:useSimpleSummaryProvider="true"
-            />
+            app:key="@string/pref_default_exit_time"/>
+
+<!--        <MultiSelectListPreference-->
+<!--            app:title="@string/custom_breaks"-->
+<!--            app:key="@string/pref_default_custom_breaks"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            />-->
 
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/system_times"
@@ -31,37 +30,31 @@
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/lunch_break"
-            app:key="@string/pref_default_lunch_break_time"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_lunch_break_time"/>
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/lunch_break_duration"
-            app:key="@string/pref_default_lunch_break_duration"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_lunch_break_duration"/>
 
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/evening_break"
-            app:key="@string/pref_default_evening_break_time"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_evening_break_time"/>
 
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/evening_break_duration"
-            app:key="@string/pref_default_evening_break_duration"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_evening_break_duration"/>
 
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/night_break"
-            app:key="@string/pref_default_night_break_time"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_night_break_time"/>
 
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
             app:title="@string/night_break_duration"
-            app:key="@string/pref_default_night_break_duration"
-            app:useSimpleSummaryProvider="true"/>
+            app:key="@string/pref_default_night_break_duration"/>
 
     </PreferenceCategory>
 

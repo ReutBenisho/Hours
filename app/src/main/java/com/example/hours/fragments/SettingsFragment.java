@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.utils.App;
 //import com.example.hours.utils.EditTimeDialog;
 //import com.example.hours.utils.EditTimePreference;
@@ -25,6 +26,7 @@ import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
 import com.example.hours.models.SettingsViewModel;
 //import com.example.hours.utils.TimeBindEditTextListener;
+import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.TimestampTextWatcher;
 
 import java.util.HashMap;
@@ -147,6 +149,7 @@ public class SettingsFragment extends Fragment implements
         getActivity().setTitle(pref.getTitle());
         return true;
     }
+
     public static class ParentSettingsFragment extends PreferenceFragmentCompat {
         public int TAG = R.string.empty;
         @Override
@@ -221,7 +224,7 @@ public class SettingsFragment extends Fragment implements
         }
     }
 
-    public static class TimesFragment extends ParentSettingsFragment {
+    public static class TimesFragment extends ParentSettingsFragment implements OnUpdateListener {
         View mView;
 
         @Override
@@ -243,6 +246,7 @@ public class SettingsFragment extends Fragment implements
             setDefaultTime(R.string.pref_default_evening_break_duration);
             setDefaultTime(R.string.pref_default_night_break_time);
             setDefaultTime(R.string.pref_default_night_break_duration);
+            ListenerManager.addListener(this, ListenerManager.ListenerType.PREFERENCE_CHANGE);
             return mView;
         }
 
@@ -255,12 +259,29 @@ public class SettingsFragment extends Fragment implements
                     editText.addTextChangedListener(new TimestampTextWatcher(editText));
                 }
             });
+            String val = SharedPreferencesUtil.getString(getString(prefId));
+            findPreference(getString(prefId)).setSummary(val);
+
 
         }
 
         private void ResetGeneralSettings() {
             //TODO: ADD LOGIC TO RESET ALL GENERAL SETTINGS
 
+        }
+
+        @Override
+        public void onUpdateListener(OnUpdateListener listener, Object obj) {
+            if(listener == this) {
+                ListenerManager.Data data = (ListenerManager.Data) obj;
+                switch (data.type) {
+                    case PREFERENCE_CHANGE: {
+                        String key = ((String)data.obj);
+                        String val = SharedPreferencesUtil.getString(key);
+                        findPreference(key).setSummary(val);
+                    }
+                }
+            }
         }
     }
 }

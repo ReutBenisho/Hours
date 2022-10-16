@@ -132,9 +132,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         return view;
     }
-//    דברים נוספים שצריכה לעשות:
-//    למנוע לחיצה על OK אם שעה לא חוקית
-//    לאפשר יצירת הפסקות קבועות בsharedperefrence
+
     @Override
     public void onResume() {
         super.onResume();
@@ -218,7 +216,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
-    public void onUpdate(OnUpdateListener listener, Object obj) {
+    public void onUpdateListener(OnUpdateListener listener, Object obj) {
 
         updateHours();
     }

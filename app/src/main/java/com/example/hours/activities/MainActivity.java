@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.fragments.SettingsFragment;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
@@ -340,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     }
 
     @Override
-    public void onUpdate(OnUpdateListener listener, Object obj) {
+    public void onUpdateListener(OnUpdateListener listener, Object obj) {
         if(listener == this){
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
@@ -417,19 +418,16 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String pref) {
         if(pref == LocaleHelper.SELECTED_LANGUAGE)
             return;
-        int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
-        String prefType = SettingsFragment.keyTypes.get(pref_id);
-        switch (prefType)
-        {
-            case "boolean":
-                boolean boolValue = sharedPreferences.getBoolean(pref, false);
-                SharedPreferencesUtil.setDefaults(pref,boolValue);
-                break;
-            case "String":
-                String strValue = sharedPreferences.getString(pref, "");
-                SharedPreferencesUtil.setDefaults(pref, strValue);
-                break;
+
+        if(SharedPreferencesUtil.isTimePref(pref)
+                && !Timestamp.isValid(sharedPreferences.getString(pref, ""))) {
+            SharedPreferencesUtil.setPreviousTime(pref);
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.PREFERENCE_CHANGE, pref);
+            return;
         }
+
+        int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
+        saveSharedPref(sharedPreferences, pref, pref_id);
         switch (pref_id)
         {
             case R.string.pref_system_dark_mode:
@@ -497,6 +495,21 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 break;
             case R.string.pref_default_night_break_duration:
                 Defaults.User.NIGHT_BREAK_DURATION.setTime(sharedPreferences.getString(pref, ""));
+                break;
+        }
+    }
+
+    private void saveSharedPref(SharedPreferences sharedPreferences, String pref, int pref_id) {
+        String prefType = SettingsFragment.keyTypes.get(pref_id);
+        switch (prefType)
+        {
+            case "boolean":
+                boolean boolValue = sharedPreferences.getBoolean(pref, false);
+                SharedPreferencesUtil.setDefaults(pref,boolValue);
+                break;
+            case "String":
+                String strValue = sharedPreferences.getString(pref, "");
+                SharedPreferencesUtil.setDefaults(pref, strValue);
                 break;
         }
     }
