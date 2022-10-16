@@ -4,7 +4,7 @@ import com.example.hours.utils.Defaults;
 
 public class HoursManager {
     private static HoursManager mInstance = null;
-    public HoursInfo info;
+    public final HoursInfo info;
 
     private HoursManager()
     {
@@ -24,36 +24,36 @@ public class HoursManager {
         {
             if(info.userInfo.isStudent)
             {
-                info.calcInfo.student.additional125Hours = info.userInfo.arrivalTime.add(Defaults.ADDITIONAL_125_HOURS);
+                info.calcInfo.student.additional125Hours = info.userInfo.arrivalTime.add(Defaults.getAdditional125Hours());
                 info.calcInfo.student.additional125Hours = adjustBreaks(info.calcInfo.student.additional125Hours);
             }
-            info.calcInfo.additional6Hours = info.userInfo.arrivalTime.add(Defaults.MAX_ADDITIONAL_HOURS);
+            info.calcInfo.additional6Hours = info.userInfo.arrivalTime.add(Defaults.getMaxAdditionalHours());
             info.calcInfo.additional6Hours = adjustBreaks(info.calcInfo.additional6Hours);
             if(info.userInfo.isStudent)
                 info.calcInfo.student.additional150Hours = new Timestamp(info.calcInfo.additional6Hours);
 
         }
         else {
-            adjustArrivalToLaunchBreak();
-            info.calcInfo.halfDay = info.userInfo.arrivalTime.add(Defaults.HALF_DAY);
+            adjustArrivalToLunchBreak();
+            info.calcInfo.halfDay = info.userInfo.arrivalTime.add(Defaults.getHalfDay());
             info.calcInfo.halfDay = adjustBreaks(info.calcInfo.halfDay);
-            info.calcInfo.fullDay = info.calcInfo.halfDay.add(Defaults.HALF_DAY);
+            info.calcInfo.fullDay = info.calcInfo.halfDay.add(Defaults.getHalfDay());
             info.calcInfo.fullDay = adjustBreaks(info.calcInfo.fullDay);
             if(!info.userInfo.isStudent){
-                info.calcInfo.zeroHours = info.calcInfo.fullDay.add(Defaults.ZERO_HOURS);
+                info.calcInfo.zeroHours = info.calcInfo.fullDay.add(Defaults.getZeroHours());
                 info.calcInfo.zeroHours = adjustBreaks(info.calcInfo.zeroHours);
-                info.calcInfo.additional3AndHalfHours = info.calcInfo.zeroHours.add(Defaults.ADDITIONAL_HOURS);
+                info.calcInfo.additional3AndHalfHours = info.calcInfo.zeroHours.add(Defaults.getAdditionalHours());
             }
             else {
-                info.calcInfo.additional3AndHalfHours = info.calcInfo.fullDay.add(Defaults.ZERO_HOURS).add(Defaults.ADDITIONAL_HOURS);
-                info.calcInfo.student.additional125Hours = info.calcInfo.fullDay.add(Defaults.ADDITIONAL_125_HOURS);
+                info.calcInfo.additional3AndHalfHours = info.calcInfo.fullDay.add(Defaults.getZeroHours()).add(Defaults.getAdditionalHours());
+                info.calcInfo.student.additional125Hours = info.calcInfo.fullDay.add(Defaults.getAdditional125Hours());
                 info.calcInfo.student.additional125Hours = adjustBreaks(info.calcInfo.student.additional125Hours);
 
 
             }
 
             info.calcInfo.additional3AndHalfHours = adjustBreaks(info.calcInfo.additional3AndHalfHours);
-            info.calcInfo.additional6Hours = info.calcInfo.additional3AndHalfHours.add(Defaults.EXTRA_ADDITIONAL_HOURS);
+            info.calcInfo.additional6Hours = info.calcInfo.additional3AndHalfHours.add(Defaults.getExtraAdditionalHours());
             info.calcInfo.additional6Hours = adjustBreaks(info.calcInfo.additional6Hours);
             if(info.userInfo.isStudent){
                 info.calcInfo.student.additional150Hours = new Timestamp(info.calcInfo.additional6Hours);
@@ -96,43 +96,57 @@ public class HoursManager {
         sumAllBreaks();
         if(info.userInfo.arrivalTime.isAfter(info.userInfo.exitTime))
             return info;
+
+        //check what's the total if exiting at evening break -
+        //if it's less than a full day - there's no break
+        Timestamp exitTime = info.userInfo.exitTime;
+        info.userInfo.exitTime = Defaults.getEveningStart();
+        Timestamp totalIfExitingAtBreak = removeOverlaps();
+        info.userInfo.exitTime = exitTime;
+        info.clearCalculatedInfo();
+        sumAllBreaks();
+
+        Timestamp totalNoOverlaps = removeOverlaps();
         if(info.userInfo.isFriday)
         {
-            Timestamp additional = removeOvelaps();
             if(info.userInfo.isStudent){
-                if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
-                    info.calcInfo.totalTime.additional125Hours.setTime(additional);
+                if(totalNoOverlaps.lessThan(Defaults.getAdditional125Hours())){
+                    info.calcInfo.totalTime.additional125Hours.setTime(totalNoOverlaps);
                 }
                 else {
-                    info.calcInfo.totalTime.additional125Hours.setTime(Defaults.ADDITIONAL_125_HOURS);
-                    info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.ADDITIONAL_125_HOURS));
+                    info.calcInfo.totalTime.additional125Hours.setTime(Defaults.getAdditional125Hours());
+                    info.calcInfo.totalTime.additional150Hours.setTime(totalNoOverlaps.sub(Defaults.getAdditional125Hours()));
                 }
             }
             else{
-                info.calcInfo.totalTime.additionalHours.setTime(additional);
+                info.calcInfo.totalTime.additionalHours.setTime(totalNoOverlaps);
             }
         }
         else
         {
-            info.calcInfo.totalTime.total = removeOvelaps();
-            if(info.userInfo.exitTime.isAfter(Defaults.EVENING_BREAK_START)
-                    && info.breaks.customBreaks.size() == 0)
-                info.calcInfo.totalTime.total = info.calcInfo.totalTime.total.sub(Defaults.EVENING_BREAK_DURATION);
+            info.calcInfo.totalTime.total = totalNoOverlaps;
 
-            if(info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)){
+            if(info.userInfo.exitTime.isAfter(Defaults.getEveningStart())
+//                    && info.breaks.customBreaks.size() == 0
+            //&&info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.FULL_DAY)
+                    && totalIfExitingAtBreak.equalsOrGreaterThan(Defaults.getFullDayWithLunchBreak())
+            )
+                info.calcInfo.totalTime.total = info.calcInfo.totalTime.total.sub(Defaults.getEveningDuration());
+
+            if(info.calcInfo.totalTime.total.equalsOrGreaterThan(Defaults.getFullDay())){
                 info.calcInfo.totalTime.isFullDay = true;
-                Timestamp additional = info.calcInfo.totalTime.total.sub(Defaults.FULL_DAY);
+                Timestamp additional = info.calcInfo.totalTime.total.sub(Defaults.getFullDay());
                 if(info.userInfo.isStudent){
-                    if(additional.lessThan(Defaults.ADDITIONAL_125_HOURS)){
+                    if(additional.lessThan(Defaults.getAdditional125Hours())){
                         info.calcInfo.totalTime.additional125Hours.setTime(additional);
                     }
                     else {
-                        info.calcInfo.totalTime.additional125Hours.setTime(Defaults.ADDITIONAL_125_HOURS);
-                        info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.ADDITIONAL_125_HOURS));
+                        info.calcInfo.totalTime.additional125Hours.setTime(Defaults.getAdditional125Hours());
+                        info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.getAdditional125Hours()));
                     }
                 }
                 else {
-                    if (additional.equalsOrGreaterThan(Defaults.ZERO_HOURS)) {
+                    if (additional.equalsOrGreaterThan(Defaults.getZeroHours())) {
                         info.calcInfo.totalTime.additionalHours.setTime(additional);
                     } else {
                         info.calcInfo.totalTime.zeroHours.setTime(additional);
@@ -141,17 +155,17 @@ public class HoursManager {
             }
             else {
                 info.calcInfo.totalTime.isFullDay = false;
-                if(info.calcInfo.totalTime.total.lessThan(Defaults.HALF_DAY) || info.userInfo.isStudent)
-                    info.calcInfo.totalTime.unpaidAbsence.setTime(Defaults.FULL_DAY.sub(info.calcInfo.totalTime.total));
+                if(info.calcInfo.totalTime.total.lessThan(Defaults.getHalfDay()) || info.userInfo.isStudent)
+                    info.calcInfo.totalTime.unpaidAbsence.setTime(Defaults.getFullDay().sub(info.calcInfo.totalTime.total));
                 else
-                    info.calcInfo.totalTime.globalAbsence.setTime(Defaults.FULL_DAY.sub(info.calcInfo.totalTime.total));
+                    info.calcInfo.totalTime.globalAbsence.setTime(Defaults.getFullDay().sub(info.calcInfo.totalTime.total));
             }
         }
         //mHourInfo = CalcDayNoExit(mHourInfo);
         return info;
     }
 
-    private Timestamp removeOvelaps() {
+    private Timestamp removeOverlaps() {
         Timestamp duration = info.userInfo.exitTime.sub(info.userInfo.arrivalTime);
         for(int i = 0; i < info.breaks.allBreaks.size(); i++)
             duration = removeOverlap(info.userInfo.arrivalTime, info.userInfo.exitTime,
@@ -169,9 +183,9 @@ public class HoursManager {
         for(int i = 0; i < info.breaks.allBreaks.size(); i++){
             exitTime = adjustToBreak(exitTime, i);
         }
-        if(!info.breaks.tookEveningBreak && exitTime.isAfter(Defaults.EVENING_BREAK_START)) {
+        if(!info.breaks.tookEveningBreak && exitTime.isAfter(Defaults.getEveningStart())) {
             info.breaks.tookEveningBreak = true;
-            exitTime = exitTime.add(Defaults.EVENING_BREAK_DURATION);
+            exitTime = exitTime.add(Defaults.getEveningDuration());
         }
 
         return exitTime;
@@ -199,9 +213,9 @@ public class HoursManager {
         return exitTime;
     }
 
-    private void adjustArrivalToLaunchBreak() {
-        if(info.userInfo.arrivalTime.isBetween(Defaults.LAUNCH_BREAK_START, Defaults.LAUNCH_BREAK_END)){
-            info.userInfo.arrivalTime = Defaults.LAUNCH_BREAK_END;
+    private void adjustArrivalToLunchBreak() {
+        if(info.userInfo.arrivalTime.isBetween(Defaults.getLunchStart(), Defaults.getLunchEnd())){
+            info.userInfo.arrivalTime = Defaults.getLunchEnd();
         }
     }
 

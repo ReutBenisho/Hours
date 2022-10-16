@@ -10,9 +10,10 @@
     <color name="green">#4CAF50</color>
     <color name="blue">#002AFF</color>
     <color name="gray_20">#9F9E9E</color>
-    <color name="gray_50">#BF3E3E3E</color>
+    <color name="gray_50_trans_75">#BF3E3E3E</color>
     <color name="gray_90">#333333</color>
-    <color name="gray_10">#40C8C8C8</color>
-    <color name="blue_10">#80115577</color>
+    <color name="gray_10_trans_25">#40C8C8C8</color>
+    <color name="blue_10_trans_50">#80115577</color>
+    <color name="gray_90_trans_25">#40333333</color>
 
 </resources>

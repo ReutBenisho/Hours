@@ -1,26 +1,27 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Dark mode">
-        <SwitchPreferenceCompat
-            app:key="@string/pref_system_mode"
-            app:title="Use system's default mode"
-            app:defaultValue="true"
-            app:disableDependentsState="true"/>
+    <SwitchPreferenceCompat
+        app:key="@string/pref_dark_mode"
+        app:title="@string/dark_mode"
+        app:summaryOff="@string/you_are_weak"
+        app:summaryOn="@string/you_chose_wisely"
+        app:defaultValue="true"/>
 
-        <SwitchPreferenceCompat
-            app:dependency="@string/pref_system_mode"
-            app:key="@string/pref_dark_mode"
-            app:title="Dark Mode"
-            app:summaryOff="You are weak."
-            app:summaryOn="You chose wisely."/>
+    <ListPreference
+        app:defaultValue="iw"
+        app:entries="@array/language_entries"
+        app:entryValues="@array/language_values"
+        app:key="@string/pref_language"
+        app:title="@string/language"
+        app:useSimpleSummaryProvider="true" />
 
-    </PreferenceCategory>
 
     <SwitchPreferenceCompat
         app:key="@string/pref_student_mode"
-        app:summaryOff="Thank god it's over"
-        app:summaryOn="Don't worry, you're half-way there!"
-        app:title="Student Mode"
+        app:summaryOff="@string/thank_god_its_over"
+        app:summaryOn="@string/dont_worry_youre_halfway_there"
+        app:title="@string/student_mode"
         app:defaultValue="false"/>
+
 </PreferenceScreen>

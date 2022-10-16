@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +23,14 @@ import android.widget.LinearLayout;
 import com.example.hours.calcUtils.Break;
 import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.utils.App;
+import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.R;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.utils.SharedPreferencesUtil;
+import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
 import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,7 +38,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private CalcDayModel mViewModel;
-    public static final String TAG = "CALC_DAY_NO_EXIT_TAG";
+    public static final String TAG = App.getStr(R.string.tag_calc_day_no_exit);
 
     private HoursManager mHoursManager;
     private LinearLayout mLayoutMiddayTimes;
@@ -43,6 +48,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     private AppCompatCheckBox mCkbtn_friday;
     private LinearLayout mLayoutExitTime;
     private TextInputEditText mTxtArrivalTime;
+    private TextWatcher mTimestampTextWatcher;
+    private EditText mTxtExitTime;
 
 
     public static CalcDayFragment newInstance() {
@@ -56,9 +63,16 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     @Override
+    public void onDestroyView() {
+        mTxtArrivalTime.removeTextChangedListener(mTimestampTextWatcher);
+        super.onDestroyView();
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
@@ -74,16 +88,18 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         });
 
         mHoursManager = HoursManager.getInstance();
-        mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 30);
+        mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
-        mTxtArrivalTime.setText(mHoursManager.info.userInfo.arrivalTime.toString());
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.popTimePicker(view, getContext());
-            }
-        };
-        mTxtArrivalTime.setOnClickListener(listener);
+        String from = mTxtArrivalTime.getText().toString();
+        String str = Defaults.getArrival().toString();
+        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        mTxtArrivalTime.setText(str);
+        mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrivalTime);
+        if(mTxtArrivalTime.getTag() == null)
+        {
+            mTxtArrivalTime.addTextChangedListener(mTimestampTextWatcher);
+            mTxtArrivalTime.setTag(mTimestampTextWatcher);
+        }
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
         mCkbtn_add_exit_time.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -91,11 +107,14 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
                     Utils.addExitTimeLayout(getLayoutInflater(), mLayoutExitTime, getContext());
-                    EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-                    mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
+                    mTxtExitTime = getView().findViewById(R.id.txt_exit_time);
+                    if(mTxtExitTime != null)
+                        mHoursManager.info.userInfo.exitTime.setTime(mTxtExitTime.getText().toString());
                 }
-                else
+                else {
                     Utils.removeExitTime(mLayoutExitTime);
+                    mTxtExitTime = null;
+                }
 
                 openCalcDayFragment(isChecked);
             }
@@ -113,11 +132,23 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         return view;
     }
-
+//    דברים נוספים שצריכה לעשות:
+//    למנוע לחיצה על OK אם שעה לא חוקית
+//    לאפשר יצירת הפסקות קבועות בsharedperefrence
     @Override
     public void onResume() {
         super.onResume();
-        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, "");
+        String str = Defaults.getArrival().toString();
+        String from = mTxtArrivalTime.getText().toString();
+        Log.d("onResume", "chaning arrival txtView from " + from + " to " + str);
+        mTxtArrivalTime.setText(str);
+        if(mTxtExitTime != null) {
+            str = Defaults.getExit().toString();
+            from = mTxtExitTime.getText().toString();
+            Log.d("onResume", "chaning exit txtView from " + from + " to " + str);
+            mTxtExitTime.setText(str);
+        }
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 
     @Override
@@ -146,7 +177,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         if(mCkbtn_add_exit_time.isChecked())
         {
             EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-            mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
+            if(txtExitTime != null)
+                mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
         }
         mHoursManager.info.userInfo.isFriday = mCkbtn_friday.isChecked();
         mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
@@ -155,8 +187,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     private void openCalcDayFragment(boolean isExitTimeAdded) {
         Fragment fragment = null;
-        Class fragmentClass = null;
-        String tag = "";
+        Class fragmentClass;
+        String tag;
         if(isExitTimeAdded){
             fragmentClass = WithExitFragment.class;
             tag = WithExitFragment.TAG;

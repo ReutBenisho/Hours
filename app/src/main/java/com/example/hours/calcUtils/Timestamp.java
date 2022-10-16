@@ -2,15 +2,22 @@ package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionHelper;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
+import java.time.Duration;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 public class Timestamp {
-    private LocalTime mTime;
+    private Duration mTime;
 
     public Timestamp(){
-        mTime = LocalTime.of(0, 0);
+
+        mTime = Duration.of(0, ChronoUnit.MINUTES);
     }
 
     public static Timestamp removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
@@ -31,35 +38,35 @@ public class Timestamp {
     }
 
     public Timestamp(int hour){
-        mTime = LocalTime.of(hour, 0);
+
+        mTime = Duration.of(hour* 60, ChronoUnit.MINUTES);
     }
 
     public Timestamp(int hour, int minute){
-        mTime = LocalTime.of(hour, minute);
+        mTime = Duration.of(hour* 60 + minute, ChronoUnit.MINUTES);
     }
 
-    public Timestamp(LocalTime other){
-        mTime = LocalTime.of(other.getHour(), other.getMinute());
+    public Timestamp(Duration other){
+
+        mTime = Duration.of(other.toMinutes(), ChronoUnit.MINUTES);
     }
 
     public Timestamp(Timestamp other){
-        mTime = LocalTime.of(other.mTime.getHour(), other.mTime.getMinute());
-    }
-
-    public LocalTime toLocalTime(){
-        return mTime;
+        mTime = Duration.of(other.mTime.toMinutes(), ChronoUnit.MINUTES);
     }
 
     public boolean isBefore(Timestamp before){
-        return mTime.isBefore(before.mTime);
+
+        return mTime.compareTo(before.mTime) < 0;
     }
 
     public boolean isAfter(Timestamp after){
-        return mTime.isAfter(after.mTime);
+
+        return mTime.compareTo(after.mTime) > 0;
     }
 
     public boolean isBetween(Timestamp first, Timestamp second){
-        return mTime.isAfter(first.mTime) && mTime.isBefore(second.mTime);
+        return mTime.compareTo(first.mTime) > 0 && mTime.compareTo(second.mTime) < 0;
     }
 
     public Timestamp add(int hour, int minute){
@@ -70,38 +77,34 @@ public class Timestamp {
     }
 
     public Timestamp add(Timestamp timeToAdd){
-        return new Timestamp(mTime).add(timeToAdd.mTime.getHour(), timeToAdd.mTime.getMinute());
+        return new Timestamp(mTime.plusMinutes(timeToAdd.mTime.toMinutes()));
     }
 
     public Timestamp sub(int hour, int minute){
-        Timestamp newTime = new Timestamp(mTime);
-        newTime.mTime = newTime.mTime.minusHours(hour);
-        newTime.mTime = newTime.mTime.minusMinutes(minute);
-        return newTime;
+        return new Timestamp(mTime.minusMinutes(hour * 60 + minute));
     }
 
     public Timestamp sub(Timestamp timeToRemove){
-        return new Timestamp(mTime).sub(timeToRemove.mTime.getHour(), timeToRemove.mTime.getMinute());
+        return new Timestamp(mTime.minusMinutes(timeToRemove.mTime.toMinutes()));
     }
 
     @NonNull
     public String toString(){
-        return String.format(Locale.getDefault(), "%02d:%02d", mTime.getHour(), mTime.getMinute());
+        return String.format(Locale.getDefault(), "%02d:%02d", mTime.toHours(), mTime.toMinutes() - mTime.toHours() * 60);
     }
 
     public void setTime(String str){
-        mTime = mTime.withHour(Integer.parseInt(str.substring(0, 2)));
-        mTime = mTime.withMinute(Integer.parseInt(str.substring(3, 5)));
+        int hours = Integer.parseInt(str.substring(0, 2));
+        int minutes = Integer.parseInt(str.substring(3, 5));
+        mTime = Duration.of(hours * 60 + minutes, ChronoUnit.MINUTES);
     }
 
     public void setTime(int hour, int minute){
-        mTime = mTime.withHour(hour);
-        mTime = mTime.withMinute(minute);
+        mTime = Duration.of(hour * 60 + minute, ChronoUnit.MINUTES);
     }
-    public void setTime(Timestamp other)
-    {
-        mTime = mTime.withHour(other.getHour());
-        mTime = mTime.withMinute(other.getMinute());
+    public void setTime(Timestamp other){
+
+        mTime = Duration.of(other.mTime.toMinutes(), ChronoUnit.MINUTES);
     }
 
     public static boolean isOverlap(Timestamp startRange1, Timestamp endRange1,
@@ -119,14 +122,6 @@ public class Timestamp {
             newTime.setTime(Timestamp.getLatest(endRange1, endRange2).add(totalOverlap));
         }
         return newTime;
-    }
-
-    public static Timestamp toCalcTime(LocalTime timeToConvert){
-        return new Timestamp(timeToConvert);
-    }
-
-    public static LocalTime toLocalTime(Timestamp timeToConvert){
-        return timeToConvert.mTime;
     }
 
     public static Timestamp getEarliest(Timestamp first, Timestamp second){
@@ -147,17 +142,18 @@ public class Timestamp {
         }
     }
 
-    public int getHour() {
-        return mTime.getHour();
+    public long getHour() {
+
+        return mTime.toHours();
     }
 
-    public int getMinute() {
-        return mTime.getMinute();
+    public long getMinute() {
+
+        return mTime.toMinutes() - mTime.toHours()* 60;
     }
 
     public void clear() {
-        mTime = mTime.withHour(0);
-        mTime = mTime.withMinute(0);
+        mTime = Duration.of(0, ChronoUnit.MINUTES);
     }
 
     public boolean equalsOrGreaterThan(Timestamp other) {
@@ -167,4 +163,9 @@ public class Timestamp {
     public boolean lessThan(Timestamp other) {
         return isBefore(other);
     }
+
+    public Timestamp copy(){
+        return new Timestamp(this);
+    }
+
 }

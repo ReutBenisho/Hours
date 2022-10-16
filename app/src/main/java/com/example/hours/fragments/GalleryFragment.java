@@ -10,17 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.hours.R;
 import com.example.hours.databinding.FragmentGalleryBinding;
 import com.example.hours.models.GalleryViewModel;
+import com.example.hours.utils.App;
 
 public class GalleryFragment extends Fragment {
 
-    public static final String TAG = "GALLERY_TAG";
+    public static final String TAG = App.getStr(R.string.tag_gallery);
     private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 
         GalleryViewModel galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);

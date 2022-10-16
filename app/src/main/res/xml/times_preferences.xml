@@ -1,27 +1,68 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
-        app:defaultValue="true"
-        app:key="@string/pref_default_time"
-        app:title="Use default time settings"
-        app:disableDependentsState="true"/>
+    <PreferenceCategory app:title="@string/user_times"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
+        <EditTextPreference
+            app:title="@string/arrival_time"
+            app:key="@string/pref_default_arrival_time"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            app:title="@string/exit_time"
+            app:key="@string/pref_default_exit_time"
+            app:useSimpleSummaryProvider="true"/>
+        <MultiSelectListPreference
+            app:title="@string/custom_breaks"
+            app:key="@string/pref_default_custom_breaks"
+            app:useSimpleSummaryProvider="true"
+            />
 
-    <Preference
-        app:dependency="@string/pref_default_time"
-        app:title="Default arrival time"
-        app:key="@string/pref_default_arrival_time"
-        app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/system_times"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="@string/pref_default_system_time"
+            app:title="@string/use_default_system_times"
+            app:disableDependentsState="true"/>
 
-    <Preference
-        app:dependency="@string/pref_default_time"
-        app:title="Default launch break time"
-        app:key="@string/pref_default_launch_break_time"
-        app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/lunch_break"
+            app:key="@string/pref_default_lunch_break_time"
+            app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/lunch_break_duration"
+            app:key="@string/pref_default_lunch_break_duration"
+            app:useSimpleSummaryProvider="true"/>
 
-    <Preference
-        app:dependency="@string/pref_default_time"
-        app:title="Default eveing break time"
-        app:key="@string/pref_default_evening_break_time"
-        app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/evening_break"
+            app:key="@string/pref_default_evening_break_time"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/evening_break_duration"
+            app:key="@string/pref_default_evening_break_duration"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/night_break"
+            app:key="@string/pref_default_night_break_time"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
+            app:title="@string/night_break_duration"
+            app:key="@string/pref_default_night_break_duration"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

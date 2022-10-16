@@ -3,9 +3,12 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Break {
 
-    public BreakTimes breakTimes;
+    public final BreakTimes breakTimes;
     public Boolean tookBreak;
     public Break(BreakTimes pair, Boolean _tookBreak){
         breakTimes = new BreakTimes(pair);
@@ -58,6 +61,8 @@ public class Break {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof Break))
+            return false;
         Break obj = (Break) object;
         if(!breakTimes.start.equals(obj.breakTimes.start))
             return false;
@@ -72,7 +77,9 @@ public class Break {
     @Override
     public String toString() {
         String s = "";
-        s += "start: " + breakTimes.start + " end: " + breakTimes.end + " took: " + tookBreak;
+        s += " Start: " + breakTimes.start
+                + " End: " + breakTimes.end
+                + " Took: " + tookBreak;
         return s;
     }
 

@@ -1,22 +1,29 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <Preference
         android:fragment="com.example.hours.fragments.SettingsFragment$GeneralFragment"
         app:key="general_header"
         app:title="@string/general_header"
-        app:icon="@drawable/ic_edit"/>
+        app:icon="@drawable/ic_edit"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"/>
 
     <Preference
         android:fragment="com.example.hours.fragments.SettingsFragment$NotificationsFragment"
         app:key="notifications_header"
         app:title="@string/notifications_header"
-        app:icon="@drawable/ic_notifications"/>
+        app:icon="@drawable/ic_notifications"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"/>
 
     <Preference
         android:fragment="com.example.hours.fragments.SettingsFragment$TimesFragment"
         app:key="times_header"
         app:title="@string/times_header"
-        app:icon="@drawable/ic_clock"/>
+        app:icon="@drawable/ic_clock"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true"/>
 
 </PreferenceScreen>

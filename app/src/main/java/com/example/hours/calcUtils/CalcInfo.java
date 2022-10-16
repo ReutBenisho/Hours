@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class CalcInfo {
     public Timestamp halfDay;
     public Timestamp fullDay;
@@ -43,6 +46,8 @@ public class CalcInfo {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof CalcInfo))
+            return false;
         CalcInfo obj = (CalcInfo) object;
         if(!totalTime.equals(obj.totalTime))
             return false;
@@ -73,9 +78,9 @@ public class CalcInfo {
         if(zeroHours != null)
             s += "\nZero hours: " + zeroHours.toString();
         if(additional3AndHalfHours != null)
-            s += "\nAdditional 3 and half hours: " + additional3AndHalfHours.toString();
+            s += "\nAdditional 3.5: " + additional3AndHalfHours.toString();
         if(additional6Hours != null)
-            s += "\nAdditional 6 hours: " + additional6Hours.toString();
+            s += "\nAdditional 6: " + additional6Hours.toString();
         s += totalTime.toString();
         s += student.toString();
         return s;

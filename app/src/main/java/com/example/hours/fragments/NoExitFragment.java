@@ -16,11 +16,12 @@ import android.widget.TextView;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.R;
 import com.example.hours.models.NoExitViewModel;
+import com.example.hours.utils.App;
 import com.example.hours.utils.Utils;
 
 public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
 
-    public static final String TAG = "NO_EXIT_FRAGMENT";
+    public static final String TAG = App.getStr(R.string.tag_calc_day_no_exit);
     private NoExitViewModel mViewModel;
     private HoursManager mHoursManager;
     private TextView mLblTxtHalfDay;
@@ -51,7 +52,8 @@ public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDay
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_no_exit, container, false);
 
         initialize();

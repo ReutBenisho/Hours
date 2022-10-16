@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class UserInfo {
     public Timestamp arrivalTime;
     public Timestamp exitTime;
@@ -15,6 +18,8 @@ public class UserInfo {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof UserInfo))
+            return false;
         UserInfo obj = (UserInfo) object;
         if(!arrivalTime.equals(obj.arrivalTime))
             return false;
@@ -43,9 +48,9 @@ public class UserInfo {
     public String toString() {
         String s = "";
         if(arrivalTime != null)
-            s += "Arrival: " + arrivalTime.toString();
+            s += "\nArrival: " + arrivalTime.toString();
         if(exitTime != null)
-            s += "\nExit time: " + exitTime.toString();
+            s += "\nExit: " + exitTime.toString();
         s += "\nFriday: " + isFriday;
         s += "\nStudent: " + isStudent;
         return s;

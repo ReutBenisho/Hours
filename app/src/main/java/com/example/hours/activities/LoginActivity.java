@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferencesUtil.loadDefaults();
-        if(SharedPreferencesUtil.getString("existing_user") == "true"){
+        if(SharedPreferencesUtil.getBoolean(getString(R.string.pref_existing_user))){
 
         }
         else{
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         SharedPreferencesUtil.loadDefaults();
-        if(SharedPreferencesUtil.getString("existing_user") == "true"){
+        if(SharedPreferencesUtil.getBoolean(getString(R.string.pref_existing_user))){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

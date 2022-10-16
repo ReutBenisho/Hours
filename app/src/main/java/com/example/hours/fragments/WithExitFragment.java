@@ -2,6 +2,7 @@ package com.example.hours.fragments;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.R;
@@ -21,7 +23,7 @@ import com.example.hours.utils.Utils;
 
 public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
 
-    public static final String TAG = "WITH_EXIT_FRAGMENT";
+    public static final String TAG = App.getStr(R.string.tag_calc_day_with_exit);
     private WithExitViewModel mViewModel;
 
     private TextView mLblTxtFullDay;
@@ -42,7 +44,8 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcD
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 
         mView = inflater.inflate(R.layout.fragment_with_exit, container, false);
 
@@ -88,13 +91,16 @@ public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcD
         mHoursManager.CalcDayWithExit();
 
         if(mHoursManager.info.calcInfo.totalTime.isFullDay){
-            mLblTxtFullDay.setText(Defaults.FULL_DAY.toString());
+            mLblTxtFullDay.setText(Defaults.getFullDay().toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
+            mLblTxtFullDay.setTypeface(Typeface.DEFAULT);
+
         }
         else
         {
             mLblTxtFullDay.setText(mHoursManager.info.calcInfo.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
+            mLblTxtFullDay.setTypeface(null, Typeface.BOLD);
         }
         mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.totalTime.zeroHours.toString());
         mLblTxtAdditionalHours.setText(mHoursManager.info.calcInfo.totalTime.additionalHours.toString());

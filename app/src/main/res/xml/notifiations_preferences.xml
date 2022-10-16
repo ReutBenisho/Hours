@@ -1,36 +1,54 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_launch_break"
-        app:title="Launch break" />
+    <PreferenceCategory android:title="@string/notify_before_breaks"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_evening_break"
-        app:title="Evening break" />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_lunch_break"
+            app:title="@string/lunch_break" />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_evening_break"
+            app:title="@string/evening_break" />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_night_break"
+            app:title="@string/night_break" />
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_night_break"
-        app:title="Night break" />
+    </PreferenceCategory>
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_mothers_transportation"
-        app:title="Mothers transportation" />
+    <PreferenceCategory android:title="@string/notify_before_transportation"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_afternoon_transportation"
-        app:title="Afternoon transportation" />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_mothers_transportation"
+            app:title="@string/mothers_transportation" />
 
-    <SwitchPreferenceCompat
-        app:key="pref_notify_evening_transportation"
-        app:title="Evening transportation" />
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_afternoon_transportation"
+            app:title="@string/afternoon_transportation" />
 
-    <EditTextPreference
-        android:defaultValue="5"
-        android:key="pref_reminder_time"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Default reminder time (in minute)"
-        app:useSimpleSummaryProvider="true"/>
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_evening_transportation"
+            app:title="@string/evening_transportation" />
+
+        <SwitchPreferenceCompat
+            app:key="@string/pref_notify_night_transportation"
+            app:title="@string/night_transportation" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/notification_default_time"
+        app:allowDividerBelow="true"
+        app:allowDividerAbove="true">
+        <EditTextPreference
+            android:defaultValue="5"
+            android:key="@string/pref_reminder_time"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/default_reminder_time_in_minutes"
+            app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

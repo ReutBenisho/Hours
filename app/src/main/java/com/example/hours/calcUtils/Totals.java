@@ -2,6 +2,9 @@ package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Totals {
 
     public Timestamp total;
@@ -47,13 +50,13 @@ public class Totals {
         String s = "";
 
         s += "\nTotal time: " + total.toString();
-        s += "\nZero hours: " + zeroHours.toString();
-        s += "\nAdditional hours: " + additionalHours.toString();
-        s += "\nAdditional 125% hours: " + additional125Hours.toString();
-        s += "\nAdditional 150% hours: " + additional150Hours.toString();
+        s += "\nTotal zero hours: " + zeroHours.toString();
+        s += "\nTotal additional hours: " + additionalHours.toString();
+        s += "\nTotal additional 125% hours: " + additional125Hours.toString();
+        s += "\nTotal additional 150% hours: " + additional150Hours.toString();
         s += "\nIs full day: " + isFullDay;
-        s += "\nGlobal absence: " + globalAbsence.toString();
-        s += "\nUnpaid absence: " + unpaidAbsence.toString();
+        s += "\nTotal global absence hours: " + globalAbsence.toString();
+        s += "\nTotal unpaid absence hours: " + unpaidAbsence.toString();
 
         return s;
     }

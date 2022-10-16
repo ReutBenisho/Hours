@@ -2,6 +2,9 @@ package com.example.hours.calcUtils;
 
 import androidx.annotation.NonNull;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 public class Student {
     public Timestamp additional125Hours;
     public Timestamp additional150Hours;

@@ -1,40 +1,83 @@
 package com.example.hours.fragments;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
+import android.widget.EditText;
 
-import com.example.hours.utils.Defaults;
+import com.example.hours.utils.App;
+//import com.example.hours.utils.EditTimeDialog;
+//import com.example.hours.utils.EditTimePreference;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.R;
-import com.example.hours.utils.SharedPreferencesUtil;
-import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.models.SettingsViewModel;
+//import com.example.hours.utils.TimeBindEditTextListener;
+import com.example.hours.utils.TimestampTextWatcher;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsFragment extends Fragment implements
         PreferenceFragmentCompat.OnPreferenceStartFragmentCallback{
+    public static Map<Integer, String> keyTypes = initMap();
 
-    public static final String TAG = "SETTINGS_FRAGMENT";
+    private static Map<Integer, String> initMap() {
+        HashMap<Integer, String> map = new HashMap<>();
+        //general
+        map.put(R.string.pref_system_dark_mode, "boolean");
+        map.put(R.string.pref_dark_mode, "boolean");
+        map.put(R.string.pref_system_language, "boolean");
+        map.put(R.string.pref_language, "String");
+        map.put(R.string.pref_student_mode, "boolean");
+        //notifications
+        map.put(R.string.pref_all_notifications, "boolean");
+        map.put(R.string.pref_notify_lunch_break, "boolean");
+        map.put(R.string.pref_notify_evening_break, "boolean");
+        map.put(R.string.pref_notify_night_break, "boolean");
+        map.put(R.string.pref_notify_mothers_transportation, "boolean");
+        map.put(R.string.pref_notify_afternoon_transportation, "boolean");
+        map.put(R.string.pref_notify_evening_transportation, "boolean");
+        map.put(R.string.pref_notify_night_transportation, "boolean");
+        map.put(R.string.pref_reminder_time, "String");
+        //times
+        map.put(R.string.pref_default_system_time, "boolean");
+        map.put(R.string.pref_default_arrival_time, "String");
+        map.put(R.string.pref_default_exit_time, "String");
+        map.put(R.string.pref_default_custom_breaks, "String");
+        map.put(R.string.use_default_system_times, "boolean");
+        map.put(R.string.pref_default_lunch_break_time, "String");
+        map.put(R.string.pref_default_lunch_break_duration, "String");
+        map.put(R.string.pref_default_evening_break_time, "String");
+        map.put(R.string.pref_default_evening_break_duration, "String");
+        map.put(R.string.pref_default_night_break_time, "String");
+        map.put(R.string.pref_default_night_break_duration, "String");
+
+
+        return map;
+    }
+
+    public static final String TAG = App.getStr(R.string.tag_settings_fragment);
     private SettingsViewModel mViewModel;
     private static final String TITLE_TAG = "settingsActivityTitle";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        container.removeAllViews(); // Inflate the layout for this fragment
+        if(container != null)
+            container.removeAllViews(); // Inflate the layout for this fragment
 // create ContextThemeWrapper from the original Activity Context with the custom theme
 //        Context context = new ContextThemeWrapper(getActivity(), R.style.Theme_Hours_Settings);
 //        // clone the inflater using the ContextThemeWrapper
@@ -76,7 +119,7 @@ public class SettingsFragment extends Fragment implements
 //
 //            }
 //        });
-        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, getString(R.string.menu_settings));
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.menu_settings);
         return view;
     }
 
@@ -99,13 +142,13 @@ public class SettingsFragment extends Fragment implements
         // Replace the existing Fragment with the new Fragment
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.settings_fragment_container, fragment)
-                .addToBackStack(fragment.TAG)
+                .addToBackStack(getString(fragment.TAG))
                 .commit();
         getActivity().setTitle(pref.getTitle());
         return true;
     }
     public static class ParentSettingsFragment extends PreferenceFragmentCompat {
-        public String TAG = "Parent Frag";
+        public int TAG = R.string.empty;
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
@@ -124,7 +167,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Settings";
+            TAG = R.string.menu_settings;
             setPreferencesFromResource(R.xml.header_preferences, rootKey);
         }
     }
@@ -133,7 +176,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Message Frag";
+            TAG = R.string.tag_messages_fragment;
             setPreferencesFromResource(R.xml.messages_preferences, rootKey);
         }
     }
@@ -142,7 +185,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Sync Frag";
+            TAG = R.string.tag_sync_fragment;
             setPreferencesFromResource(R.xml.sync_preferences, rootKey);
         }
     }
@@ -151,7 +194,7 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
-            TAG = "General";
+            TAG = R.string.general_header;
             super.onCreate(savedInstanceState);
         }
 
@@ -160,6 +203,7 @@ public class SettingsFragment extends Fragment implements
             setPreferencesFromResource(R.xml.general_preferences, rootKey);
         }
 
+        @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -172,63 +216,46 @@ public class SettingsFragment extends Fragment implements
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Notifications";
+            TAG = R.string.notifications_header;
             setPreferencesFromResource(R.xml.notifiations_preferences, rootKey);
         }
     }
 
     public static class TimesFragment extends ParentSettingsFragment {
+        View mView;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            TAG = "Times";
+            TAG = R.string.times_header;
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
         }
 
+        @NonNull
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            setDefaultTime(R.string.pref_default_arrival_time, Defaults.ARRIVAL_TIME.toString());
-            setDefaultTime(R.string.pref_default_launch_break_time, Defaults.LAUNCH_BREAK_START.toString());
-            return super.onCreateView(inflater, container, savedInstanceState);
+            mView =  super.onCreateView(inflater, container, savedInstanceState);
+
+            setDefaultTime(R.string.pref_default_arrival_time);
+            setDefaultTime(R.string.pref_default_exit_time);
+            setDefaultTime(R.string.pref_default_lunch_break_time);
+            setDefaultTime(R.string.pref_default_lunch_break_duration);
+            setDefaultTime(R.string.pref_default_evening_break_time);
+            setDefaultTime(R.string.pref_default_evening_break_duration);
+            setDefaultTime(R.string.pref_default_night_break_time);
+            setDefaultTime(R.string.pref_default_night_break_duration);
+            return mView;
         }
 
-        private void setDefaultTime(int idDefaultTime, String defaultValue) {
-            String strDefaultTime = getString(idDefaultTime);
-            findPreference(strDefaultTime)
-                    .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                        @Override
-                        public boolean onPreferenceClick(Preference preference) {
-                            TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                    Timestamp viewTimestamp = new Timestamp(selectedHour, selectedMinute);
-                                    preference.setDefaultValue(viewTimestamp.toString());
-                                    preference.setSummary(viewTimestamp.toString());
-                                }
-                            };
-                            Timestamp timestamp = new Timestamp();
-                            String value = preference.getSummary().toString();
-                            timestamp.setTime(value);
-                            TimePickerDialog timePickerDialog =
-                                    new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_DARK, onTimeSetListener,
-                                            timestamp.getHour(), timestamp.getMinute(),
-                                            true);
-                            timePickerDialog.setTitle(R.string.enter_time);
-                            timePickerDialog.show();
-                            return true;
-                        }
-                    });
-            Preference myPreference = findPreference(strDefaultTime);
-            SharedPreferencesUtil.setDefaults(strDefaultTime, defaultValue);
-            //PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(strDefaultTime, defaultValue);
-            myPreference.setSummary(defaultValue);
-            myPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        private void setDefaultTime(int prefId) {
+            EditTextPreference pref = findPreference(getString(prefId));
+            pref.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    preference.setSummary(newValue.toString());
-                    return false;
+                public void onBindEditText(@NonNull EditText editText) {
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    editText.addTextChangedListener(new TimestampTextWatcher(editText));
                 }
             });
+
         }
 
         private void ResetGeneralSettings() {

@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hours"
         android:name=".utils.App"
+        android:configChanges="locale|orientation"
         >
 
         <activity

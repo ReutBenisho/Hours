@@ -3,6 +3,9 @@ package com.example.hours.calcUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.hours.R;
+import com.example.hours.utils.App;
+
 import java.util.ArrayList;
 
 public class Breaks {
@@ -13,6 +16,8 @@ public class Breaks {
 
     @Override
     public boolean equals(@Nullable Object object) {
+        if(object == null || !(object instanceof Breaks))
+            return false;
         Breaks obj = (Breaks) object;
         if(preDefinedBreaks.size() != obj.preDefinedBreaks.size())
             return false;
@@ -32,7 +37,7 @@ public class Breaks {
             if(!allBreaks.get(i).equals(obj.allBreaks.get(i)))
                 return false;
         }
-        if(tookEveningBreak != tookEveningBreak)
+        if(tookEveningBreak != obj.tookEveningBreak)
             return false;
         return true;
     }
@@ -57,21 +62,21 @@ public class Breaks {
     @NonNull
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
 
         for(int i = 0; i < preDefinedBreaks.size(); i++){
-            s += "\nPre defined break # " + i + " " + preDefinedBreaks.get(i).toString();
+            s.append("\nPre defined break #").append(i).append(" ").append(preDefinedBreaks.get(i).toString());
         }
 
         for(int i = 0; i < customBreaks.size(); i++){
-            s += "\nCustom break # " + i + " " + customBreaks.get(i).toString();
+            s.append("\nCustom break #").append(i).append(" ").append(customBreaks.get(i).toString());
         }
 
 //        for(int i = 0; i < allBreaks.size(); i++){
 //            s += "\nAll breaks #" + i + allBreaks.get(i).toString();
 //        }
-        s += "\nTook evening break: " + tookEveningBreak;
+        s.append("\nTook evening break: ").append(tookEveningBreak);
 
-        return s;
+        return s.toString();
     }
 }
