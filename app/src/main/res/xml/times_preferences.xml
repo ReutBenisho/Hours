@@ -17,6 +17,16 @@
 <!--            app:useSimpleSummaryProvider="true"-->
 <!--            />-->
 
+<!--        <com.example.hours.preferences.dateformat.DateFormatPreference-->
+<!--            android:key="dayHeaderDateFormat"-->
+<!--            android:defaultValue="defaultWeekday:"-->
+<!--            android:title="Day Header Date Format"/>-->
+
+        <com.example.hours.preferences.customBreaks.CustomBreaksPreference
+            android:key="pref_custom_breaks"
+            android:title="Custom Breaks"/>
+
+
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/system_times"
         app:allowDividerBelow="true"

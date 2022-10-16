@@ -6,6 +6,12 @@ import android.util.Log;
 import androidx.preference.PreferenceManager;
 
 import com.example.hours.R;
+import com.example.hours.calcUtils.BreakTimes;
+import com.example.hours.calcUtils.CustomBreak;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SharedPreferencesUtil {
     public static void loadDefaults(){
@@ -33,6 +39,10 @@ public class SharedPreferencesUtil {
         Defaults.User.EVENING_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString()));
         Defaults.User.NIGHT_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString()));
         Defaults.User.NIGHT_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString()));
+        ArrayList<CustomBreak> breaks = CustomBreak.deseralize(manager.getString("CustomBreaks", ""));
+        Defaults.User.CUSTOM_BREAKS_LIST.clear();
+        for (int i = 0; i < breaks.size(); i++)
+            Defaults.addBreakToList(breaks.get(i));
 
     }
 
@@ -45,6 +55,13 @@ public class SharedPreferencesUtil {
         editor.putString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
         editor.putString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
         editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
+        ArrayList<CustomBreak> breaks = new ArrayList<>();
+        breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0)));
+        breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15)));
+
+        Set<CustomBreak> set = new HashSet<>();
+        set.addAll(breaks);
+        editor.putString("CustomBreaks", CustomBreak.serialize(breaks));
     }
 
     public static void setDefaults(String key, String value) {

@@ -19,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.hours.interfaces.OnUpdateListener;
+import com.example.hours.preferences.customBreaks.CustomBreaksDialog;
+import com.example.hours.preferences.customBreaks.CustomBreaksPreference;
+import com.example.hours.preferences.dateformat.DateFormatDialog;
+import com.example.hours.preferences.dateformat.DateFormatPreference;
 import com.example.hours.utils.App;
 //import com.example.hours.utils.EditTimeDialog;
 //import com.example.hours.utils.EditTimePreference;
@@ -231,6 +235,24 @@ public class SettingsFragment extends Fragment implements
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             TAG = R.string.times_header;
             setPreferencesFromResource(R.xml.times_preferences, rootKey);
+        }
+
+        @Override
+        public void onDisplayPreferenceDialog(@NonNull Preference preference) {
+            DialogFragment dialogFragment = null;
+//            if (preference instanceof DateFormatPreference) {
+//                dialogFragment = new DateFormatDialog((DateFormatPreference) preference);
+//            }
+            if (preference instanceof CustomBreaksPreference) {
+                dialogFragment = new CustomBreaksDialog((CustomBreaksPreference) preference);
+            }
+
+            if (dialogFragment != null) {
+                dialogFragment.setTargetFragment(this, 0);
+                dialogFragment.show(getFragmentManager(), getString(TAG));
+            } else {
+                super.onDisplayPreferenceDialog(preference);
+            }
         }
 
         @NonNull

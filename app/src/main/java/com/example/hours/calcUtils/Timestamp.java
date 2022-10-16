@@ -20,6 +20,10 @@ public class Timestamp {
         mTime = Duration.of(0, ChronoUnit.MINUTES);
     }
 
+    public Timestamp(String str) {
+        setTime(str);
+    }
+
     public static Timestamp removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
         if(isOverlap(startRange1, endRange1, startRange2, endRange2)){
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);

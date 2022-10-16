@@ -2,7 +2,11 @@ package com.example.hours.utils;
 
 import android.util.Log;
 
+import com.example.hours.calcUtils.CustomBreak;
 import com.example.hours.calcUtils.Timestamp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Defaults {
 
@@ -49,6 +53,8 @@ public class Defaults {
 
         public static Timestamp NIGHT_BREAK_START = System.NIGHT_BREAK_START.copy();
         public static Timestamp NIGHT_BREAK_DURATION = System.NIGHT_BREAK_DURATION.copy();
+
+        public static ArrayList<CustomBreak> CUSTOM_BREAKS_LIST = new ArrayList<>();
     }
 
     public static Timestamp getArrival(){
@@ -155,6 +161,25 @@ public class Defaults {
         Timestamp temp = User.EXIT_TIME;
         Log.d("Defaults", "exit is " + temp.toString());
         return User.EXIT_TIME.copy();
+    }
+
+    public static ArrayList<CustomBreak> getCustomBreaksList()
+    {
+        ArrayList<CustomBreak> list = new ArrayList<>();
+        for(int i = 0; i < User.CUSTOM_BREAKS_LIST.size(); i++)
+        {
+            list.add(User.CUSTOM_BREAKS_LIST.get(i).copy());
+        }
+        return list;
+    }
+
+    public static void clearCustomBreaksList(){
+
+        User.CUSTOM_BREAKS_LIST.clear();
+    }
+
+    public static void addBreakToList(CustomBreak breakPref){
+        User.CUSTOM_BREAKS_LIST.add(breakPref.copy());
     }
 
 }
