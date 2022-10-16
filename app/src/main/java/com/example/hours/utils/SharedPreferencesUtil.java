@@ -20,14 +20,7 @@ public class SharedPreferencesUtil {
         if(firstRun)
         {
             editor.putBoolean("pref_first_run",false);
-            editor.putString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
-            editor.putString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
-            editor.putString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
-            editor.putString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString());
-            editor.putString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString());
-            editor.putString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
-            editor.putString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
-            editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
+            setDefaultTimeToSharedPreference(editor);
             editor.commit();
         }
 
@@ -42,6 +35,18 @@ public class SharedPreferencesUtil {
         Defaults.User.NIGHT_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString()));
 
     }
+
+    private static void setDefaultTimeToSharedPreference(SharedPreferences.Editor editor) {
+        editor.putString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
+        editor.putString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
+        editor.putString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
+        editor.putString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString());
+        editor.putString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString());
+        editor.putString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
+        editor.putString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
+        editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
+    }
+
     public static void setDefaults(String key, String value) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         SharedPreferences.Editor editor = preferences.edit();
@@ -63,5 +68,31 @@ public class SharedPreferencesUtil {
     public static boolean getBoolean(String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         return preferences.getBoolean(key, false);
+    }
+
+    public static boolean isTimePref(String pref) {
+        if(pref == App.getStr(R.string.pref_default_arrival_time)
+        || pref == App.getStr(R.string.pref_default_exit_time)
+        || pref == App.getStr(R.string.pref_default_lunch_break_time)
+        || pref == App.getStr(R.string.pref_default_lunch_break_duration)
+        || pref == App.getStr(R.string.pref_default_evening_break_time)
+        || pref == App.getStr(R.string.pref_default_evening_break_duration)
+        || pref == App.getStr(R.string.pref_default_night_break_time)
+        || pref == App.getStr(R.string.pref_default_night_break_duration))
+                return true;
+        return false;
+    }
+
+    public static void setPreviousTime(String pref) {
+        String orgStr = SharedPreferencesUtil.getString(pref);
+        SharedPreferences manager = PreferenceManager.getDefaultSharedPreferences(App.getContext());
+        SharedPreferences.Editor editor= manager.edit();
+        setDefaultTimeToSharedPreference(editor);
+        editor.commit();
+        String newStr = SharedPreferencesUtil.getString(pref);
+        if(orgStr == newStr)
+            Log.d("setPreviousTime", "didnt change to previous");
+        else
+            Log.d("setPreviousTime", "successully");
     }
 }

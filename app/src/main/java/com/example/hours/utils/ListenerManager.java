@@ -11,6 +11,7 @@ public class ListenerManager {
     public enum ListenerType{
         INFO_LABELS,
         ACTION_BAR_TITLE,
+        PREFERENCE_CHANGE
     }
     public static class Data{
         public final ListenerType type;
@@ -44,7 +45,7 @@ public class ListenerManager {
             return;
         for(int i = 0; i < mListeners.get(type).size(); i++){
             OnUpdateListener listener =  mListeners.get(type).get(i);
-            listener.onUpdate(listener,new Data(type, obj));
+            listener.onUpdateListener(listener,new Data(type, obj));
         }
     }
 

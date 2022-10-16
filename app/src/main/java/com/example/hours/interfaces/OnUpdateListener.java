@@ -1,5 +1,5 @@
 package com.example.hours.interfaces;
 
 public interface OnUpdateListener {
-    void onUpdate(OnUpdateListener listener, Object obj);
+    void onUpdateListener(OnUpdateListener listener, Object obj);
 }

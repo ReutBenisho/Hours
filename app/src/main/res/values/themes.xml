@@ -33,4 +33,12 @@
 
     <style name="Theme.Hours.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AlertDialogCustom" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/background_center_color</item>
+        <item name="colorPrimary">@color/background_center_color</item>
+        <item name="android:background">#222222</item>
+        <item name="textColorAlertDialogListItem">@color/white</item>
+    </style>
+
 </resources>
