@@ -152,7 +152,8 @@ public class Defaults {
     }
 
     public static Timestamp getExit(){
-
+        Timestamp temp = User.EXIT_TIME;
+        Log.d("Defaults", "exit is " + temp.toString());
         return User.EXIT_TIME.copy();
     }
 

@@ -49,6 +49,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     private LinearLayout mLayoutExitTime;
     private TextInputEditText mTxtArrivalTime;
     private TextWatcher mTimestampTextWatcher;
+    private EditText mTxtExitTime;
 
 
     public static CalcDayFragment newInstance() {
@@ -106,12 +107,14 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
                     Utils.addExitTimeLayout(getLayoutInflater(), mLayoutExitTime, getContext());
-                    EditText txtExitTime = getView().findViewById(R.id.txt_exit_time);
-                    if(txtExitTime != null)
-                        mHoursManager.info.userInfo.exitTime.setTime(txtExitTime.getText().toString());
+                    mTxtExitTime = getView().findViewById(R.id.txt_exit_time);
+                    if(mTxtExitTime != null)
+                        mHoursManager.info.userInfo.exitTime.setTime(mTxtExitTime.getText().toString());
                 }
-                else
+                else {
                     Utils.removeExitTime(mLayoutExitTime);
+                    mTxtExitTime = null;
+                }
 
                 openCalcDayFragment(isChecked);
             }
@@ -130,7 +133,6 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         return view;
     }
 //    דברים נוספים שצריכה לעשות:
-//    לתמוך בקריאה מה-sjaredprefernec בעת טעינה
 //    למנוע לחיצה על OK אם שעה לא חוקית
 //    לאפשר יצירת הפסקות קבועות בsharedperefrence
     @Override
@@ -138,8 +140,14 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         super.onResume();
         String str = Defaults.getArrival().toString();
         String from = mTxtArrivalTime.getText().toString();
-        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        Log.d("onResume", "chaning arrival txtView from " + from + " to " + str);
         mTxtArrivalTime.setText(str);
+        if(mTxtExitTime != null) {
+            str = Defaults.getExit().toString();
+            from = mTxtExitTime.getText().toString();
+            Log.d("onResume", "chaning exit txtView from " + from + " to " + str);
+            mTxtExitTime.setText(str);
+        }
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 

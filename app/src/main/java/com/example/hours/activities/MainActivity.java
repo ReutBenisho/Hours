@@ -466,14 +466,19 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 break;
             case R.string.pref_default_arrival_time:
                 String s = sharedPreferences.getString(pref, "");
-                Log.d("onSharedPreferenceChanged", "changing arrival time to " + s);
+                Log.d("onSharedPreferenceChanged", "changing ARRIVAL_TIME to " + s);
                 Defaults.User.ARRIVAL_TIME.setTime(s);
                 break;
             case R.string.pref_default_exit_time:
-                Defaults.User.EXIT_TIME.setTime(sharedPreferences.getString(pref, ""));
+                String s2 = sharedPreferences.getString(pref, "");
+                Log.d("onSharedPreferenceChanged", "changing EXIT_TIME to " + s2);
+                Defaults.User.EXIT_TIME.setTime(s2);
                 break;
             case R.string.pref_default_custom_breaks:
                 //TODO: do stuff
+                break;
+            case R.string.pref_default_system_time:
+                Defaults.useSystem = sharedPreferences.getBoolean(pref, true);
                 break;
             case R.string.pref_default_lunch_break_time:
                 Defaults.User.LUNCH_BREAK_START.setTime(sharedPreferences.getString(pref, ""));
