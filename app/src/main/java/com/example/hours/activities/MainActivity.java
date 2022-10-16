@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -464,7 +465,9 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 }
                 break;
             case R.string.pref_default_arrival_time:
-                Defaults.User.ARRIVAL_TIME.setTime(sharedPreferences.getString(pref, ""));
+                String s = sharedPreferences.getString(pref, "");
+                Log.d("onSharedPreferenceChanged", "changing arrival time to " + s);
+                Defaults.User.ARRIVAL_TIME.setTime(s);
                 break;
             case R.string.pref_default_exit_time:
                 Defaults.User.EXIT_TIME.setTime(sharedPreferences.getString(pref, ""));

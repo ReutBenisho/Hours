@@ -15,14 +15,15 @@ public class SharedPreferencesUtil {
 
         SharedPreferences manager = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         Defaults.useSystem = manager.getBoolean(App.getStr(R.string.pref_default_system_time), true);
-        manager.getString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
-        manager.getString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
-        manager.getString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
-        manager.getString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString());
-        manager.getString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString());
-        manager.getString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
-        manager.getString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
-        manager.getString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
+
+        Defaults.User.ARRIVAL_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString()));
+        Defaults.User.EXIT_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString()));
+        Defaults.User.LUNCH_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString()));
+        Defaults.User.LUNCH_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString()));
+        Defaults.User.EVENING_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString()));
+        Defaults.User.EVENING_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString()));
+        Defaults.User.NIGHT_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString()));
+        Defaults.User.NIGHT_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString()));
     }
     public static void setDefaults(String key, String value) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());

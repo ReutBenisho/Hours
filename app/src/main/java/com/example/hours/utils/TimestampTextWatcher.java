@@ -2,13 +2,12 @@ package com.example.hours.utils;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.example.hours.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Calendar;
 
 public class TimestampTextWatcher implements TextWatcher {
     private final EditText mEditText;
@@ -22,7 +21,14 @@ public class TimestampTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        int editTextId = mEditText.getId();
+        String name = mEditText.getResources().getResourceName(editTextId);
+        if(current == "")
+            Log.d("onTextChanged", "view = " + name + " First entrance");
+
+        Log.d("onTextChanged", "view = " + name + " checking if already equal to value...");
         if (!s.toString().equals(current)) {
+            Log.d("onTextChanged", "view = " + name + " different (current is " + current + " and s is " + s.toString());
             String currentString = s.toString();
             int sel = currentString.length();
             //if(current != "") {
@@ -148,6 +154,8 @@ public class TimestampTextWatcher implements TextWatcher {
 //                current = currentString;
 //
 //            }
+
+            Log.d("onTextChanged", "view = " + name + " set value to " + current);
             mEditText.setText(current);
             mEditText.setSelection(sel < current.length() ? sel : current.length());
 

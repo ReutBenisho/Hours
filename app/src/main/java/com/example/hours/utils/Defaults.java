@@ -1,5 +1,7 @@
 package com.example.hours.utils;
 
+import android.util.Log;
+
 import com.example.hours.calcUtils.Timestamp;
 
 public class Defaults {
@@ -23,7 +25,6 @@ public class Defaults {
         public static final Timestamp EXTRA_ADDITIONAL_HOURS = new Timestamp(2, 30);
         public static final Timestamp ADDITIONAL_125_HOURS = new Timestamp(2, 0);
 
-
         public static final Timestamp EVENING_BREAK_START = new Timestamp(19, 36);
         public static final Timestamp EVENING_BREAK_DURATION = new Timestamp(0, 12);
 
@@ -32,51 +33,55 @@ public class Defaults {
     }
 
     public static class User {
-        public static Timestamp ARRIVAL_TIME = new Timestamp(System.ARRIVAL_TIME);
+        public static Timestamp ARRIVAL_TIME = System.ARRIVAL_TIME.copy();
         public static Timestamp EXIT_TIME = System.ARRIVAL_TIME.add(System.HALF_DAY).add(System.HALF_DAY).add(System.LUNCH_BREAK_DURATION);
-        public static Timestamp HALF_DAY = new Timestamp(System.HALF_DAY);
-        public static Timestamp LUNCH_BREAK_START = new Timestamp(System.LUNCH_BREAK_START);
-        public static Timestamp LUNCH_BREAK_DURATION = new Timestamp(System.LUNCH_BREAK_DURATION);
+        public static Timestamp HALF_DAY = System.HALF_DAY.copy();
+        public static Timestamp LUNCH_BREAK_START = System.LUNCH_BREAK_START.copy();
+        public static Timestamp LUNCH_BREAK_DURATION = System.LUNCH_BREAK_DURATION.copy();
 
-        public static Timestamp ZERO_HOURS = new Timestamp(System.ZERO_HOURS);
-        public static Timestamp ADDITIONAL_HOURS = new Timestamp(System.ADDITIONAL_HOURS);
-        public static Timestamp EXTRA_ADDITIONAL_HOURS = new Timestamp(System.EXTRA_ADDITIONAL_HOURS);
-        public static Timestamp ADDITIONAL_125_HOURS = new Timestamp(System.ADDITIONAL_125_HOURS);
+        public static Timestamp ZERO_HOURS = System.ZERO_HOURS.copy();
+        public static Timestamp ADDITIONAL_HOURS = System.ADDITIONAL_HOURS.copy();
+        public static Timestamp EXTRA_ADDITIONAL_HOURS = System.EXTRA_ADDITIONAL_HOURS.copy();
+        public static Timestamp ADDITIONAL_125_HOURS = System.ADDITIONAL_125_HOURS.copy();
 
-        public static Timestamp EVENING_BREAK_START = new Timestamp(System.EVENING_BREAK_START);
-        public static Timestamp EVENING_BREAK_DURATION = new Timestamp(System.EVENING_BREAK_DURATION);
+        public static Timestamp EVENING_BREAK_START = System.EVENING_BREAK_START.copy();
+        public static Timestamp EVENING_BREAK_DURATION = System.EVENING_BREAK_DURATION.copy();
 
-        public static Timestamp NIGHT_BREAK_START = new Timestamp(System.NIGHT_BREAK_START);
-        public static Timestamp NIGHT_BREAK_DURATION = new Timestamp(System.NIGHT_BREAK_DURATION);
+        public static Timestamp NIGHT_BREAK_START = System.NIGHT_BREAK_START.copy();
+        public static Timestamp NIGHT_BREAK_DURATION = System.NIGHT_BREAK_DURATION.copy();
     }
 
     public static Timestamp getArrival(){
-        return User.ARRIVAL_TIME;
+        Timestamp temp = User.ARRIVAL_TIME;
+        Log.d("Defaults", "arrival is " + temp.toString());
+        return User.ARRIVAL_TIME.copy();
     }
 
     public static Timestamp getHalfDay(){
         if(useSystem)
-            return System.HALF_DAY;
-        return User.HALF_DAY;
+            return System.HALF_DAY.copy();
+        return User.HALF_DAY.copy();
     }
 
     public static Timestamp getFullDay(){
+
         return getHalfDay().add(getHalfDay());
     }
 
     public static Timestamp getLunchStart(){
         if(useSystem)
-            return System.LUNCH_BREAK_START;
-        return User.LUNCH_BREAK_START;
+            return System.LUNCH_BREAK_START.copy();
+        return User.LUNCH_BREAK_START.copy();
     }
 
     public static Timestamp getLunchDuration(){
         if(useSystem)
-            return System.LUNCH_BREAK_DURATION;
-        return User.LUNCH_BREAK_DURATION;
+            return System.LUNCH_BREAK_DURATION.copy();
+        return User.LUNCH_BREAK_DURATION.copy();
     }
 
     public static Timestamp getLunchEnd(){
+
         return getLunchStart().add(getLunchDuration());
     }
 
@@ -86,20 +91,20 @@ public class Defaults {
 
     public static Timestamp getZeroHours(){
         if(useSystem)
-            return System.ZERO_HOURS;
-        return User.ZERO_HOURS;
+            return System.ZERO_HOURS.copy();
+        return User.ZERO_HOURS.copy();
     }
 
     public static Timestamp getAdditionalHours(){
         if(useSystem)
-            return System.ADDITIONAL_HOURS;
-        return User.ADDITIONAL_HOURS;
+            return System.ADDITIONAL_HOURS.copy();
+        return User.ADDITIONAL_HOURS.copy();
     }
 
     public static Timestamp getExtraAdditionalHours(){
         if(useSystem)
-            return System.EXTRA_ADDITIONAL_HOURS;
-        return User.EXTRA_ADDITIONAL_HOURS;
+            return System.EXTRA_ADDITIONAL_HOURS.copy();
+        return User.EXTRA_ADDITIONAL_HOURS.copy();
     }
 
     public static Timestamp getMaxAdditionalHours(){
@@ -108,44 +113,47 @@ public class Defaults {
 
     public static Timestamp getAdditional125Hours(){
         if(useSystem)
-            return System.ADDITIONAL_125_HOURS;
-        return User.ADDITIONAL_125_HOURS;
+            return System.ADDITIONAL_125_HOURS.copy();
+        return User.ADDITIONAL_125_HOURS.copy();
     }
 
     public static Timestamp getEveningStart(){
         if(useSystem)
-            return System.EVENING_BREAK_START;
-        return User.EVENING_BREAK_START;
+            return System.EVENING_BREAK_START.copy();
+        return User.EVENING_BREAK_START.copy();
     }
 
     public static Timestamp getEveningDuration(){
         if(useSystem)
-            return System.EVENING_BREAK_DURATION;
-        return User.EVENING_BREAK_DURATION;
+            return System.EVENING_BREAK_DURATION.copy();
+        return User.EVENING_BREAK_DURATION.copy();
     }
 
     public static Timestamp getEveningEnd(){
+
         return getEveningStart().add(getEveningDuration());
     }
 
     public static Timestamp getNightStart(){
         if(useSystem)
-            return System.NIGHT_BREAK_START;
-        return User.NIGHT_BREAK_START;
+            return System.NIGHT_BREAK_START.copy();
+        return User.NIGHT_BREAK_START.copy();
     }
 
     public static Timestamp getNightDuration(){
         if(useSystem)
-            return System.NIGHT_BREAK_DURATION;
-        return User.NIGHT_BREAK_DURATION;
+            return System.NIGHT_BREAK_DURATION.copy();
+        return User.NIGHT_BREAK_DURATION.copy();
     }
 
     public static Timestamp getNightEnd(){
+
         return getNightStart().add(getNightDuration());
     }
 
     public static Timestamp getExit(){
-        return User.EXIT_TIME;
+
+        return User.EXIT_TIME.copy();
     }
 
 }

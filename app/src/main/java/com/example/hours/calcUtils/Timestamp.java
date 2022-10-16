@@ -163,4 +163,9 @@ public class Timestamp {
     public boolean lessThan(Timestamp other) {
         return isBefore(other);
     }
+
+    public Timestamp copy(){
+        return new Timestamp(this);
+    }
+
 }

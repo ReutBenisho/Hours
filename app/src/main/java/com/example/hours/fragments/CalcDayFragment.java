@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     private AppCompatCheckBox mCkbtn_friday;
     private LinearLayout mLayoutExitTime;
     private TextInputEditText mTxtArrivalTime;
+    private TextWatcher mTimestampTextWatcher;
 
 
     public static CalcDayFragment newInstance() {
@@ -56,6 +59,12 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
+    }
+
+    @Override
+    public void onDestroyView() {
+        mTxtArrivalTime.removeTextChangedListener(mTimestampTextWatcher);
+        super.onDestroyView();
     }
 
     @Override
@@ -80,8 +89,16 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         mHoursManager = HoursManager.getInstance();
         mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
-        mTxtArrivalTime.setText(Defaults.getArrival().toString());
-        mTxtArrivalTime.addTextChangedListener(new TimestampTextWatcher(mTxtArrivalTime));
+        String from = mTxtArrivalTime.getText().toString();
+        String str = Defaults.getArrival().toString();
+        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        mTxtArrivalTime.setText(str);
+        mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrivalTime);
+        if(mTxtArrivalTime.getTag() == null)
+        {
+            mTxtArrivalTime.addTextChangedListener(mTimestampTextWatcher);
+            mTxtArrivalTime.setTag(mTimestampTextWatcher);
+        }
 
         mCkbtn_add_exit_time = view.findViewById(R.id.ckbtn_add_exit_time);
         mCkbtn_add_exit_time.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -112,11 +129,17 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         return view;
     }
-
+//    דברים נוספים שצריכה לעשות:
+//    לתמוך בקריאה מה-sjaredprefernec בעת טעינה
+//    למנוע לחיצה על OK אם שעה לא חוקית
+//    לאפשר יצירת הפסקות קבועות בsharedperefrence
     @Override
     public void onResume() {
         super.onResume();
-        mTxtArrivalTime.setText(Defaults.getArrival().toString());
+        String str = Defaults.getArrival().toString();
+        String from = mTxtArrivalTime.getText().toString();
+        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        mTxtArrivalTime.setText(str);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
     }
 
