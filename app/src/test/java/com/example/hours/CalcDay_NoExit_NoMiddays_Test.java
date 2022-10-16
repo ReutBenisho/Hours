@@ -42,19 +42,18 @@ public void test1_Arrival_07_30() {
         mHoursManager.CalcDayNoExit();
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
-        expHoursInfo.calcInfo.halfDay = new Timestamp(Defaults.getHalfDay());
-        expHoursInfo.calcInfo.fullDay = Defaults.getFullDayWithLunchBreak();
-        expHoursInfo.calcInfo.zeroHours = Defaults.getFullDayWithLunchBreak().add(Defaults.getZeroHours());
+        expHoursInfo.calcInfo.halfDay = Defaults.getArrival().add(Defaults.getHalfDay());
+        expHoursInfo.calcInfo.fullDay = Defaults.getArrival().add(Defaults.getFullDayWithLunchBreak());
+        expHoursInfo.calcInfo.zeroHours = Defaults.getArrival().add(Defaults.getFullDayWithLunchBreak().add(Defaults.getZeroHours()));
         expHoursInfo.calcInfo.additional3AndHalfHours =
-                Defaults.getFullDayWithLunchBreak()
+                Defaults.getArrival().add(Defaults.getFullDayWithLunchBreak())
                         .add(Defaults.getZeroHours())
                         .add(Defaults.getAdditionalHours())
-                        .add(Defaults.getLunchDuration());
+                        .add(Defaults.getEveningDuration());
         expHoursInfo.calcInfo.additional6Hours =
-                Defaults.getFullDayWithLunchBreak()
-                        .add(Defaults.getZeroHours())
+                Defaults.getArrival().add(Defaults.getFullDayWithLunchBreak())
                         .add(Defaults.getMaxAdditionalHours())
-                        .add(Defaults.getLunchDuration());
+                        .add(Defaults.getEveningDuration());
         expHoursInfo.breaks.tookEveningBreak = true;
         assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
     }

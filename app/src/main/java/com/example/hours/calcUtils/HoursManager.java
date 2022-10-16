@@ -141,8 +141,8 @@ public class HoursManager {
                         info.calcInfo.totalTime.additional125Hours.setTime(additional);
                     }
                     else {
-                        info.calcInfo.totalTime.additional125Hours.setTime(Defaults.getAdditionalHours());
-                        info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.getAdditionalHours()));
+                        info.calcInfo.totalTime.additional125Hours.setTime(Defaults.getAdditional125Hours());
+                        info.calcInfo.totalTime.additional150Hours.setTime(additional.sub(Defaults.getAdditional125Hours()));
                     }
                 }
                 else {
