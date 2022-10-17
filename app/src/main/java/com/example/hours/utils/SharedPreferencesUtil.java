@@ -1,7 +1,6 @@
 package com.example.hours.utils;
 
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -10,8 +9,6 @@ import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.CustomBreak;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class SharedPreferencesUtil {
     public static void loadDefaults(){
@@ -22,7 +19,7 @@ public class SharedPreferencesUtil {
         if(firstRun)
         {
             editor.putBoolean(App.getStr(R.string.pref_first_run),false);
-            setDefaultTimeToSharedPreference(editor);
+            setDefaultTimeToSharedPreference(editor, null);
             editor.commit();
         }
 
@@ -44,23 +41,30 @@ public class SharedPreferencesUtil {
 
     }
 
-    private static void setDefaultTimeToSharedPreference(SharedPreferences.Editor editor) {
-        editor.putString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
-        editor.putString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
-        editor.putString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
-        editor.putString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString());
-        editor.putString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString());
-        editor.putString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
-        editor.putString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
-        editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
-        ArrayList<CustomBreak> breaks = new ArrayList<>();
-        breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0)));
-        breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15)));
-        breaks.add(new CustomBreak(true, new BreakTimes(12, 50, 13, 15)));
-
-        Set<CustomBreak> set = new HashSet<>();
-        set.addAll(breaks);
-        editor.putString("CustomBreaks", CustomBreak.serialize(breaks));
+    private static void setDefaultTimeToSharedPreference(SharedPreferences.Editor editor, String pref) {
+        if(pref == null || pref == App.getStr(R.string.pref_default_arrival_time))
+            editor.putString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_exit_time))
+            editor.putString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_lunch_break_time))
+            editor.putString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_lunch_break_duration))
+            editor.putString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_evening_break_time))
+            editor.putString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_evening_break_duration))
+            editor.putString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_night_break_time))
+            editor.putString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_night_break_duration))
+            editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_custom_breaks)) {
+            ArrayList<CustomBreak> breaks = new ArrayList<>();
+            breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0)));
+            breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15)));
+            breaks.add(new CustomBreak(true, new BreakTimes(12, 50, 13, 15)));
+            editor.putString(App.getStr(R.string.pref_custom_breaks), CustomBreak.serialize(breaks));
+        }
     }
 
     public static void setDefaults(String key, String value) {
@@ -100,10 +104,9 @@ public class SharedPreferencesUtil {
     }
 
     public static void setPreviousTime(String pref) {
-        String orgStr = SharedPreferencesUtil.getString(pref);
         SharedPreferences manager = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         SharedPreferences.Editor editor= manager.edit();
-        setDefaultTimeToSharedPreference(editor);
+        setDefaultTimeToSharedPreference(editor, pref);
         editor.commit();
     }
 }

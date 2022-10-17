@@ -21,8 +21,6 @@ import android.widget.EditText;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.preferences.customBreaks.CustomBreaksDialog;
 import com.example.hours.preferences.customBreaks.CustomBreaksPreference;
-import com.example.hours.preferences.dateformat.DateFormatDialog;
-import com.example.hours.preferences.dateformat.DateFormatPreference;
 import com.example.hours.utils.App;
 //import com.example.hours.utils.EditTimeDialog;
 //import com.example.hours.utils.EditTimePreference;
@@ -62,7 +60,7 @@ public class SettingsFragment extends Fragment implements
         map.put(R.string.pref_default_system_time, "boolean");
         map.put(R.string.pref_default_arrival_time, "String");
         map.put(R.string.pref_default_exit_time, "String");
-        map.put(R.string.pref_default_custom_breaks, "String");
+        map.put(R.string.pref_custom_breaks, "String");
         map.put(R.string.use_default_system_times, "boolean");
         map.put(R.string.pref_default_lunch_break_time, "String");
         map.put(R.string.pref_default_lunch_break_duration, "String");
@@ -268,7 +266,7 @@ public class SettingsFragment extends Fragment implements
             setDefaultTime(R.string.pref_default_evening_break_duration);
             setDefaultTime(R.string.pref_default_night_break_time);
             setDefaultTime(R.string.pref_default_night_break_duration);
-            ListenerManager.addListener(this, ListenerManager.ListenerType.PREFERENCE_CHANGE);
+            ListenerManager.addListener(this, ListenerManager.ListenerType.TIME_PREFERENCE_CHANGE);
             return mView;
         }
 
@@ -297,10 +295,11 @@ public class SettingsFragment extends Fragment implements
             if(listener == this) {
                 ListenerManager.Data data = (ListenerManager.Data) obj;
                 switch (data.type) {
-                    case PREFERENCE_CHANGE: {
+                    case TIME_PREFERENCE_CHANGE: {
                         String key = ((String)data.obj);
                         String val = SharedPreferencesUtil.getString(key);
                         findPreference(key).setSummary(val);
+                        break;
                     }
                 }
             }

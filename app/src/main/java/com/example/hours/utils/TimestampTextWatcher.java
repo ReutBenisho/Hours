@@ -173,8 +173,7 @@ public class TimestampTextWatcher implements TextWatcher {
             else {
                 if (current.matches("^([01][0-9]|2[0-3]):([0-5][0-9])$"))
                 {
-                    mEditText.setTextColor(mEditText.getResources().getColor(R.color.white));
-
+                    mEditText.setTextColor(mEditText.getResources().getColor(R.color.settings_text_primary));
                 }
                 else
                    mEditText.setTextColor(mEditText.getResources().getColor(R.color.red));

@@ -40,7 +40,7 @@
         <item name="android:textColorPrimary">@color/background_center_color</item>
         <item name="colorPrimary">@color/background_center_color</item>
         <item name="android:background">@color/settings_dialog_background</item>
-        <item name="textColorAlertDialogListItem">@color/white</item>
+        <item name="textColorAlertDialogListItem">@color/settings_text_primary</item>
     </style>
 
 </resources>

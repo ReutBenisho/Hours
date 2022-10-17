@@ -24,26 +24,26 @@ public class CustomBreaksPreference extends DialogPreference {
     }
 
     public CustomBreaksPreference(Context context, AttributeSet attrs) {
+
         super(context, attrs);
     }
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        ArrayList<CustomBreak> list = CustomBreak.deseralize(SharedPreferencesUtil.getString("CustomBreaks"));
-        return list;
+        return CustomBreak.deseralize(SharedPreferencesUtil.getString(App.getStr(R.string.pref_custom_breaks)));
     }
 
     @Override
     public void setDefaultValue(Object defaultValue) {
         super.setDefaultValue(defaultValue);
-        this.mBreaksList = (ArrayList<CustomBreak>) defaultValue;
+        mBreaksList = (ArrayList<CustomBreak>) CustomBreak.deseralize(SharedPreferencesUtil.getString(App.getStr(R.string.pref_custom_breaks)));
         Defaults.setCustomBreaks(mBreaksList);
 
     }
 
     @Override
     protected void onSetInitialValue(@Nullable Object defaultValue) {
-        mBreaksList = (ArrayList<CustomBreak>) defaultValue;
+        mBreaksList = (ArrayList<CustomBreak>) CustomBreak.deseralize(SharedPreferencesUtil.getString(App.getStr(R.string.pref_custom_breaks)));
        Defaults.setCustomBreaks(mBreaksList);
 
         showValue();
@@ -65,7 +65,7 @@ public class CustomBreaksPreference extends DialogPreference {
     public void setValue(ArrayList<CustomBreak> list) {
         this.mBreaksList = list;
         Defaults.setCustomBreaks(mBreaksList);
-        SharedPreferencesUtil.setDefaults("CustomBreaks", CustomBreak.serialize(mBreaksList));
+        SharedPreferencesUtil.setDefaults(App.getStr(R.string.pref_custom_breaks), CustomBreak.serialize(mBreaksList));
         showValue();
     }
 
