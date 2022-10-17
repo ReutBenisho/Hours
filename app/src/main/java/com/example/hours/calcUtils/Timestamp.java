@@ -74,7 +74,7 @@ public class Timestamp {
     }
 
     public boolean isBetween(Timestamp first, Timestamp second){
-        return mTime.compareTo(first.mTime) > 0 && mTime.compareTo(second.mTime) < 0;
+        return mTime.compareTo(first.mTime) >= 0 && mTime.compareTo(second.mTime) <= 0;
     }
 
     public Timestamp add(int hour, int minute){
