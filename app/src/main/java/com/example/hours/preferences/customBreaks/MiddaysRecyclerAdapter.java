@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,13 +19,13 @@ import com.example.hours.utils.TimestampTextWatcher;
 
 import java.util.ArrayList;
 
-public class CustomBreaksRecyclerAdapter extends RecyclerView.Adapter<CustomBreaksRecyclerAdapter.ViewHolder>{
+public class MiddaysRecyclerAdapter extends RecyclerView.Adapter<MiddaysRecyclerAdapter.ViewHolder>{
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private final ArrayList<CustomBreak> mCustomBreaksList;
 
-    public CustomBreaksRecyclerAdapter(Context context, ArrayList<CustomBreak> breaks) {
+    public MiddaysRecyclerAdapter(Context context, ArrayList<CustomBreak> breaks) {
         mContext = context;
         mCustomBreaksList = breaks;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -35,7 +34,7 @@ public class CustomBreaksRecyclerAdapter extends RecyclerView.Adapter<CustomBrea
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mLayoutInflater.inflate(R.layout.custom_break_preference_item, parent, false);
+        View itemView = mLayoutInflater.inflate(R.layout.row_midday_exit_and_arrival_times, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -43,38 +42,36 @@ public class CustomBreaksRecyclerAdapter extends RecyclerView.Adapter<CustomBrea
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CustomBreak breakPref = mCustomBreaksList.get(holder.getAdapterPosition());
-        holder.mCkbxIsEnabled.setChecked(breakPref.isEnabled);
-        holder.mCkbxIsEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled = b;
-            }
-        });
-        holder.mTxtBreakTimes.setText(breakPref.times.toString());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.mTxtMiddayExit.setText(breakPref.times.start.toString());
+        holder.mTxtMiddayExit.addTextChangedListener(new TimestampTextWatcher(holder.mTxtMiddayExit));
+        holder.mTxtMiddayArrival.setText(breakPref.times.end.toString());
+        holder.mTxtMiddayArrival.addTextChangedListener(new TimestampTextWatcher(holder.mTxtMiddayArrival));
+        holder.mBtnRemoveMidday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isEnabled = mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled;
-                mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled = !isEnabled;
-                holder.mCkbxIsEnabled.setChecked(!isEnabled);
+                mCustomBreaksList.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+                notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
+
             }
         });
     }
 
     @Override
     public int getItemCount() {
-
         return mCustomBreaksList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public final CheckBox mCkbxIsEnabled;
-        public final TextView mTxtBreakTimes;
+        public final EditText mTxtMiddayExit;
+        public final EditText mTxtMiddayArrival;
+        public final View mBtnRemoveMidday;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mCkbxIsEnabled = itemView.findViewById(R.id.ckbx_customBreak_isEnabled);
-            mTxtBreakTimes = itemView.findViewById(R.id.txt_customBreak_times);
+            mTxtMiddayExit = itemView.findViewById(R.id.txt_midday_exit_time);
+            mTxtMiddayArrival = itemView.findViewById(R.id.txt_midday_arrival_time);
+            mBtnRemoveMidday = itemView.findViewById(R.id.img_remove_midday);
         }
     }
 

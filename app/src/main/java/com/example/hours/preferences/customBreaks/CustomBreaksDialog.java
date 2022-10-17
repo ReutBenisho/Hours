@@ -19,7 +19,9 @@ import java.util.ArrayList;
 public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
     private final CustomBreaksPreference preference;
     private CustomBreaksRecyclerAdapter mCustomBreaksRecyclerAdapter;
+    private MiddaysRecyclerAdapter mMiddaysRecyclerAdapter;
     private ArrayList<CustomBreak> mBreaksList;
+    private boolean useCustomBreaksAdapter = true;
 
     public CustomBreaksDialog(CustomBreaksPreference preference) {
         this.preference = preference;
@@ -39,7 +41,11 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
 
         mBreaksList = preference.getValue();
         mCustomBreaksRecyclerAdapter = new CustomBreaksRecyclerAdapter(context, mBreaksList);
-        recyclerBreaks.setAdapter(mCustomBreaksRecyclerAdapter);
+        mMiddaysRecyclerAdapter = new MiddaysRecyclerAdapter(context, mBreaksList);
+        if(useCustomBreaksAdapter)
+            recyclerBreaks.setAdapter(mCustomBreaksRecyclerAdapter);
+        else
+            recyclerBreaks.setAdapter(mMiddaysRecyclerAdapter);
 
         return dialogView;
     }
@@ -47,7 +53,11 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
     @Override
     public void onResume() {
         super.onResume();
-        mCustomBreaksRecyclerAdapter.notifyDataSetChanged();
+        if(useCustomBreaksAdapter)
+            mCustomBreaksRecyclerAdapter.notifyDataSetChanged();
+        else
+            mMiddaysRecyclerAdapter.notifyDataSetChanged();
+
     }
 
     @Override
