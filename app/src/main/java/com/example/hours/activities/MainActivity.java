@@ -416,7 +416,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String pref) {
-        if(pref == LocaleHelper.SELECTED_LANGUAGE)
+        if(pref == LocaleHelper.SELECTED_LANGUAGE
+        || pref == "CustomBreaks")
             return;
 
         if(SharedPreferencesUtil.isTimePref(pref)

@@ -24,6 +24,7 @@
 
         <com.example.hours.preferences.customBreaks.CustomBreaksPreference
             android:key="pref_custom_breaks"
+            android:defaultValue="defaultBreaks"
             android:title="Custom Breaks"/>
 
 

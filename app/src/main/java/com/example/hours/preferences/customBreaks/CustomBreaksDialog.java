@@ -33,13 +33,13 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
     protected View onCreateDialogView(Context context) {
         ConstraintLayout dialogView = (ConstraintLayout) LayoutInflater.from(context).inflate(R.layout.custom_breaks_preference_list, null);
 
-        RecyclerView recyclerNotes = dialogView.findViewById(R.id.list_custom_breaks);
+        RecyclerView recyclerBreaks = dialogView.findViewById(R.id.list_custom_breaks);
         LinearLayoutManager notesLayoutManager = new LinearLayoutManager(context);
-        recyclerNotes.setLayoutManager(notesLayoutManager);
+        recyclerBreaks.setLayoutManager(notesLayoutManager);
 
-        mBreaksList = Defaults.getCustomBreaksList();
+        mBreaksList = preference.getValue();
         mCustomBreaksRecyclerAdapter = new CustomBreaksRecyclerAdapter(context, mBreaksList);
-        recyclerNotes.setAdapter(mCustomBreaksRecyclerAdapter);
+        recyclerBreaks.setAdapter(mCustomBreaksRecyclerAdapter);
 
         return dialogView;
     }
@@ -53,10 +53,9 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            Defaults.clearCustomBreaksList();
-            for(int i = 0; i < mBreaksList.size(); i++)
-            {
-                Defaults.addBreakToList(mBreaksList.get(i));
+
+            if (preference.callChangeListener(mBreaksList)) {
+                preference.setValue(mBreaksList);
             }
         }
     }

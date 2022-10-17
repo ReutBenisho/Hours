@@ -47,7 +47,9 @@ public class CustomBreaksRecyclerAdapter extends RecyclerView.Adapter<CustomBrea
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.mCkbxIsEnabled.setChecked(!holder.mCkbxIsEnabled.isChecked());
+                boolean isEnabled = mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled;
+                mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled = !isEnabled;
+                holder.mCkbxIsEnabled.setChecked(!isEnabled);
                 //holder.mCkbxIsEnabled.jumpDrawablesToCurrentState();
             }
         });

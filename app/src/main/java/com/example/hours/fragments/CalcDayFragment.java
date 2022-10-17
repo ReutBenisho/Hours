@@ -136,6 +136,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     @Override
     public void onResume() {
         super.onResume();
+        if(mHoursManager == null)
+            mHoursManager = HoursManager.getInstance();
         String str = Defaults.getArrival().toString();
         String from = mTxtArrivalTime.getText().toString();
         Log.d("onResume", "chaning arrival txtView from " + from + " to " + str);

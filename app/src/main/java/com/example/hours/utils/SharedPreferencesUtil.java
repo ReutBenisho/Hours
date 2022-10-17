@@ -39,10 +39,7 @@ public class SharedPreferencesUtil {
         Defaults.User.EVENING_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_evening_break_duration), Defaults.getEveningDuration().toString()));
         Defaults.User.NIGHT_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_time), Defaults.getNightStart().toString()));
         Defaults.User.NIGHT_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString()));
-        ArrayList<CustomBreak> breaks = CustomBreak.deseralize(manager.getString("CustomBreaks", ""));
-        Defaults.User.CUSTOM_BREAKS_LIST.clear();
-        for (int i = 0; i < breaks.size(); i++)
-            Defaults.addBreakToList(breaks.get(i));
+
 
     }
 
