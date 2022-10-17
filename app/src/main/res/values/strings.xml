@@ -159,4 +159,22 @@
     <string name="sign_in_via_google">Sign in with google</string>
     <string name="or">or</string>
     <string name="invalidTime">Invalid time</string>
+    <string name="pref_first_run" translatable="false">pref_first_run</string>
+    <string name="regex_24hour_timestamp_format" translatable="false">^([01][0-9]|2[0-3]):([0-5][0-9])$</string>
+    <string name="add_custom_break">Add custom break</string>
+    <string name="breaks">Breaks</string>
+
+    <!--For testings only-->
+    <string name="hidden" translatable="false">Hidden</string>
+    <string name="device_default" translatable="false">Device default</string>
+    <string name="date_format_default_weekday" translatable="false">Default with Weekday</string>
+    <string name="custom_pattern" translatable="false">Custom pattern</string>
+    <string name="not_found" translatable="false">Not found</string>
+    <string name="pattern_example" translatable="false">Pattern example</string>
+    <string name="simple_options" translatable="false">Simple options</string>
+    <string name="sample_date" translatable="false">Sample date (in yyyy-MM-dd format)</string>
+    <string name="result_formatted_date" translatable="false">Result, formatted date</string>
+
+
+
 </resources>

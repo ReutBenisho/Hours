@@ -97,4 +97,7 @@
     <string name="sign_in_via_google">התחבר באמצעות גוגל</string>
     <string name="or">או</string>
     <string name="invalidTime">זמן לא תקין</string>
+    <string name="add_custom_break">הוסף הפסקה</string>
+    <string name="breaks">הפסקות</string>
+
 </resources>

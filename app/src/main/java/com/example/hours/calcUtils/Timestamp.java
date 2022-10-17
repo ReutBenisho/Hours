@@ -35,7 +35,7 @@ public class Timestamp {
     }
 
     public static boolean isValid(String str) {
-        return str.matches("^([01][0-9]|2[0-3]):([0-5][0-9])$");
+        return str.matches(App.getStr(R.string.regex_24hour_timestamp_format));
     }
 
     @Override

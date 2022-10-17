@@ -7,7 +7,9 @@ import android.util.AttributeSet;
 import androidx.annotation.Nullable;
 import androidx.preference.DialogPreference;
 
+import com.example.hours.R;
 import com.example.hours.calcUtils.CustomBreak;
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.SharedPreferencesUtil;
 
@@ -52,7 +54,7 @@ public class CustomBreaksPreference extends DialogPreference {
         long countBreaks = mBreaksList.stream()
                 .filter(b -> b.isEnabled)
                 .count();
-        return countBreaks + " custom breaks";
+        return countBreaks + " " + App.getStr(R.string.breaks);
     }
 
     private void showValue() {
