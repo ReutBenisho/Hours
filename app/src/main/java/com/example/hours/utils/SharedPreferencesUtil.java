@@ -15,10 +15,6 @@ import java.util.Set;
 
 public class SharedPreferencesUtil {
     public static void loadDefaults(){
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.header_preferences, true);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.general_preferences, true);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.notifiations_preferences, true);
-        PreferenceManager.setDefaultValues(App.getContext(), R.xml.times_preferences, true);
 
         SharedPreferences manager = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         SharedPreferences.Editor editor= manager.edit();
@@ -29,6 +25,11 @@ public class SharedPreferencesUtil {
             setDefaultTimeToSharedPreference(editor);
             editor.commit();
         }
+
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.header_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.general_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.notifiations_preferences, true);
+        PreferenceManager.setDefaultValues(App.getContext(), R.xml.times_preferences, true);
 
         Defaults.User.ARRIVAL_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString()));
         Defaults.User.EXIT_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString()));
@@ -55,6 +56,7 @@ public class SharedPreferencesUtil {
         ArrayList<CustomBreak> breaks = new ArrayList<>();
         breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0)));
         breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15)));
+        breaks.add(new CustomBreak(true, new BreakTimes(12, 50, 13, 15)));
 
         Set<CustomBreak> set = new HashSet<>();
         set.addAll(breaks);
@@ -103,10 +105,5 @@ public class SharedPreferencesUtil {
         SharedPreferences.Editor editor= manager.edit();
         setDefaultTimeToSharedPreference(editor);
         editor.commit();
-        String newStr = SharedPreferencesUtil.getString(pref);
-        if(orgStr == newStr)
-            Log.d("setPreviousTime", "didnt change to previous");
-        else
-            Log.d("setPreviousTime", "successully");
     }
 }

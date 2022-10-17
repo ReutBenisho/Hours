@@ -1,5 +1,7 @@
 package com.example.hours.calcUtils;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,16 +26,14 @@ public class CustomBreak {
     public static String serialize(ArrayList<CustomBreak> list){
         String str = "";
         for(int i = 0; i < list.size(); i++){
-            str += list.get(i).isEnabled +","
-                    + list.get(i).times.start + ","
-                    + list.get(i).times.end+ ";";
+            str += list.get(i).toString() + ";";
         }
         return str;
     }
 
     public static ArrayList<CustomBreak> deseralize(String str){
         ArrayList<CustomBreak> list = new ArrayList<>();
-        if(str == "")
+        if(str == null || str == "")
             return list;
         String[] breaks = str.split(";");
         for (int i = 0; i < breaks.length; i++){
@@ -44,5 +44,11 @@ public class CustomBreak {
             list.add(new CustomBreak(isEnabled, new BreakTimes(start, end)));
         }
         return list;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return isEnabled + "," + times.start + "," + times.end;
     }
 }

@@ -182,4 +182,11 @@ public class Defaults {
         User.CUSTOM_BREAKS_LIST.add(breakPref.copy());
     }
 
+    public static void setCustomBreaks(ArrayList<CustomBreak> list){
+        Defaults.clearCustomBreaksList();
+        for(int i = 0; i < list.size(); i++)
+        {
+            Defaults.addBreakToList(list.get(i));
+        }
+    }
 }

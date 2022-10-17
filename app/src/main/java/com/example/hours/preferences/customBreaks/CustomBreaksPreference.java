@@ -3,19 +3,15 @@ package com.example.hours.preferences.customBreaks;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 
 import androidx.annotation.Nullable;
 import androidx.preference.DialogPreference;
 
 import com.example.hours.calcUtils.CustomBreak;
-import com.example.hours.preferences.dateformat.DateFormatType;
-import com.example.hours.preferences.dateformat.DateFormatValue;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CustomBreaksPreference extends DialogPreference {
     ArrayList<CustomBreak> mBreaksList = new ArrayList<>();
@@ -39,14 +35,14 @@ public class CustomBreaksPreference extends DialogPreference {
     public void setDefaultValue(Object defaultValue) {
         super.setDefaultValue(defaultValue);
         this.mBreaksList = (ArrayList<CustomBreak>) defaultValue;
-        saveListToDefaults();
+        Defaults.setCustomBreaks(mBreaksList);
 
     }
 
     @Override
     protected void onSetInitialValue(@Nullable Object defaultValue) {
         mBreaksList = (ArrayList<CustomBreak>) defaultValue;
-       saveListToDefaults();
+       Defaults.setCustomBreaks(mBreaksList);
 
         showValue();
     }
@@ -66,17 +62,9 @@ public class CustomBreaksPreference extends DialogPreference {
 
     public void setValue(ArrayList<CustomBreak> list) {
         this.mBreaksList = list;
-        saveListToDefaults();
+        Defaults.setCustomBreaks(mBreaksList);
         SharedPreferencesUtil.setDefaults("CustomBreaks", CustomBreak.serialize(mBreaksList));
         showValue();
-    }
-
-    private void saveListToDefaults() {
-        Defaults.clearCustomBreaksList();
-        for(int i = 0; i < mBreaksList.size(); i++)
-        {
-            Defaults.addBreakToList(mBreaksList.get(i));
-        }
     }
 
     public ArrayList<CustomBreak> getValue() {
