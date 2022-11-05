@@ -171,7 +171,8 @@
     <string name="tuesday_abbriviated">Tue</string>
     <string name="wednesday_abbriviated">Wed</string>
     <string name="thursday_abbriviated">Thu</string>
-    <string name="friday_abbriviated">Fri</string>
+    <string name="daily_report">Daily Report</string>
+
 
     <!--For testings only-->
     <string name="hidden" translatable="false">Hidden</string>
@@ -183,7 +184,5 @@
     <string name="simple_options" translatable="false">Simple options</string>
     <string name="sample_date" translatable="false">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date" translatable="false">Result, formatted date</string>
-    <string name="daily_report">Daily Report</string>
-
 
 </resources>
