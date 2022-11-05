@@ -1,5 +1,14 @@
 package com.example.hours.db;
 
+import static com.example.hours.db.HoursDbContract.DailyReportEntry;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.hours.calcUtils.Timestamp;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -14,9 +23,47 @@ public class DataManager {
     public static DataManager getInstance() {
         if(ourInstance == null) {
             ourInstance = new DataManager();
-            ourInstance.initializeDailyReports();
+            //ourInstance.initializeDailyReports();
         }
         return ourInstance;
+    }
+
+    public static void loadFromDataBase(HoursOpenHelper dbHelper){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] columns = {
+                DailyReportEntry.COLUMN_DATE,
+                DailyReportEntry.COLUMN_ARRIVAL,
+                DailyReportEntry.COLUMN_EXIT};
+        Cursor cursor = db.query(DailyReportEntry.TABLE_NAME, columns,
+                null, null, null, null, DailyReportEntry.COLUMN_DATE
+        );
+        loadDailyReportsFromCursor(cursor);
+    }
+
+    private static void loadDailyReportsFromCursor(Cursor cursor) {
+        int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
+        int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
+        int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+        DataManager db = getInstance();
+        db.mDailyReports.clear();
+        while(cursor.moveToNext())
+        {
+            String dateStr = cursor.getString(datePos);
+            Date date;
+            try {
+
+                date = (new SimpleDateFormat("dd-MM-yyyy")).parse(dateStr);
+            }
+            catch (ParseException ex){
+                date = new Date(2022 - 1900, 1, 1);
+            }
+
+            Timestamp arrival = new Timestamp(cursor.getString(arrivalPos));
+            Timestamp exit = new Timestamp(cursor.getString(exitPos));
+            DailyReport report = new DailyReport(date, arrival.getDuration(), exit.getDuration());
+            db.mDailyReports.add(report);
+        }
+        cursor.close();
     }
 
     public List<DailyReport> getDailyReports() {
@@ -75,9 +122,9 @@ public class DataManager {
         final DataManager dm = getInstance();
 
         DailyReport report = new DailyReport(new Date(2022 - 1900, 10, 30), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
-        DailyReport report2 = new DailyReport(new Date(2022 - 1900, 10, 31), Duration.of(8 * 60 + 12, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
-        DailyReport report3 = new DailyReport(new Date(2022 - 1900, 11, 1), Duration.of(8 * 60 + 22, ChronoUnit.MINUTES), Duration.of(19 * 60 + 12, ChronoUnit.MINUTES));
-        DailyReport report4 = new DailyReport(new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 22, ChronoUnit.MINUTES), Duration.of(18 * 60 + 46, ChronoUnit.MINUTES));
+        DailyReport report2 = new DailyReport(new Date(2022 - 1900, 10, 31), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 25, ChronoUnit.MINUTES));
+        DailyReport report3 = new DailyReport(new Date(2022 - 1900, 11, 1), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
+        DailyReport report4 = new DailyReport(new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
         mDailyReports.add(report);
         mDailyReports.add(report2);
         mDailyReports.add(report3);

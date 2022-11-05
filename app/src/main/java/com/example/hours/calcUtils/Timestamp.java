@@ -63,6 +63,10 @@ public class Timestamp {
         mTime = Duration.of(other.mTime.toMinutes(), ChronoUnit.MINUTES);
     }
 
+    public Duration getDuration(){
+        return Duration.of(mTime.toMinutes(), ChronoUnit.MINUTES);
+    }
+
     public boolean isBefore(Timestamp before){
 
         return mTime.compareTo(before.mTime) < 0;

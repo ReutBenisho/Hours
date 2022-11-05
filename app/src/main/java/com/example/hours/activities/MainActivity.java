@@ -21,6 +21,7 @@ import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.db.DataManager;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.fragments.SettingsFragment;
 import com.example.hours.utils.Defaults;
@@ -214,7 +215,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
-        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
+        mDbOpenHelper.getWritableDatabase();
+        DataManager.loadFromDataBase(mDbOpenHelper);
     }
 
     private void sendEmail() {
