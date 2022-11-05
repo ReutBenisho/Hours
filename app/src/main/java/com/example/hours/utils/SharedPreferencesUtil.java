@@ -17,7 +17,6 @@ public class SharedPreferencesUtil {
         SharedPreferences manager = PreferenceManager.getDefaultSharedPreferences(App.getContext());
         SharedPreferences.Editor editor= manager.edit();
         boolean firstRun = manager.getBoolean(App.getStr(R.string.pref_first_run), true);
-
         if(firstRun)
         {
             editor.putBoolean(App.getStr(R.string.pref_first_run),false);
