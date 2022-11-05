@@ -27,70 +27,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_arrival_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_daily_reports"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:maxLines="1"
-                android:textColorHint="@color/white"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxStrokeColor="@color/white"
-                app:errorEnabled="true"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_current_report_date">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txt_arrival_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:digits="0123456789:"
-                    android:hint="@string/arrival_day"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textDirection="anyRtl" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/img_add_midday_row"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-50dp"
-                android:layout_marginStart="-30dp"
-                android:src="@drawable/ic_clock_add"
-                app:tint="@color/white"
-                app:fabSize="mini"
-                app:layout_constraintStart_toEndOf="@id/txt_arrival_layout"
-                app:layout_constraintTop_toBottomOf="@id/txt_arrival_layout" />
-
-            <LinearLayout
-                android:id="@+id/layout_midday_exit_and_arrival_times"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/txt_arrival_layout"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txt_arrival_layout"
-                app:layout_constraintTop_toBottomOf="@+id/txt_arrival_layout" />
-
-            <LinearLayout
-                android:id="@+id/layout_exit_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/txt_arrival_layout"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/txt_arrival_layout"
-                app:layout_constraintTop_toBottomOf="@+id/layout_midday_exit_and_arrival_times" />
+                app:layout_constraintTop_toBottomOf="@id/lbl_daily_report"
+                tools:listitem="@layout/daily_report_item" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment_daily_report"
@@ -99,21 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/background_calc_labels"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/txt_arrival_layout"
-                app:layout_constraintStart_toStartOf="@id/txt_arrival_layout"
-                app:layout_constraintTop_toBottomOf="@id/layout_exit_time" />
+                app:layout_constraintEnd_toEndOf="@id/list_daily_reports"
+                app:layout_constraintStart_toStartOf="@id/list_daily_reports"
+                app:layout_constraintTop_toBottomOf="@id/list_daily_reports" />
 
-            <TextView
-                android:id="@+id/lbl_current_report_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lbl_daily_report" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,24 +6,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.hours.R;
+import com.example.hours.adapters.DailyReportRecyclerAdapter;
 import com.example.hours.calcUtils.Break;
 import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.CustomBreak;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.db.DailyReport;
+import com.example.hours.db.DataManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.DailyReportModel;
 import com.example.hours.utils.App;
@@ -42,13 +47,11 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
     public static final String TAG = App.getStr(R.string.tag_daily_report);
 
     private HoursManager mHoursManager;
-    private LinearLayout mLayoutMiddayTimes;
-    private ImageView mBtnAddMiddayRow;
     private ICalcDayFragment mFragment;
-    private LinearLayout mLayoutExitTime;
-    private TextInputEditText mTxtArrivalTime;
-    private TextWatcher mTimestampTextWatcher;
-    private EditText mTxtExitTime;
+    private RecyclerView mRecycleDailyReports;
+    private LinearLayoutManager mDailyReportsLayoutManager;
+    private DailyReportRecyclerAdapter mDailyReportRecyclerAdapter;
+    private SnapHelper mSnapHelper;
 
 
     public static DailyReportFragment newInstance() {
@@ -63,7 +66,6 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
 
     @Override
     public void onDestroyView() {
-        mTxtArrivalTime.removeTextChangedListener(mTimestampTextWatcher);
         super.onDestroyView();
     }
 
@@ -76,67 +78,31 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
         mHoursManager = HoursManager.getInstance();
+        mRecycleDailyReports = view.findViewById(R.id.list_daily_reports);
+        mDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
+        mRecycleDailyReports.setLayoutManager(mDailyReportsLayoutManager);
+        List<DailyReport> reports = DataManager.getInstance().getDailyReports();
+        mDailyReportRecyclerAdapter = new DailyReportRecyclerAdapter(getContext(), reports);
+        mRecycleDailyReports.setAdapter(mDailyReportRecyclerAdapter);
+        mSnapHelper = new LinearSnapHelper();
+        mSnapHelper.attachToRecyclerView(mRecycleDailyReports);
+        
 
-        mLayoutMiddayTimes = view.findViewById(R.id.layout_midday_exit_and_arrival_times);
-        mLayoutExitTime = view.findViewById(R.id.layout_exit_time);
-        mBtnAddMiddayRow = view.findViewById(R.id.img_add_midday_row);
-
-        mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.addMiddayRowToLayout(getLayoutInflater(), mLayoutMiddayTimes, getContext());
-            }
-        });
-
-
-        mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
-        mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
-        String from = mTxtArrivalTime.getText().toString();
-        String str = Defaults.getArrival().toString();
-        Log.d("onCreateView", "chaning txtView from " + from + " to " + str);
-        mTxtArrivalTime.setText(str);
-        mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrivalTime);
-        if(mTxtArrivalTime.getTag() == null)
-        {
-            mTxtArrivalTime.addTextChangedListener(mTimestampTextWatcher);
-            mTxtArrivalTime.setTag(mTimestampTextWatcher);
-        }
 
         openDailyReportFragment(false);
-
-        showEnabledBreaks();
 
         updateHours();
 
         return view;
     }
-
-    private void showEnabledBreaks() {
-        List<CustomBreak> breaksList = Defaults.getCustomBreaksList();
-        Utils.removeAllMiddayRowFromLayout(mLayoutMiddayTimes);
-        for(int i = 0; i < breaksList.size(); i++) {
-            if(breaksList.get(i).isEnabled) {
-                Utils.addMiddayRowToLayout(getLayoutInflater(), mLayoutMiddayTimes, getContext(), breaksList.get(i).toString());
-            }
-        }
+    public int getSnapPosition()
+    {
+        return mDailyReportsLayoutManager.getPosition(mSnapHelper.findSnapView(mDailyReportsLayoutManager));
     }
-
     @Override
     public void onResume() {
         super.onResume();
-        if(mHoursManager == null)
-            mHoursManager = HoursManager.getInstance();
-        String str = Defaults.getArrival().toString();
-        String from = mTxtArrivalTime.getText().toString();
-        Log.d("onResume", "chaning arrival txtView from " + from + " to " + str);
-        mTxtArrivalTime.setText(str);
-        if(mTxtExitTime != null) {
-            str = Defaults.getExit().toString();
-            from = mTxtExitTime.getText().toString();
-            Log.d("onResume", "chaning exit txtView from " + from + " to " + str);
-            mTxtExitTime.setText(str);
-        }
-        showEnabledBreaks();
+        mDailyReportRecyclerAdapter.notifyDataSetChanged();
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
 
         updateHours();
@@ -157,31 +123,14 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
     private void updateHours() {
         if(mHoursManager == null)
             return;
-        mHoursManager.info.clear();
-        mHoursManager.info.userInfo.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
-        mHoursManager.info.breaks.customBreaks.clear();
-        for(int i = 0; i < mLayoutMiddayTimes.getChildCount(); i++){
-            Timestamp middayExit = new Timestamp();
-            Timestamp middayArrival = new Timestamp();
-            Utils.GetTimestampsFromViewIndex(mLayoutMiddayTimes, i, middayExit, middayArrival);
-            BreakTimes customBreak = new BreakTimes(middayExit, middayArrival);
-            mHoursManager.info.breaks.customBreaks.add(new Break(customBreak, false));
-        }
-        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
+        mHoursManager.info.clearCalculatedInfo();
         mFragment.update(false);
     }
 
     private void openDailyReportFragment(boolean isExitTimeAdded) {
         Fragment fragment = null;
-        Class fragmentClass;
-        String tag;
-        if(isExitTimeAdded){
-            fragmentClass = WithExitFragment.class;
-            tag = WithExitFragment.TAG;
-        } else{
-            fragmentClass = NoExitFragment.class;
-            tag = NoExitFragment.TAG;
-        }
+        Class fragmentClass = WithExitFragment.class;;
+        String tag = WithExitFragment.TAG;
 
         try {
             fragment = (Fragment) fragmentClass.newInstance();
