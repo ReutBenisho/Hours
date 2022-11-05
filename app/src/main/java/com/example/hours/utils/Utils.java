@@ -33,7 +33,7 @@ public class Utils {
         }
     }
 
-    public static void addMiddayRowToLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
+    public static void addMiddayRowToLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context, String customBreak) {
         View viewMiddayRow = layoutInflater.inflate(R.layout.row_midday_exit_and_arrival_times, null, false);
         TextInputEditText txtMiddayExit = viewMiddayRow.findViewById(R.id.txt_midday_exit_time);
         txtMiddayExit.addTextChangedListener(new TimestampTextWatcher(txtMiddayExit));
@@ -48,6 +48,16 @@ public class Utils {
             }
         });
         layout.addView(viewMiddayRow);
+
+        if(customBreak != null) {
+            String[] data = customBreak.split(",");
+            txtMiddayExit.setText(data[1]);
+            txtMiddayArrival.setText(data[2]);
+        }
+    }
+
+    public static void addMiddayRowToLayout(LayoutInflater layoutInflater, LinearLayout layout, Context context) {
+       addMiddayRowToLayout(layoutInflater, layout, context, null);
     }
 //
 //    public static void popTimePicker(View view, Context context) {
@@ -124,5 +134,10 @@ public class Utils {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+    }
+
+    public static void removeAllMiddayRowFromLayout(LinearLayout layout) {
+        layout.removeAllViews();
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
     }
 }

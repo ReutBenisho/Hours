@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 
 import com.example.hours.calcUtils.Break;
 import com.example.hours.calcUtils.BreakTimes;
+import com.example.hours.calcUtils.CustomBreak;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
@@ -34,6 +35,7 @@ import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
 import com.example.hours.models.CalcDayModel;
 import com.google.android.material.textfield.TextInputEditText;
+import java.util.List;
 
 public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
@@ -76,6 +78,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
         View view = inflater.inflate(R.layout.fragment_calc_day, container, false);
 
+        mHoursManager = HoursManager.getInstance();
+
         mLayoutMiddayTimes = view.findViewById(R.id.layout_midday_exit_and_arrival_times);
         mLayoutExitTime = view.findViewById(R.id.layout_exit_time);
         mBtnAddMiddayRow = view.findViewById(R.id.img_add_midday_row);
@@ -87,12 +91,12 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             }
         });
 
-        mHoursManager = HoursManager.getInstance();
+
         mHoursManager.info.userInfo.arrivalTime = Defaults.getArrival();
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
         String from = mTxtArrivalTime.getText().toString();
         String str = Defaults.getArrival().toString();
-        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        Log.d("onCreateView", "chaning txtView from " + from + " to " + str);
         mTxtArrivalTime.setText(str);
         mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrivalTime);
         if(mTxtArrivalTime.getTag() == null)
@@ -127,15 +131,31 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
                 openCalcDayFragment(mCkbtn_add_exit_time.isChecked());
             }
         });
+
         openCalcDayFragment(false);
+
+        showEnabledBreaks();
+
         updateHours();
 
         return view;
     }
 
+    private void showEnabledBreaks() {
+        List<CustomBreak> breaksList = Defaults.getCustomBreaksList();
+        Utils.removeAllMiddayRowFromLayout(mLayoutMiddayTimes);
+        for(int i = 0; i < breaksList.size(); i++) {
+            if(breaksList.get(i).isEnabled) {
+                Utils.addMiddayRowToLayout(getLayoutInflater(), mLayoutMiddayTimes, getContext(), breaksList.get(i).toString());
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        if(mHoursManager == null)
+            mHoursManager = HoursManager.getInstance();
         String str = Defaults.getArrival().toString();
         String from = mTxtArrivalTime.getText().toString();
         Log.d("onResume", "chaning arrival txtView from " + from + " to " + str);
@@ -146,7 +166,10 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
             Log.d("onResume", "chaning exit txtView from " + from + " to " + str);
             mTxtExitTime.setText(str);
         }
+        showEnabledBreaks();
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
+
+        updateHours();
     }
 
     @Override
@@ -162,6 +185,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     private void updateHours() {
+        if(mHoursManager == null)
+            return;
         mHoursManager.info.clear();
         mHoursManager.info.userInfo.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
         mHoursManager.info.breaks.customBreaks.clear();
@@ -217,8 +242,15 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     @Override
     public void onUpdateListener(OnUpdateListener listener, Object obj) {
-
-        updateHours();
+        if(obj == null || !(obj instanceof ListenerManager.Data))
+            return;
+        ListenerManager.Data data = (ListenerManager.Data) obj;
+        switch (data.type)
+        {
+            case INFO_LABELS:
+                updateHours();
+                break;
+        }
     }
 
     public interface ICalcDayFragment {

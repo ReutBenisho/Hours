@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/settings_window_background">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_break_start_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@color/settings_text_primary"
+        app:boxBackgroundMode="none"
+        app:boxStrokeColor="@color/background_center_color"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/txt_break_end_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_break_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="0123456789:"
+            android:hint="@string/exit"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textDirection="anyRtl" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_break_end_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textColorHint="@color/settings_text_primary"
+        app:boxBackgroundMode="none"
+        app:boxStrokeColor="@color/background_center_color"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_break_start_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_break_end_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="0123456789:"
+            android:hint="@string/arrival"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textDirection="anyRtl" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lbl_repeat_daily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/repeat_on"
+        android:textColor="@color/settings_text_primary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_break_end_layout" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_sunday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/sunday_abbriviated"
+        app:layout_constraintEnd_toStartOf="@+id/btn_monday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_repeat_daily" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_monday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/monday_abbriviated"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_sunday"
+        app:layout_constraintEnd_toStartOf="@+id/btn_tuesday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_sunday"
+        app:layout_constraintTop_toTopOf="@+id/btn_sunday" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_tuesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/tuesday_abbriviated"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_monday"
+        app:layout_constraintEnd_toStartOf="@+id/btn_wednesday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_monday"
+        app:layout_constraintTop_toTopOf="@+id/btn_monday" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_wednesday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/wednesday_abbriviated"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_tuesday"
+        app:layout_constraintEnd_toStartOf="@+id/btn_thursday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_tuesday"
+        app:layout_constraintTop_toTopOf="@+id/btn_tuesday" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_thursday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/thursday_abbriviated"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_wednesday"
+        app:layout_constraintEnd_toStartOf="@+id/btn_friday"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_wednesday"
+        app:layout_constraintTop_toTopOf="@+id/btn_wednesday" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/btn_friday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_settings_radio_btn"
+        android:button="@drawable/btn_transparent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/friday_abbriviated"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_thursday"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_thursday"
+        app:layout_constraintTop_toTopOf="@+id/btn_thursday" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

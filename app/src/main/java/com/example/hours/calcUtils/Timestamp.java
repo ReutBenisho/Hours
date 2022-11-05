@@ -20,6 +20,10 @@ public class Timestamp {
         mTime = Duration.of(0, ChronoUnit.MINUTES);
     }
 
+    public Timestamp(String str) {
+        setTime(str);
+    }
+
     public static Timestamp removeOverlap(Timestamp startRange1, Timestamp endRange1, Timestamp startRange2, Timestamp endRange2, Timestamp duration) {
         if(isOverlap(startRange1, endRange1, startRange2, endRange2)){
             Timestamp startOverlap = Timestamp.getLatest(startRange1, startRange2);
@@ -31,7 +35,7 @@ public class Timestamp {
     }
 
     public static boolean isValid(String str) {
-        return str.matches("^([01][0-9]|2[0-3]):([0-5][0-9])$");
+        return str.matches(App.getStr(R.string.regex_24hour_timestamp_format));
     }
 
     @Override
@@ -70,7 +74,7 @@ public class Timestamp {
     }
 
     public boolean isBetween(Timestamp first, Timestamp second){
-        return mTime.compareTo(first.mTime) > 0 && mTime.compareTo(second.mTime) < 0;
+        return mTime.compareTo(first.mTime) >= 0 && mTime.compareTo(second.mTime) <= 0;
     }
 
     public Timestamp add(int hour, int minute){

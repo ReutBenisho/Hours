@@ -7,7 +7,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
@@ -416,15 +415,19 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String pref) {
-        if(pref == LocaleHelper.SELECTED_LANGUAGE)
+        if(pref == LocaleHelper.SELECTED_LANGUAGE
+        || pref == getString(R.string.pref_custom_breaks))
             return;
 
         if(SharedPreferencesUtil.isTimePref(pref)
                 && !Timestamp.isValid(sharedPreferences.getString(pref, ""))) {
             SharedPreferencesUtil.setPreviousTime(pref);
-            ListenerManager.NotifyListeners(ListenerManager.ListenerType.PREFERENCE_CHANGE, pref);
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.TIME_PREFERENCE_CHANGE, pref);
             return;
         }
+        else if(SharedPreferencesUtil.isTimePref(pref))
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.TIME_PREFERENCE_CHANGE, pref);
+
 
         int pref_id = getResources().getIdentifier(pref, "string", getPackageName());
         saveSharedPref(sharedPreferences, pref, pref_id);
@@ -433,6 +436,9 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
             case R.string.pref_system_dark_mode:
             case R.string.pref_dark_mode:
                 Utils.setupDarkMode(getApplicationContext());
+                //setActionBarIconToBackArrow(false);
+                //setActionBarIconToBackArrow(true);
+
                 break;
             case R.string.pref_student_mode:
                 mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
@@ -472,7 +478,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 Log.d("onSharedPreferenceChanged", "changing EXIT_TIME to " + s2);
                 Defaults.User.EXIT_TIME.setTime(s2);
                 break;
-            case R.string.pref_default_custom_breaks:
+            case R.string.pref_custom_breaks:
                 //TODO: do stuff
                 break;
             case R.string.pref_default_system_time:

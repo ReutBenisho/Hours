@@ -1,4 +1,7 @@
 package com.example.hours.calcUtils;
+
+import androidx.annotation.NonNull;
+
 public class BreakTimes {
 
     public final Timestamp start;
@@ -25,5 +28,15 @@ public class BreakTimes {
 
     public boolean contain(BreakTimes other) {
         return other.start.isBetween(start, end) && other.end.isBetween(start, end);
+    }
+
+    public BreakTimes copy() {
+        return new BreakTimes(start.copy(), end.copy());
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return start.toString() + " - " + end.toString();
     }
 }
