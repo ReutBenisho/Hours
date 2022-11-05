@@ -110,6 +110,11 @@ public class Timestamp {
     public void setTime(int hour, int minute){
         mTime = Duration.of(hour * 60 + minute, ChronoUnit.MINUTES);
     }
+
+    public void setTime(Duration duration){
+        mTime = Duration.of(duration.toMinutes(), ChronoUnit.MINUTES);
+    }
+
     public void setTime(Timestamp other){
 
         mTime = Duration.of(other.mTime.toMinutes(), ChronoUnit.MINUTES);

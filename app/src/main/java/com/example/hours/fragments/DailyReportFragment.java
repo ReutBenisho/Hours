@@ -1,14 +1,10 @@
 package com.example.hours.fragments;
 
 import android.os.Bundle;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +18,6 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.hours.R;
 import com.example.hours.adapters.DailyReportRecyclerAdapter;
-import com.example.hours.calcUtils.Break;
-import com.example.hours.calcUtils.BreakTimes;
-import com.example.hours.calcUtils.CustomBreak;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
@@ -32,16 +25,13 @@ import com.example.hours.db.DataManager;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.DailyReportModel;
 import com.example.hours.utils.App;
-import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
-import com.example.hours.utils.SharedPreferencesUtil;
-import com.example.hours.utils.TimestampTextWatcher;
-import com.example.hours.utils.Utils;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.hours.utils.OnSnapPositionChangeListener;
+import com.example.hours.utils.SnapOnScrollListener;
 
 import java.util.List;
 
-public class DailyReportFragment extends Fragment implements OnUpdateListener {
+public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener {
 
     private DailyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_daily_report);
@@ -52,6 +42,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
     private LinearLayoutManager mDailyReportsLayoutManager;
     private DailyReportRecyclerAdapter mDailyReportRecyclerAdapter;
     private SnapHelper mSnapHelper;
+    private SnapOnScrollListener mSnapOnScrollListener;
+    private List<DailyReport> mDailyReports;
 
 
     public static DailyReportFragment newInstance() {
@@ -78,16 +70,17 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
 
         mHoursManager = HoursManager.getInstance();
-        mRecycleDailyReports = view.findViewById(R.id.list_daily_reports);
+        mRecycleDailyReports =  view.findViewById(R.id.list_daily_reports);
         mDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
         mRecycleDailyReports.setLayoutManager(mDailyReportsLayoutManager);
-        List<DailyReport> reports = DataManager.getInstance().getDailyReports();
-        mDailyReportRecyclerAdapter = new DailyReportRecyclerAdapter(getContext(), reports);
+        mDailyReports = DataManager.getInstance().getDailyReports();
+        mDailyReportRecyclerAdapter = new DailyReportRecyclerAdapter(getContext(), mDailyReports);
         mRecycleDailyReports.setAdapter(mDailyReportRecyclerAdapter);
         mSnapHelper = new LinearSnapHelper();
+        //mSnapHelper.attachToRecyclerView(mRecycleDailyReports);
         mSnapHelper.attachToRecyclerView(mRecycleDailyReports);
-        
-
+        mSnapOnScrollListener = new SnapOnScrollListener(mSnapHelper, this, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE);
+        mRecycleDailyReports.addOnScrollListener(mSnapOnScrollListener);
 
         openDailyReportFragment(false);
 
@@ -95,10 +88,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
 
         return view;
     }
-    public int getSnapPosition()
-    {
-        return mDailyReportsLayoutManager.getPosition(mSnapHelper.findSnapView(mDailyReportsLayoutManager));
-    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -124,6 +114,20 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
         if(mHoursManager == null)
             return;
         mHoursManager.info.clearCalculatedInfo();
+        int position = mSnapOnScrollListener.getPosition();
+        if(position < 0)
+            return;
+        mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReports.get(position).getArrival());
+        mHoursManager.info.userInfo.exitTime.setTime(mDailyReports.get(position).getExit());
+//
+//        View snapView_og = mDailyReportsLayoutManager.getChildAt(0);
+//        //View snapView = mDailyReports.get(position);
+//        if(snapView == null)
+//            return;
+//        String s1 = ((EditText)snapView.findViewById(R.id.txt_arrival_time)).getText().toString();
+//        mHoursManager.info.userInfo.arrivalTime.setTime(s1);
+//        String s2 = ((EditText)snapView.findViewById(R.id.txt_exit_time)).getText().toString();
+       // mHoursManager.info.userInfo.exitTime.setTime(s2);
         mFragment.update(false);
     }
 
@@ -165,4 +169,9 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener {
         }
     }
 
+    @Override
+    public int onSnapPositionChange(int position) {
+        ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
+        return 0;
+    }
 }
