@@ -19,7 +19,7 @@ import com.example.hours.models.NoExitViewModel;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Utils;
 
-public class NoExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
+public class NoExitFragment extends Fragment implements ICalcDayFragment {
 
     public static final String TAG = App.getStr(R.string.tag_calc_day_no_exit);
     private NoExitViewModel mViewModel;
