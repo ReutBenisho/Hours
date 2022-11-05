@@ -50,7 +50,8 @@ public class CustomBreaksRecyclerAdapter extends RecyclerView.Adapter<CustomBrea
                 mCustomBreaksList.get(holder.getAdapterPosition()).isEnabled = b;
             }
         });
-        holder.mTxtBreakTimes.setText(breakPref.times.toString());
+        //checkc why the days aren't shown in the dialog?
+        holder.mTxtBreakTimes.setText(breakPref.customBreakString());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

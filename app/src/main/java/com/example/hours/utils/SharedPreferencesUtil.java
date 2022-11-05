@@ -60,9 +60,13 @@ public class SharedPreferencesUtil {
             editor.putString(App.getStr(R.string.pref_default_night_break_duration), Defaults.getNightDuration().toString());
         if(pref == null || pref == App.getStr(R.string.pref_custom_breaks)) {
             ArrayList<CustomBreak> breaks = new ArrayList<>();
-            breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0)));
-            breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15)));
-            breaks.add(new CustomBreak(true, new BreakTimes(12, 50, 13, 15)));
+            boolean[] days = new boolean[6];
+            breaks.add(new CustomBreak(true, new BreakTimes(16, 30, 19, 0), days));
+            days[0] = true;
+            days[3] = true;
+            breaks.add(new CustomBreak(false, new BreakTimes(16, 45, 19, 15), days));
+            days[1] = true;
+            breaks.add(new CustomBreak(true, new BreakTimes(12, 50, 13, 15), days));
             editor.putString(App.getStr(R.string.pref_custom_breaks), CustomBreak.serialize(breaks));
         }
     }

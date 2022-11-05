@@ -99,5 +99,13 @@
     <string name="invalidTime">זמן לא תקין</string>
     <string name="add_custom_break">הוסף הפסקה</string>
     <string name="breaks">הפסקות</string>
+    <string name="repeat_on">בחר ימים:</string>
+    <string name="sunday_abbriviated">א\'</string>
+    <string name="monday_abbriviated">ב\'</string>
+    <string name="tuesday_abbriviated">ג\'</string>
+    <string name="wednesday_abbriviated">ד\'</string>
+    <string name="thursday_abbriviated">ה\'</string>
+    <string name="friday_abbriviated">ו\'</string>
+
 
 </resources>

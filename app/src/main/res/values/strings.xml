@@ -164,6 +164,13 @@
     <string name="add_custom_break">Add custom break</string>
     <string name="breaks">Breaks</string>
     <string name="pref_custom_breaks" translatable="false">pref_custom_breaks</string>
+    <string name="repeat_on">Repeat on:</string>
+    <string name="sunday_abbriviated">Sun</string>
+    <string name="monday_abbriviated">Mon</string>
+    <string name="tuesday_abbriviated">Tue</string>
+    <string name="wednesday_abbriviated">Wed</string>
+    <string name="thursday_abbriviated">Thu</string>
+    <string name="friday_abbriviated">Fri</string>
 
     <!--For testings only-->
     <string name="hidden" translatable="false">Hidden</string>
@@ -175,7 +182,6 @@
     <string name="simple_options" translatable="false">Simple options</string>
     <string name="sample_date" translatable="false">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date" translatable="false">Result, formatted date</string>
-
 
 
 </resources>

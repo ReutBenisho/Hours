@@ -96,7 +96,7 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         mTxtArrivalTime = view.findViewById(R.id.txt_arrival_time);
         String from = mTxtArrivalTime.getText().toString();
         String str = Defaults.getArrival().toString();
-        Log.d("onResume", "chaning txtView from " + from + " to " + str);
+        Log.d("onCreateView", "chaning txtView from " + from + " to " + str);
         mTxtArrivalTime.setText(str);
         mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrivalTime);
         if(mTxtArrivalTime.getTag() == null)
@@ -168,6 +168,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         }
         showEnabledBreaks();
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
+
+        updateHours();
     }
 
     @Override
@@ -183,6 +185,8 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
     }
 
     private void updateHours() {
+        if(mHoursManager == null)
+            return;
         mHoursManager.info.clear();
         mHoursManager.info.userInfo.arrivalTime.setTime(mTxtArrivalTime.getText().toString());
         mHoursManager.info.breaks.customBreaks.clear();
@@ -238,8 +242,15 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
 
     @Override
     public void onUpdateListener(OnUpdateListener listener, Object obj) {
-
-        updateHours();
+        if(obj == null || !(obj instanceof ListenerManager.Data))
+            return;
+        ListenerManager.Data data = (ListenerManager.Data) obj;
+        switch (data.type)
+        {
+            case INFO_LABELS:
+                updateHours();
+                break;
+        }
     }
 
     public interface ICalcDayFragment {

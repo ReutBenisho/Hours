@@ -21,7 +21,7 @@ public class App extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+        super.attachBaseContext(base);
     }
 
     public static Context getContext(){

@@ -4,22 +4,26 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hours.R;
+import com.example.hours.calcUtils.BreakTimes;
 import com.example.hours.calcUtils.CustomBreak;
+import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.utils.Defaults;
+import com.example.hours.utils.LocaleHelper;
 
 import java.util.ArrayList;
 
-public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
+public class CustomBreaksDialog extends PreferenceDialogFragmentCompat implements AddCustomBreakDialog.AddCustomBreakListener {
     private final CustomBreaksPreference preference;
-    private CustomBreaksRecyclerAdapter mCustomBreaksRecyclerAdapter;
-    private MiddaysRecyclerAdapter mMiddaysRecyclerAdapter;
+    private RecyclerView.Adapter mCustomBreaksRecyclerAdapter;
     private ArrayList<CustomBreak> mBreaksList;
     private boolean useCustomBreaksAdapter = true;
 
@@ -32,6 +36,11 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(LocaleHelper.onAttach(context));
+    }
+
+    @Override
     protected View onCreateDialogView(Context context) {
         ConstraintLayout dialogView = (ConstraintLayout) LayoutInflater.from(context).inflate(R.layout.custom_breaks_preference_list, null);
 
@@ -40,23 +49,29 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
         recyclerBreaks.setLayoutManager(notesLayoutManager);
 
         mBreaksList = preference.getValue();
-        mCustomBreaksRecyclerAdapter = new CustomBreaksRecyclerAdapter(context, mBreaksList);
-        mMiddaysRecyclerAdapter = new MiddaysRecyclerAdapter(context, mBreaksList);
         if(useCustomBreaksAdapter)
-            recyclerBreaks.setAdapter(mCustomBreaksRecyclerAdapter);
+            mCustomBreaksRecyclerAdapter = new CustomBreaksRecyclerAdapter(context, mBreaksList);
         else
-            recyclerBreaks.setAdapter(mMiddaysRecyclerAdapter);
+            mCustomBreaksRecyclerAdapter = new MiddaysRecyclerAdapter(context, mBreaksList);
 
+        recyclerBreaks.setAdapter(mCustomBreaksRecyclerAdapter);
+
+        Button btn = dialogView.findViewById(R.id.button_add_custom_break);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddCustomBreakDialog addBreakDialog = new AddCustomBreakDialog();
+                addBreakDialog.onAttach(context);
+                //addBreakDialog.show();
+            }
+        });
         return dialogView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(useCustomBreaksAdapter)
-            mCustomBreaksRecyclerAdapter.notifyDataSetChanged();
-        else
-            mMiddaysRecyclerAdapter.notifyDataSetChanged();
+        mCustomBreaksRecyclerAdapter.notifyDataSetChanged();
 
     }
 
@@ -70,5 +85,16 @@ public class CustomBreaksDialog extends PreferenceDialogFragmentCompat{
         }
     }
 
+    @Override
+    public void addBreak(String breakStart, String breakEnd, boolean[] days) {
+        CustomBreak newBreak = new CustomBreak(true,
+                new BreakTimes(new Timestamp(breakStart), new Timestamp(breakEnd)),
+                days);
+        int position = mBreaksList.size();
+        mBreaksList.add(newBreak);
+        mCustomBreaksRecyclerAdapter.notifyItemInserted(position);
+        mCustomBreaksRecyclerAdapter.notifyItemRangeChanged(position, mCustomBreaksRecyclerAdapter.getItemCount());
+
+    }
 }
 
