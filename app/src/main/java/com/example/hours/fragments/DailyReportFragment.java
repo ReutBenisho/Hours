@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,8 +33,9 @@ import com.example.hours.utils.ListenerManager;
 import com.example.hours.utils.OnSnapPositionChangeListener;
 import com.example.hours.utils.SnapOnScrollListener;
 
-public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener {
+public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int LOADER_DAILY_REPORTS = 0;
     private DailyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_daily_report);
 
@@ -45,6 +49,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     public static final String DAILY_REPORT_ID = "com.example.hours.DAILY_REPORT_ID";
     private HoursOpenHelper mDbOpenHelper;
     private DailyReport mDailyReport;
+    private boolean mCreatedLoader;
 
 
     public static DailyReportFragment newInstance() {
@@ -94,7 +99,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     @Override
     public void onResume() {
         super.onResume();
-        loadDailyReports();
+        getActivity().getSupportLoaderManager().restartLoader(LOADER_DAILY_REPORTS, null, this);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
 
         updateHours();
@@ -190,5 +195,48 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         mDailyReport = mDailyReportRecyclerAdapter.getCurrentReport(position);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
         return 0;
+    }
+
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        CursorLoader loader = null;
+        if(id == LOADER_DAILY_REPORTS){
+            loader = new CursorLoader(getContext()){
+                @Override
+                public Cursor loadInBackground() {
+
+                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+                    final String[] noteColumns = {
+                            DailyReportEntry._ID,
+                            DailyReportEntry.COLUMN_DATE,
+                            DailyReportEntry.COLUMN_ARRIVAL,
+                            DailyReportEntry.COLUMN_EXIT,};
+                    String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
+                            null, null, null, null, noteOrderBy);
+
+                }
+            };
+        }
+        mCreatedLoader = true;
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        if (!mCreatedLoader)
+            return;
+        mCreatedLoader = false;
+        if (loader.getId() == LOADER_DAILY_REPORTS) {
+            mDailyReportRecyclerAdapter.changeCursor(data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        if(loader.getId() == LOADER_DAILY_REPORTS){
+            mDailyReportRecyclerAdapter.changeCursor(null);
+        }
     }
 }
