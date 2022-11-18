@@ -31,16 +31,19 @@ public class DataManager {
     public static void loadFromDataBase(HoursOpenHelper dbHelper){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = {
+                DailyReportEntry._ID,
                 DailyReportEntry.COLUMN_DATE,
                 DailyReportEntry.COLUMN_ARRIVAL,
                 DailyReportEntry.COLUMN_EXIT};
+        String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
         Cursor cursor = db.query(DailyReportEntry.TABLE_NAME, columns,
-                null, null, null, null, DailyReportEntry.COLUMN_DATE
+                null, null, null, null, noteOrderBy
         );
         loadDailyReportsFromCursor(cursor);
     }
 
     private static void loadDailyReportsFromCursor(Cursor cursor) {
+        int idPos = cursor.getColumnIndex(DailyReportEntry._ID);
         int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
         int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
         int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
@@ -48,6 +51,8 @@ public class DataManager {
         db.mDailyReports.clear();
         while(cursor.moveToNext())
         {
+            int reportId = cursor.getInt(idPos);
+
             String dateStr = cursor.getString(datePos);
             Date date;
             try {
@@ -60,7 +65,7 @@ public class DataManager {
 
             Timestamp arrival = new Timestamp(cursor.getString(arrivalPos));
             Timestamp exit = new Timestamp(cursor.getString(exitPos));
-            DailyReport report = new DailyReport(date, arrival.getDuration(), exit.getDuration());
+            DailyReport report = new DailyReport(reportId, date, arrival.getDuration(), exit.getDuration());
             db.mDailyReports.add(report);
         }
         cursor.close();
@@ -121,10 +126,10 @@ public class DataManager {
     public void initializeDailyReports() {
         final DataManager dm = getInstance();
 
-        DailyReport report = new DailyReport(new Date(2022 - 1900, 10, 30), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
-        DailyReport report2 = new DailyReport(new Date(2022 - 1900, 10, 31), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 25, ChronoUnit.MINUTES));
-        DailyReport report3 = new DailyReport(new Date(2022 - 1900, 11, 1), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
-        DailyReport report4 = new DailyReport(new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
+        DailyReport report = new DailyReport(1, new Date(2022 - 1900, 10, 30), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
+        DailyReport report2 = new DailyReport(2, new Date(2022 - 1900, 10, 31), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 25, ChronoUnit.MINUTES));
+        DailyReport report3 = new DailyReport(3, new Date(2022 - 1900, 11, 1), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
+        DailyReport report4 = new DailyReport(4, new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
         mDailyReports.add(report);
         mDailyReports.add(report2);
         mDailyReports.add(report3);

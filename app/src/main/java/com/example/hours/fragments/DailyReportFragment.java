@@ -44,6 +44,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private SnapHelper mSnapHelper;
     private SnapOnScrollListener mSnapOnScrollListener;
     private List<DailyReport> mDailyReports;
+    public static final String DAILY_REPORT_ID = "com.example.hours.DAILY_REPORT_ID";
+    private int mDailyReportId;
 
 
     public static DailyReportFragment newInstance() {
@@ -172,6 +174,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     @Override
     public int onSnapPositionChange(int position) {
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
+        mDailyReportId = (int) mDailyReportRecyclerAdapter.getItemId(position);
         return 0;
     }
 }

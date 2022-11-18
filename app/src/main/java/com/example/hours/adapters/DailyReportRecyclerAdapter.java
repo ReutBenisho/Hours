@@ -52,30 +52,11 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DailyReport report = mDailyReports.get(holder.getAdapterPosition());
+        holder.mId = report.getId();
         holder.mLblDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()));
         holder.mTxtArrival.setText((new Timestamp(report.getArrival())).toString());
-        holder.mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.addMiddayRowToLayout(mLayoutInflater, holder.mLayoutMiddayTimes, App.getContext());
-            }
-        });
         holder.mTxtExit.setText((new Timestamp(report.getExit())).toString());
 
-        HoursManager.getInstance().info.userInfo.arrivalTime = Defaults.getArrival();
-        mTimestampTextWatcher = new TimestampTextWatcher(holder.mTxtArrival);
-        if(holder.mTxtArrival.getTag() == null)
-        {
-            holder.mTxtArrival.addTextChangedListener(mTimestampTextWatcher);
-            holder.mTxtArrival.setTag(mTimestampTextWatcher);
-        }
-
-        mTimestampTextWatcher = new TimestampTextWatcher(holder.mTxtExit);
-        if(holder.mTxtExit.getTag() == null)
-        {
-            holder.mTxtExit.addTextChangedListener(mTimestampTextWatcher);
-            holder.mTxtExit.setTag(mTimestampTextWatcher);
-        }
     }
 
     @Override
@@ -84,8 +65,13 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
         return mDailyReports.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public long getItemId(int position) {
+        return mDailyReports.get(position).getId();
+    }
 
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public int mId;
         public final TextView mLblDate;
         public final EditText mTxtArrival;
         public final LinearLayout mLayoutMiddayTimes;
@@ -94,11 +80,37 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            //Date
             mLblDate = itemView.findViewById(R.id.lbl_current_report_date);
+
+            //Arrival
             mTxtArrival = itemView.findViewById(R.id.txt_arrival_time);
+            mTimestampTextWatcher = new TimestampTextWatcher(mTxtArrival);
+            if(mTxtArrival.getTag() == null)
+            {
+                mTxtArrival.addTextChangedListener(mTimestampTextWatcher);
+                mTxtArrival.setTag(mTimestampTextWatcher);
+            }
+
+            //Middays
             mLayoutMiddayTimes = itemView.findViewById(R.id.layout_midday_exit_and_arrival_times);
             mBtnAddMiddayRow = itemView.findViewById(R.id.img_add_midday_row);
+            mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utils.addMiddayRowToLayout(mLayoutInflater, mLayoutMiddayTimes, App.getContext());
+                }
+            });
+
+            //Exit
             mTxtExit = itemView.findViewById(R.id.txt_exit_time);
+            mTimestampTextWatcher = new TimestampTextWatcher(mTxtExit);
+            if(mTxtExit.getTag() == null)
+            {
+                mTxtExit.addTextChangedListener(mTimestampTextWatcher);
+                mTxtExit.setTag(mTimestampTextWatcher);
+            }
         }
 
     }

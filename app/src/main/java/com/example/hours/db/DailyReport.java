@@ -6,14 +6,15 @@ import android.os.Parcelable;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.Dictionary;
 
 public final class DailyReport implements Parcelable{
+    private int mId;
     private Date mDate;
     private Duration mArrival;
     private Duration mExit;
 
-    public DailyReport(Date date, Duration arrival, Duration exit) {
+    public DailyReport(int id, Date date, Duration arrival, Duration exit) {
+        mId = id;
         mDate = new Date(String.valueOf(date));
         mArrival = Duration.of(arrival.toMinutes(), ChronoUnit.MINUTES);
         mExit = Duration.of(exit.toMinutes(), ChronoUnit.MINUTES);
@@ -101,4 +102,8 @@ public final class DailyReport implements Parcelable{
                     return new DailyReport[size];
                 }
             };
+
+    public int getId() {
+        return mId;
+    }
 }
