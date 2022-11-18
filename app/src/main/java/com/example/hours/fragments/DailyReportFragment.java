@@ -1,5 +1,7 @@
 package com.example.hours.fragments;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,9 @@ import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
 import com.example.hours.db.DataManager;
+import com.example.hours.db.HoursDbContract;
+import com.example.hours.db.HoursDbContract.DailyReportEntry;
+import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.DailyReportModel;
 import com.example.hours.utils.App;
@@ -43,9 +48,9 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private DailyReportRecyclerAdapter mDailyReportRecyclerAdapter;
     private SnapHelper mSnapHelper;
     private SnapOnScrollListener mSnapOnScrollListener;
-    private List<DailyReport> mDailyReports;
     public static final String DAILY_REPORT_ID = "com.example.hours.DAILY_REPORT_ID";
     private int mDailyReportId;
+    private HoursOpenHelper mDbOpenHelper;
 
 
     public static DailyReportFragment newInstance() {
@@ -55,6 +60,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDbOpenHelper = new HoursOpenHelper(getContext());
         ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
     }
 
@@ -75,8 +81,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         mRecycleDailyReports =  view.findViewById(R.id.list_daily_reports);
         mDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
         mRecycleDailyReports.setLayoutManager(mDailyReportsLayoutManager);
-        mDailyReports = DataManager.getInstance().getDailyReports();
-        mDailyReportRecyclerAdapter = new DailyReportRecyclerAdapter(getContext(), mDailyReports);
+
+        mDailyReportRecyclerAdapter = new DailyReportRecyclerAdapter(getContext(), null);
         mRecycleDailyReports.setAdapter(mDailyReportRecyclerAdapter);
         mSnapHelper = new LinearSnapHelper();
         //mSnapHelper.attachToRecyclerView(mRecycleDailyReports);
@@ -94,10 +100,23 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     @Override
     public void onResume() {
         super.onResume();
-        mDailyReportRecyclerAdapter.notifyDataSetChanged();
+        loadDailyReports();
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
 
         updateHours();
+    }
+
+    private void loadDailyReports() {
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+        final String[] noteColumns = {
+                DailyReportEntry._ID,
+                DailyReportEntry.COLUMN_DATE,
+                DailyReportEntry.COLUMN_ARRIVAL,
+                DailyReportEntry.COLUMN_EXIT};
+        String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+        final Cursor noteCursor = db.query(DailyReportEntry.TABLE_NAME, noteColumns,
+                null, null, null, null, noteOrderBy);
+        mDailyReportRecyclerAdapter.changeCursor(noteCursor);
     }
 
     @Override
@@ -119,8 +138,10 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         int position = mSnapOnScrollListener.getPosition();
         if(position < 0)
             return;
-        mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReports.get(position).getArrival());
-        mHoursManager.info.userInfo.exitTime.setTime(mDailyReports.get(position).getExit());
+
+        // TODO: fix the following 2 lines
+       // mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReports.get(position).getArrival());
+        //mHoursManager.info.userInfo.exitTime.setTime(mDailyReports.get(position).getExit());
 //
 //        View snapView_og = mDailyReportsLayoutManager.getChildAt(0);
 //        //View snapView = mDailyReports.get(position);

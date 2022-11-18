@@ -3,6 +3,7 @@ package com.example.hours.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.example.hours.R;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
+import com.example.hours.db.HoursDbContract;
+import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.TimestampTextWatcher;
@@ -33,12 +36,34 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
     private TextWatcher mTimestampTextWatcher;
-    private final List<DailyReport> mDailyReports;
+    private Cursor mCursor;
+    private int mIdPos;
+    private int mDatePos;
+    private int mArrivalPos;
+    private int mExitPos;
 
-    public DailyReportRecyclerAdapter(Context context, List<DailyReport> dailyReports) {
+    public DailyReportRecyclerAdapter(Context context, Cursor cursor) {
         mContext = context;
-        mDailyReports = dailyReports;
+        mCursor = cursor;
         mLayoutInflater = LayoutInflater.from(mContext);
+        populateColumnPositions();
+    }
+
+    private void populateColumnPositions() {
+        if(mCursor == null)
+            return;
+        mIdPos = mCursor.getColumnIndex(DailyReportEntry._ID);
+        mDatePos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
+        mArrivalPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
+        mExitPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+    }
+
+    public void changeCursor(Cursor cursor){
+        if(mCursor != null)
+            mCursor.close();
+        mCursor = cursor;
+        populateColumnPositions();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,23 +76,16 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     @SuppressLint("all")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DailyReport report = mDailyReports.get(holder.getAdapterPosition());
-        holder.mId = report.getId();
-        holder.mLblDate.setText(new SimpleDateFormat("dd-MM-yyyy").format(report.getDate()));
-        holder.mTxtArrival.setText((new Timestamp(report.getArrival())).toString());
-        holder.mTxtExit.setText((new Timestamp(report.getExit())).toString());
-
+        mCursor.moveToPosition(position);
+        holder.mId = mCursor.getInt(mIdPos);
+        holder.mLblDate.setText(mCursor.getString(mDatePos));
+        holder.mTxtArrival.setText(mCursor.getString(mArrivalPos));
+        holder.mTxtExit.setText(mCursor.getString(mExitPos));
     }
 
     @Override
     public int getItemCount() {
-
-        return mDailyReports.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return mDailyReports.get(position).getId();
+        return mCursor == null ? 0 : mCursor.getCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
