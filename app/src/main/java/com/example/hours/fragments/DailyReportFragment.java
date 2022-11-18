@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +20,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.example.hours.R;
 import com.example.hours.adapters.DailyReportRecyclerAdapter;
 import com.example.hours.calcUtils.HoursManager;
-import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.DataManager;
-import com.example.hours.db.HoursDbContract;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.interfaces.OnUpdateListener;
@@ -33,8 +29,6 @@ import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.utils.OnSnapPositionChangeListener;
 import com.example.hours.utils.SnapOnScrollListener;
-
-import java.util.List;
 
 public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener {
 
@@ -49,8 +43,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private SnapHelper mSnapHelper;
     private SnapOnScrollListener mSnapOnScrollListener;
     public static final String DAILY_REPORT_ID = "com.example.hours.DAILY_REPORT_ID";
-    private int mDailyReportId;
     private HoursOpenHelper mDbOpenHelper;
+    private DailyReport mDailyReport;
 
 
     public static DailyReportFragment newInstance() {
@@ -139,9 +133,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         if(position < 0)
             return;
 
-        // TODO: fix the following 2 lines
-       // mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReports.get(position).getArrival());
-        //mHoursManager.info.userInfo.exitTime.setTime(mDailyReports.get(position).getExit());
+        mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReport.getArrival());
+        mHoursManager.info.userInfo.exitTime.setTime(mDailyReport.getExit());
 //
 //        View snapView_og = mDailyReportsLayoutManager.getChildAt(0);
 //        //View snapView = mDailyReports.get(position);
@@ -194,8 +187,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
 
     @Override
     public int onSnapPositionChange(int position) {
+        mDailyReport = mDailyReportRecyclerAdapter.getCurrentReport(position);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
-        mDailyReportId = (int) mDailyReportRecyclerAdapter.getItemId(position);
         return 0;
     }
 }
