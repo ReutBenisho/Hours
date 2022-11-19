@@ -30,11 +30,11 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.Calendar;
 
-public class MonthlyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MonthlyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, IMonthlyFragment {
 
     private static final int LOADER_MONTHLY_DAILY_REPORTS = 0;
     private MonthlyReportModel mViewModel;
-    public static final String TAG = App.getStr(R.string.tag_monthly_report);
+    public static final String TAG = App.getStr(R.string.tag_monthly_list);
     private HoursOpenHelper mDbOpenHelper;
     private RecyclerView mRecycleMonthlyDailyReports;
     private LinearLayoutManager mMonthlyDailyReportsLayoutManager;
@@ -67,7 +67,7 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
         if(container != null)
             container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_monthly_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_monthly_list, container, false);
 
         mRecycleMonthlyDailyReports =  view.findViewById(R.id.list_monthly_daily_reports);
         mMonthlyDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -142,5 +142,10 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
         if(loader.getId() == LOADER_MONTHLY_DAILY_REPORTS){
             mMonthlyDailyReportRecyclerAdapter.changeCursor(null);
         }
+    }
+
+    @Override
+    public void update(int month, int year) {
+        //TODO: update stuff by month & year
     }
 }

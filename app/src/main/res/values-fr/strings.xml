@@ -120,4 +120,8 @@
     <string name="october">Octobre</string>
     <string name="november">Novembre</string>
     <string name="december">Décembre</string>
+    <string name="regularHours_colon">Heures régulières:</string>
+    <string name="summary">Sommaire</string>
+    <string name="month">Mois</string>
+    <string name="list">Liste</string>
 </resources>

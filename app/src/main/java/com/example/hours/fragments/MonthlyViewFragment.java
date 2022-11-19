@@ -30,11 +30,11 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.Calendar;
 
-public class MonthlyViewFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MonthlyViewFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, IMonthlyFragment {
 
     private static final int LOADER_MONTHLY_DAILY_REPORTS = 0;
     private MonthlyReportModel mViewModel;
-    public static final String TAG = App.getStr(R.string.tag_monthly_report);
+    public static final String TAG = App.getStr(R.string.tag_monthly_view);
     private HoursOpenHelper mDbOpenHelper;
     private boolean mCreatedLoader;
     private int mCurrentMonth;
@@ -65,7 +65,7 @@ public class MonthlyViewFragment extends Fragment implements LoaderManager.Loade
         if(container != null)
             container.removeAllViews(); // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_monthly_report, container, false);
+        View view = inflater.inflate(R.layout.fragment_monthly_view, container, false);
 
         mCalendarView = view.findViewById(R.id.calendarView);
         mCalendarView.addDecorator(new WeekendDecorator());
@@ -149,5 +149,10 @@ public class MonthlyViewFragment extends Fragment implements LoaderManager.Loade
         if(loader.getId() == LOADER_MONTHLY_DAILY_REPORTS){
             // TODO: reset calender view spans
         }
+    }
+
+    @Override
+    public void update(int month, int year) {
+        //TODO: update stuff by month & year
     }
 }

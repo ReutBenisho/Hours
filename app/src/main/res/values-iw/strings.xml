@@ -120,4 +120,8 @@
     <string name="october">אוקטובר</string>
     <string name="november">נובמבר</string>
     <string name="december">דצמבר</string>
+    <string name="regularHours_colon">שעות רגילות:</string>
+    <string name="summary">סיכום</string>
+    <string name="month">חודש</string>
+    <string name="list">רשימה</string>
 </resources>

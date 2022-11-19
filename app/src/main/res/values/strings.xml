@@ -188,7 +188,15 @@
     <string name="october">October</string>
     <string name="november">November</string>
     <string name="december">December</string>
-
+    <string name="regularHours_colon">Regular Hours:</string>
+    <string name="arg_current_month" translatable="false">arg_current_month</string>
+    <string name="arg_current_year" translatable="false">arg_current_year</string>
+    <string name="tag_monthly_list" translatable="false">TAG_MONTHLY_LIST</string>
+    <string name="tag_monthly_summary" translatable="false">MONTHLY_SUMMARY_TAG</string>
+    <string name="tag_monthly_view" translatable="false">MONTHLY_VIEW_TAG</string>
+    <string name="summary">Summary</string>
+    <string name="month">Month</string>
+    <string name="list">List</string>
 
     <!--For testings only-->
     <string name="hidden" translatable="false">Hidden</string>

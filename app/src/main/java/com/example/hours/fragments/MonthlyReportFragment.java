@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -50,10 +52,11 @@ public class MonthlyReportFragment extends Fragment {
     private MonthlyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_monthly_report);
     private int mCurrentMonth;
+    private int mCurrentYear;
     private TextView mLblCurrentMonth;
     private ImageView mImagePreviousMonth;
     private ImageView mImageNextMonth;
-    private int mCurrentYear;
+    private IMonthlyFragment mFragment;
 
 
     public static MonthlyReportFragment newInstance() {
@@ -82,14 +85,19 @@ public class MonthlyReportFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_monthly_report, container, false);
 
-        RadioGroup rdBtnGroup = view.findViewById(R.id.radioGroup);
-        rdBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int btnId) {
-
-                // TODO: open correct fragment
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked)
+                    openCalcDayFragment(compoundButton.getId());
             }
-        });
+        };
+        AppCompatRadioButton rdBtnSummary = view.findViewById(R.id.rdBtn_monthly_summary);
+        rdBtnSummary.setOnCheckedChangeListener(listener);
+        AppCompatRadioButton rdBtnView = view.findViewById(R.id.rdBtn_monthly_view);
+        rdBtnView.setOnCheckedChangeListener(listener);
+        AppCompatRadioButton rdBtnList = view.findViewById(R.id.rdBtn_monthly_list);
+        rdBtnList.setOnCheckedChangeListener(listener);
 
         mLblCurrentMonth = view.findViewById(R.id.lbl_current_month);
         mImagePreviousMonth = view.findViewById(R.id.img_month_previous);
@@ -114,6 +122,8 @@ public class MonthlyReportFragment extends Fragment {
                 //TODO: send "changed month message:
             }
         });
+        rdBtnSummary.setChecked(true);
+        mLblCurrentMonth.setText(getCurrentMonthText());
         return view;
     }
 
@@ -184,4 +194,42 @@ public class MonthlyReportFragment extends Fragment {
         }
         return month + " " + mCurrentYear;
     }
+
+
+    private void openCalcDayFragment(int id) {
+        Fragment fragment = null;
+        Class fragmentClass;
+        String tag;
+        //TODO: macth each frag to correct radio button
+        if(id == R.id.rdBtn_monthly_summary){
+            fragmentClass = MonthlySummaryFragment.class;
+            tag = MonthlySummaryFragment.TAG;
+        } else if(id == R.id.rdBtn_monthly_view){
+            fragmentClass = MonthlyViewFragment.class;
+            tag = MonthlyViewFragment.TAG;
+        } else {
+            fragmentClass = MonthlyListFragment.class;
+            tag = MonthlyListFragment.TAG;
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // set MyFragment Arguments
+        if(fragment != null) {
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getChildFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_monthly_report, fragment, tag)
+                    .commit();
+
+            mFragment = (IMonthlyFragment) fragment;
+            mFragment.update(mCurrentMonth, mCurrentYear);
+        }
+    }
+
 }
