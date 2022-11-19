@@ -114,6 +114,7 @@ public class Utils {
 
     public static void updateViewVisibility(View view) {
         if(((TextView)view).getText().equals(App.getStr(R.string.midnight_timestamp)))
+        //if(false)
             ((View)view.getParent()).setVisibility(View.GONE);
         else
             ((View)view.getParent()).setVisibility(View.VISIBLE);

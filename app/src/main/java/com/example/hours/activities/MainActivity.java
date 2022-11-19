@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,8 @@ import android.view.animation.AnticipateInterpolator;
 
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.db.DataManager;
+import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.fragments.SettingsFragment;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
@@ -50,6 +54,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private HoursManager mHoursManager;
+    private HoursOpenHelper mDbOpenHelper;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //
 //        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
+        mDbOpenHelper = new HoursOpenHelper(this);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         ViewModelProvider provider = new ViewModelProvider(
@@ -162,7 +168,10 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_calc_day,R.id.nav_gallery, R.id.nav_settings)
+                R.id.nav_calc_day,
+                R.id.nav_daily_report,
+                R.id.nav_gallery,
+                R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
                 .build();
 
@@ -206,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
+        mDbOpenHelper.getWritableDatabase();
+        DataManager.loadFromDataBase(mDbOpenHelper);
     }
 
     private void sendEmail() {
@@ -319,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     @Override
     protected void onDestroy() {
         ListenerManager.removeListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
+        mDbOpenHelper.close();
         super.onDestroy();
     }
 

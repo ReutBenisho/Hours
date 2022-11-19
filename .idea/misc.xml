@@ -54,6 +54,8 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/custom_break_preference_item.xml" value="0.1796875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/custom_breaks_preference.xml" value="0.1796875" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/custom_breaks_preference_list.xml" value="0.1796875" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/daily_report_item.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/daily_repot_list.xml" value="0.1140625" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/dateformat_preference.xml" value="0.12864583333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_by_arrival.xml" value="0.12681159420289856" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day.xml" value="0.4068441064638783" />
@@ -61,6 +63,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day_no_exit.xml" value="0.3710618436406068" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calc_day_with_exit.xml" value="0.15853658536585366" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calculation_by_arrival.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_daily_report.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_gallery.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_home.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_no_exit.xml" value="0.35269709543568467" />

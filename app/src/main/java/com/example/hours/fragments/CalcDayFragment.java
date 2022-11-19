@@ -253,7 +253,4 @@ public class CalcDayFragment extends Fragment implements OnUpdateListener {
         }
     }
 
-    public interface ICalcDayFragment {
-        void update(boolean isFriday);
-    }
 }

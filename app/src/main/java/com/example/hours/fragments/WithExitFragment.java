@@ -21,7 +21,7 @@ import com.example.hours.R;
 import com.example.hours.models.WithExitViewModel;
 import com.example.hours.utils.Utils;
 
-public class WithExitFragment extends Fragment implements CalcDayFragment.ICalcDayFragment {
+public class WithExitFragment extends Fragment implements ICalcDayFragment {
 
     public static final String TAG = App.getStr(R.string.tag_calc_day_with_exit);
     private WithExitViewModel mViewModel;

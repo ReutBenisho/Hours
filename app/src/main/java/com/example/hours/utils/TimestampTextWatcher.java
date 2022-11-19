@@ -166,6 +166,7 @@ public class TimestampTextWatcher implements TextWatcher {
                 {
                     textLayout.setError("");
                     ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
+                    ListenerManager.NotifyListeners(ListenerManager.ListenerType.UPDATE_DAILY_REPORT_IN_DB);
                 }
                 else
                     textLayout.setError(App.getStr(R.string.invalidTime));
