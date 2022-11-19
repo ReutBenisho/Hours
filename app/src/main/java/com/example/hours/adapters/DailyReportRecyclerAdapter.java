@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hours.R;
+import com.example.hours.calcUtils.CustomDate;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
@@ -75,7 +76,7 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         mCursor.moveToPosition(position);
         holder.mId = mCursor.getInt(mIdPos);
-        holder.mLblDate.setText(mCursor.getString(mDatePos));
+        holder.mLblDate.setText(CustomDate.convertToFormat(mCursor.getString(mDatePos), "yyyyMMdd", "dd.MM"));
         holder.mTxtArrival.setText(new Timestamp(mCursor.getString(mArrivalPos)).toString());
         holder.mTxtExit.setText(new Timestamp(mCursor.getString(mExitPos)).toString());
     }

@@ -17,6 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hours.R;
+import com.example.hours.calcUtils.CustomBreak;
+import com.example.hours.calcUtils.CustomDate;
 import com.example.hours.calcUtils.HoursInfo;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
@@ -77,7 +79,7 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
         holder.mId = mCursor.getInt(mIdPos);
 
         //Date
-        holder.mLblDate.setText(mCursor.getString(mDatePos));
+        holder.mLblDate.setText(CustomDate.convertToFormat(mCursor.getString(mDatePos), "yyyyMMdd", "dd.MM"));
 
         //Arrival and exit
         UserInfo userInfo = new UserInfo();

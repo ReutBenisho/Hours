@@ -243,7 +243,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         int id = holder.mId;
         Date date;
         try {
-            date = (new SimpleDateFormat("dd-MM-yyyy")).parse(holder.mLblDate.getText().toString());
+            date = (new SimpleDateFormat("yyyyMMdd")).parse(holder.mLblDate.getText().toString());
         }
         catch (ParseException ex){
             date = new Date(2022 - 1900, 1, 1);

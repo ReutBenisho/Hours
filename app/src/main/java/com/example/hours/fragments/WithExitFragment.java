@@ -70,7 +70,6 @@ public class WithExitFragment extends Fragment implements ICalcDayFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(WithExitViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override

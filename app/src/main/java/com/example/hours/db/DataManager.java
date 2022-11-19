@@ -57,7 +57,7 @@ public class DataManager {
             Date date;
             try {
 
-                date = (new SimpleDateFormat("dd-MM-yyyy")).parse(dateStr);
+                date = (new SimpleDateFormat("yyyyMMdd")).parse(dateStr);
             }
             catch (ParseException ex){
                 date = new Date(2022 - 1900, 1, 1);

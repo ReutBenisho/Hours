@@ -31,6 +31,8 @@ import com.example.hours.utils.App;
 import com.example.hours.utils.OnSnapPositionChangeListener;
 import com.example.hours.utils.SnapOnScrollListener;
 
+import java.util.Calendar;
+
 public class MonthlyReportFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_MONTHLY_DAILY_REPORTS = 0;
@@ -41,6 +43,7 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     private LinearLayoutManager mMonthlyDailyReportsLayoutManager;
     private MonthlyDailyReportRecyclerAdapter mMonthlyDailyReportRecyclerAdapter;
     private boolean mCreatedLoader;
+    private int mCurrentMonth;
 
 
     public static MonthlyReportFragment newInstance() {
@@ -52,6 +55,7 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDbOpenHelper = new HoursOpenHelper(getContext());
+        mCurrentMonth = 0;
     }
 
     @Override
@@ -82,6 +86,7 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     public void onResume() {
 
         super.onResume();
+        mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
         getActivity().getSupportLoaderManager().restartLoader(LOADER_MONTHLY_DAILY_REPORTS, null, this);
 
     }
@@ -106,14 +111,24 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
                 @Override
                 public Cursor loadInBackground() {
                     SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+                    String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
+                    String[] selectionArgs = {String.format("%02d", mCurrentMonth)};
                     final String[] noteColumns = {
                             DailyReportEntry._ID,
                             DailyReportEntry.COLUMN_DATE,
                             DailyReportEntry.COLUMN_ARRIVAL,
-                            DailyReportEntry.COLUMN_EXIT,};
-                    String noteOrderBy = DailyReportEntry.COLUMN_DATE;
+                            DailyReportEntry.COLUMN_EXIT};
+                    String noteOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
+                    //Cursor c = db.rawQuery("SELECT " + DailyReportEntry._ID
+//                                    + ", " + DailyReportEntry.COLUMN_DATE
+//                                    + ", " + DailyReportEntry.COLUMN_ARRIVAL
+//                                    + ", " + DailyReportEntry.COLUMN_EXIT
+//                                    + " FROM " + DailyReportEntry.TABLE_NAME
+//                                    + " WHERE substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '11'",
+//                            null);
+                   // return c;
                     return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                            null, null, null, null, noteOrderBy);
+                          selection, null, null, null, noteOrderBy);
 
                 }
             };
