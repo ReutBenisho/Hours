@@ -1,5 +1,6 @@
 package com.example.hours.fragments;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.example.hours.R;
 import com.example.hours.adapters.DailyReportRecyclerAdapter;
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
@@ -32,6 +34,11 @@ import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.utils.OnSnapPositionChangeListener;
 import com.example.hours.utils.SnapOnScrollListener;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
 
 public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -50,6 +57,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private HoursOpenHelper mDbOpenHelper;
     private DailyReport mDailyReport;
     private boolean mCreatedLoader;
+    private int mDailyReportPos;
 
 
     public static DailyReportFragment newInstance() {
@@ -61,6 +69,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         super.onCreate(savedInstanceState);
         mDbOpenHelper = new HoursOpenHelper(getContext());
         ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
+        ListenerManager.addListener(this, ListenerManager.ListenerType.UPDATE_DAILY_REPORT_IN_DB);
     }
 
     @Override
@@ -126,8 +135,9 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         ListenerManager.removeListener(this, ListenerManager.ListenerType.INFO_LABELS);
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.UPDATE_DAILY_REPORT_IN_DB);
+        super.onDestroy();
     }
 
     private void updateHours() {
@@ -185,16 +195,54 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         switch (data.type)
         {
             case INFO_LABELS:
-                updateHours();
+                mDailyReport = getCurrentDailyReport(mDailyReportPos);
+                if(mDailyReport != null)
+                    updateHours();
+                break;
+            case UPDATE_DAILY_REPORT_IN_DB:
+                mDailyReport = getCurrentDailyReport(mDailyReportPos);
+                if(mDailyReport != null)
+                    saveDailyReportToDatabase();
                 break;
         }
     }
 
+    private void saveDailyReportToDatabase() {
+        // TODO :check why the first value isn't calculated at first
+        String selection = DailyReportEntry._ID + " = ? ";
+        String[] selectionArgs = {Integer.toString(mDailyReport.getId())};
+
+        ContentValues values = new ContentValues();
+        values.put(DailyReportEntry.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
+        values.put(DailyReportEntry.COLUMN_EXIT, mDailyReport.getExit().toString());
+        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
+        int count = db.update(DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
+    }
+
     @Override
     public int onSnapPositionChange(int position) {
-        mDailyReport = mDailyReportRecyclerAdapter.getCurrentReport(position);
+        mDailyReportPos = position;
+        mDailyReport = getCurrentDailyReport(position);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.INFO_LABELS);
         return 0;
+    }
+
+    private DailyReport getCurrentDailyReport(int position) {
+        DailyReportRecyclerAdapter.ViewHolder holder =
+                (DailyReportRecyclerAdapter.ViewHolder) mRecycleDailyReports.findViewHolderForAdapterPosition(position);
+        if(holder == null)
+            return null;
+        int id = holder.mId;
+        Date date;
+        try {
+            date = (new SimpleDateFormat("dd-MM-yyyy")).parse(holder.mLblDate.getText().toString());
+        }
+        catch (ParseException ex){
+            date = new Date(2022 - 1900, 1, 1);
+        }
+        Timestamp arrival = new Timestamp(holder.mTxtArrival.getText().toString());
+        Timestamp exit = new Timestamp(holder.mTxtExit.getText().toString());
+        return new DailyReport(id, date, arrival, exit);
     }
 
     @NonNull

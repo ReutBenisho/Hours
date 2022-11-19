@@ -65,7 +65,7 @@ public class DataManager {
 
             Timestamp arrival = new Timestamp(cursor.getString(arrivalPos));
             Timestamp exit = new Timestamp(cursor.getString(exitPos));
-            DailyReport report = new DailyReport(reportId, date, arrival.getDuration(), exit.getDuration());
+            DailyReport report = new DailyReport(reportId, date, arrival, exit);
             db.mDailyReports.add(report);
         }
         cursor.close();
@@ -126,10 +126,10 @@ public class DataManager {
     public void initializeDailyReports() {
         final DataManager dm = getInstance();
 
-        DailyReport report = new DailyReport(1, new Date(2022 - 1900, 10, 30), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
-        DailyReport report2 = new DailyReport(2, new Date(2022 - 1900, 10, 31), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 25, ChronoUnit.MINUTES));
-        DailyReport report3 = new DailyReport(3, new Date(2022 - 1900, 11, 1), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
-        DailyReport report4 = new DailyReport(4, new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
+        DailyReport report = new DailyReport(1, new Date(2022 - 1900, 10, 30), new Timestamp(7, 30), new Timestamp(16, 24));
+        DailyReport report2 = new DailyReport(2, new Date(2022 - 1900, 10, 31), new Timestamp(7, 30), new Timestamp(17, 25));
+        DailyReport report3 = new DailyReport(3, new Date(2022 - 1900, 11, 1),new Timestamp(7, 30), new Timestamp(17, 30));
+        DailyReport report4 = new DailyReport(4, new Date(2022 - 1900, 11, 2), new Timestamp(7, 30), new Timestamp(16, 0));
         mDailyReports.add(report);
         mDailyReports.add(report2);
         mDailyReports.add(report3);

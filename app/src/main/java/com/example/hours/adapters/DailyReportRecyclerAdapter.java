@@ -76,30 +76,13 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
         mCursor.moveToPosition(position);
         holder.mId = mCursor.getInt(mIdPos);
         holder.mLblDate.setText(mCursor.getString(mDatePos));
-        holder.mTxtArrival.setText(mCursor.getString(mArrivalPos));
-        holder.mTxtExit.setText(mCursor.getString(mExitPos));
+        holder.mTxtArrival.setText(new Timestamp(mCursor.getString(mArrivalPos)).toString());
+        holder.mTxtExit.setText(new Timestamp(mCursor.getString(mExitPos)).toString());
     }
 
     @Override
     public int getItemCount() {
         return mCursor == null ? 0 : mCursor.getCount();
-    }
-
-    public DailyReport getCurrentReport(int position){
-        mCursor.moveToPosition(position);
-
-        int id = mCursor.getInt(mIdPos);
-        Date date;
-        try {
-            date = (new SimpleDateFormat("dd-MM-yyyy")).parse(mCursor.getString(mDatePos));
-        }
-        catch (ParseException ex){
-            date = new Date(2022 - 1900, 1, 1);
-        }
-        Duration arrival = new Timestamp(mCursor.getString(mArrivalPos)).getDuration();
-        Duration exit = new Timestamp(mCursor.getString(mExitPos)).getDuration();
-        DailyReport report = new DailyReport(id, date, arrival, exit);
-        return report;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

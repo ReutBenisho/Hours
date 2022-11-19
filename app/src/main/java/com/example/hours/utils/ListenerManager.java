@@ -11,7 +11,8 @@ public class ListenerManager {
     public enum ListenerType{
         INFO_LABELS,
         ACTION_BAR_TITLE,
-        TIME_PREFERENCE_CHANGE
+        TIME_PREFERENCE_CHANGE,
+        UPDATE_DAILY_REPORT_IN_DB
     }
     public static class Data{
         public final ListenerType type;

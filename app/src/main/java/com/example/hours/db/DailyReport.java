@@ -3,6 +3,9 @@ package com.example.hours.db;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.hours.calcUtils.Timestamp;
+
+import java.sql.Time;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -10,20 +13,29 @@ import java.util.Date;
 public final class DailyReport implements Parcelable{
     private int mId;
     private Date mDate;
-    private Duration mArrival;
-    private Duration mExit;
+    private Timestamp mArrival;
+    private Timestamp mExit;
 
-    public DailyReport(int id, Date date, Duration arrival, Duration exit) {
+    public DailyReport(int id, Date date, Timestamp arrival, Timestamp exit) {
         mId = id;
         mDate = new Date(String.valueOf(date));
-        mArrival = Duration.of(arrival.toMinutes(), ChronoUnit.MINUTES);
-        mExit = Duration.of(exit.toMinutes(), ChronoUnit.MINUTES);
+        mArrival = new Timestamp(arrival);
+        mExit = new Timestamp(exit);
     }
 
     private DailyReport(Parcel parcel) {
+        mId = 0;
         mDate = new Date(parcel.readString());
-        mArrival = Duration.of(Integer.parseInt(parcel.readString()), ChronoUnit.MINUTES);
-        mExit = Duration.of(Integer.parseInt(parcel.readString()), ChronoUnit.MINUTES);
+        mArrival = new Timestamp();
+        mExit = new Timestamp();
+    }
+
+    public DailyReport() {
+        mId = 0;
+        mDate = new Date();
+        mArrival = new Timestamp();
+        mExit = new Timestamp();
+
     }
 
     public Date getDate() {
@@ -35,27 +47,28 @@ public final class DailyReport implements Parcelable{
         mDate = new Date(String.valueOf(date));
     }
 
-    public Duration getArrival() {
+    public Timestamp getArrival() {
         return mArrival;
     }
 
-    public void setArrival(Duration arrival) {
+    public void setArrival(Timestamp arrival) {
 
-        mArrival = Duration.of(arrival.toMinutes(), ChronoUnit.MINUTES);
+        mArrival = new Timestamp(arrival);
     }
 
-    public Duration getExit() {
+    public Timestamp getExit() {
+
         return mExit;
     }
 
-    public void setExit(Duration exit) {
+    public void setExit(Timestamp exit) {
 
-        mExit = Duration.of(exit.toMinutes(), ChronoUnit.MINUTES);
+        mExit = new Timestamp(exit);
     }
 
 
     private String getCompareKey() {
-        return mDate.toString() + "|" + mArrival.toMinutes() + "|" + mExit.toMinutes();
+        return mDate.toString() + "|" + mArrival.toString() + "|" + mExit.toString();
     }
 
     @Override
@@ -86,8 +99,8 @@ public final class DailyReport implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mDate.toString());
-        parcel.writeString(mArrival.toMinutes() + "");
-        parcel.writeString(mExit.toMinutes() + "");
+        parcel.writeString(mArrival.toString() + "");
+        parcel.writeString(mExit.toString() + "");
     }
 
     public static final Creator<DailyReport> CREATOR =
