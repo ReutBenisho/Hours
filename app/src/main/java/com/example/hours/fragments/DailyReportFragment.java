@@ -3,6 +3,7 @@ package com.example.hours.fragments;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -209,14 +210,22 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
 
     private void saveDailyReportToDatabase() {
         // TODO :check why the first value isn't calculated at first
-        String selection = DailyReportEntry._ID + " = ? ";
-        String[] selectionArgs = {Integer.toString(mDailyReport.getId())};
+        final String selection = DailyReportEntry._ID + " = ? ";
+        final String[] selectionArgs = {Integer.toString(mDailyReport.getId())};
 
-        ContentValues values = new ContentValues();
+        final ContentValues values = new ContentValues();
         values.put(DailyReportEntry.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
         values.put(DailyReportEntry.COLUMN_EXIT, mDailyReport.getExit().toString());
-        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
-        int count = db.update(DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
+                db.update(DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
+                return null;
+            }
+        };
+        task.execute();
     }
 
     @Override
