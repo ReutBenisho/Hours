@@ -107,4 +107,5 @@
     <string name="thursday_abbriviated">Jeu</string>
     <string name="friday_abbriviated">Ven</string>
     <string name="daily_report">rapport journalier</string>
+    <string name="monthly_report">Rapport mensuel</string>
 </resources>

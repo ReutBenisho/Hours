@@ -14,6 +14,10 @@
             android:icon="@drawable/ic_clock"
             android:title="@string/daily_report" />
         <item
+            android:id="@+id/nav_monthly_report"
+            android:icon="@drawable/ic_clock"
+            android:title="@string/monthly_report" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />

@@ -107,4 +107,5 @@
     <string name="thursday_abbriviated">ה\'</string>
     <string name="friday_abbriviated">ו\'</string>
     <string name="daily_report">דיווח יומי</string>
+    <string name="monthly_report">דיווח חודשי</string>
 </resources>

@@ -61,6 +61,7 @@
     <string name="newline_additional6hours_colon_space" translatable="false">\n${additional6hours_colon} </string>
     <string name="tag_gallery" translatable="false">GALLERY_TAG</string>
     <string name="tag_daily_report" translatable="false">DAILY_REPORT_TAG</string>
+    <string name="tag_monthly_report" translatable="false">MONTHLY_REPORT_TAG</string>
     <string name="pref_existing_user" translatable="false">pref_existing_user</string>
     <string name="email_subject_issue">Issue regarding the Hours app</string>
     <string name="mailto" translatable="false">mailto:</string>
@@ -174,6 +175,7 @@
     <string name="thursday_abbriviated">Thu</string>
     <string name="friday_abbriviated">Fri</string>
     <string name="daily_report">Daily Report</string>
+    <string name="monthly_report">Monthly Report</string>
 
 
     <!--For testings only-->

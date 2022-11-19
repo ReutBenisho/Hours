@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_calc_day,
                 R.id.nav_daily_report,
+                R.id.nav_monthly_report,
                 R.id.nav_gallery,
                 R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
