@@ -21,4 +21,6 @@
     <color name="settings_dialog_background">#222222</color>
     <color name="calc_labels">@color/gray_90_trans_75</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/background_end_color</color>
+    <color name="calendar_cell_selected">@color/background_end_color</color>
+
 </resources>

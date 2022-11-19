@@ -88,7 +88,7 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
 
         String arrivalAndExit = "";
         arrivalAndExit += userInfo.arrivalTime.toString();
-        arrivalAndExit += "-";
+        arrivalAndExit += " - ";
         arrivalAndExit += userInfo.exitTime.toString();
         holder.mLblArrivalAndExit.setText(arrivalAndExit);
 

@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         // Set up a listener whenever a key changes
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                 .registerOnSharedPreferenceChangeListener(this);
+        LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+
     }
 
     @Override
@@ -117,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //
 //        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
+        LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+
+        getResources().updateConfiguration(getResources().getConfiguration(),
+                getResources().getDisplayMetrics());
+
         mDbOpenHelper = new HoursOpenHelper(this);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);

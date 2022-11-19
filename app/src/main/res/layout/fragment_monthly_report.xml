@@ -19,27 +19,124 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <CalendarView
-        android:id="@+id/monthly_calendar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_monthly_report" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lbl_monthly_report">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_monthly_daily_reports"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/monthly_calendar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/monthly_report_daily_item" />
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rdBtn_monthly_summary"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:background="@drawable/background_radio_btn"
+                            android:button="@drawable/btn_transparent"
+                            android:minHeight="30dp"
+                            android:text="סיכום"
+                            android:textAlignment="center"
+                            android:textColor="@color/color_radio_selected"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/rbBtn_monthly_view"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:background="@drawable/background_radio_btn"
+                            android:button="@drawable/btn_transparent"
+                            android:minHeight="30dp"
+                            android:text="חודש"
+                            android:textAlignment="center"
+                            android:textColor="@color/color_radio_selected"
+                            app:layout_constraintBottom_toBottomOf="@+id/rdBtn_monthly_summary"
+                            app:layout_constraintEnd_toStartOf="@+id/rbBtn_monthly_list"
+                            app:layout_constraintStart_toEndOf="@+id/rdBtn_monthly_summary"
+                            app:layout_constraintTop_toTopOf="@+id/rdBtn_monthly_summary" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:id="@+id/rbBtn_monthly_list"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="32dp"
+                            android:background="@drawable/background_radio_btn"
+                            android:button="@drawable/btn_transparent"
+                            android:minHeight="30dp"
+                            android:text="רשימה"
+                            android:textAlignment="center"
+                            android:textColor="@color/color_radio_selected"
+                            app:layout_constraintBottom_toBottomOf="@+id/rdBtn_monthly_summary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rdBtn_monthly_summary" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_month_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup">
+
+                <ImageView
+                    android:id="@+id/img_month_previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_left_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/lbl_current_month"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lbl_current_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="נובמבר 2022"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/img_month_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_right_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/lbl_current_month"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment_monthly_report"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_month_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
