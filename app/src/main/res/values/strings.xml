@@ -120,6 +120,7 @@
     <string name="pref_language" translatable="false">pref_language</string>
     <string name="hebrew_entry">Hebrew</string>
     <string name="english_entry">English</string>
+    <string name="french_entry">French</string>
     <string name="notify_before_breaks">Notify Before Breaks</string>
     <string name="pref_notify_lunch_break" translatable="false">pref_notify_lunch_break</string>
     <string name="lunch_break">Lunch break</string>

@@ -14,10 +14,12 @@
     <string-array name="language_entries">
         <item>@string/hebrew_entry</item>
         <item>@string/english_entry</item>
+        <item>@string/french_entry</item>
     </string-array>
 
     <string-array name="language_values">
         <item>iw</item>
         <item>en</item>
+        <item>fr</item>
     </string-array>
 </resources>
