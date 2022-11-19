@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Hours</string>
     <string name="btn_txt_register">הירשם</string>
     <string name="lbl_txt_register">הרשמה</string>
@@ -70,6 +69,7 @@
     <string name="use_system_default_language">השתמש בשפה המוגדרת במכשיר</string>
     <string name="hebrew_entry">עברית</string>
     <string name="english_entry">אנגלית</string>
+    <string name="french_entry">צרפתית</string>
     <string name="notify_before_breaks">התראות לפני הפסקות</string>
     <string name="lunch_break">הפסקת צהריים</string>
     <string name="evening_break">הפסקת ערב</string>
@@ -107,7 +107,4 @@
     <string name="thursday_abbriviated">ה\'</string>
     <string name="friday_abbriviated">ו\'</string>
     <string name="daily_report">דיווח יומי</string>
-
-
-
 </resources>
