@@ -90,7 +90,7 @@ public class WithExitFragment extends Fragment implements ICalcDayFragment {
         mHoursManager = HoursManager.getInstance();
         mHoursManager.CalcDayWithExit();
 
-        if(mHoursManager.info.calcInfo.totalTime.isFullDay){
+        if(mHoursManager.mInfo.calcInfo.totalTime.isFullDay){
             mLblTxtFullDay.setText(Defaults.getFullDay().toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.white));
             mLblTxtFullDay.setTypeface(Typeface.DEFAULT);
@@ -98,16 +98,16 @@ public class WithExitFragment extends Fragment implements ICalcDayFragment {
         }
         else
         {
-            mLblTxtFullDay.setText(mHoursManager.info.calcInfo.totalTime.total.toString());
+            mLblTxtFullDay.setText(mHoursManager.mInfo.calcInfo.totalTime.total.toString());
             mLblTxtFullDay.setTextColor(getResources().getColor(R.color.red));
             mLblTxtFullDay.setTypeface(null, Typeface.BOLD);
         }
-        mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.totalTime.zeroHours.toString());
-        mLblTxtAdditionalHours.setText(mHoursManager.info.calcInfo.totalTime.additionalHours.toString());
-        mLblTxtAdditional125Hours.setText(mHoursManager.info.calcInfo.totalTime.additional125Hours.toString());
-        mLblTxtAdditional150Hours.setText(mHoursManager.info.calcInfo.totalTime.additional150Hours.toString());
-        mLblTxtGlobalAbsenceHours.setText(mHoursManager.info.calcInfo.totalTime.globalAbsence.toString());
-        mLblTxtUnpaidAbsenceHours.setText(mHoursManager.info.calcInfo.totalTime.unpaidAbsence.toString());
+        mLblTxtZeroHours.setText(mHoursManager.mInfo.calcInfo.totalTime.zeroHours.toString());
+        mLblTxtAdditionalHours.setText(mHoursManager.mInfo.calcInfo.totalTime.additionalHours.toString());
+        mLblTxtAdditional125Hours.setText(mHoursManager.mInfo.calcInfo.totalTime.additional125Hours.toString());
+        mLblTxtAdditional150Hours.setText(mHoursManager.mInfo.calcInfo.totalTime.additional150Hours.toString());
+        mLblTxtGlobalAbsenceHours.setText(mHoursManager.mInfo.calcInfo.totalTime.globalAbsence.toString());
+        mLblTxtUnpaidAbsenceHours.setText(mHoursManager.mInfo.calcInfo.totalTime.unpaidAbsence.toString());
     }
 
     private void updateVisibility() {

@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        Utils.setupDarkMode(getApplicationContext());
 //        updateViews(SharedPreferencesUtil.getString(getString(R.string.pref_language)));
         mHoursManager = HoursManager.getInstance();
-        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
+        mHoursManager.mInfo.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -454,7 +452,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
                 break;
             case R.string.pref_student_mode:
-                mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
+                mHoursManager.mInfo.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
                 break;
             case R.string.pref_system_language:
             case R.string.pref_language:

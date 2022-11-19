@@ -35,7 +35,7 @@ public class DataManager {
                 DailyReportEntry.COLUMN_DATE,
                 DailyReportEntry.COLUMN_ARRIVAL,
                 DailyReportEntry.COLUMN_EXIT};
-        String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
         Cursor cursor = db.query(DailyReportEntry.TABLE_NAME, columns,
                 null, null, null, null, noteOrderBy
         );

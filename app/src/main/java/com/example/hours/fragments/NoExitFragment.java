@@ -98,13 +98,13 @@ public class NoExitFragment extends Fragment implements ICalcDayFragment {
         mHoursManager = HoursManager.getInstance();
         mHoursManager.CalcDayNoExit();
 
-        mLblTxtHalfDay.setText(mHoursManager.info.calcInfo.halfDay.toString());
-        mLblTxtFullDay.setText(mHoursManager.info.calcInfo.fullDay.toString());
-        mLblTxtZeroHours.setText(mHoursManager.info.calcInfo.zeroHours.toString());
-        mLblTxt125Hours.setText(mHoursManager.info.calcInfo.student.additional125Hours.toString());
-        mLblTxt150Hours.setText(mHoursManager.info.calcInfo.student.additional150Hours.toString());
-        mLblTxt3AndHalfHours.setText(mHoursManager.info.calcInfo.additional3AndHalfHours.toString());
-        mLblTxt6Hours.setText(mHoursManager.info.calcInfo.additional6Hours.toString());
+        mLblTxtHalfDay.setText(mHoursManager.mInfo.calcInfo.halfDay.toString());
+        mLblTxtFullDay.setText(mHoursManager.mInfo.calcInfo.fullDay.toString());
+        mLblTxtZeroHours.setText(mHoursManager.mInfo.calcInfo.zeroHours.toString());
+        mLblTxt125Hours.setText(mHoursManager.mInfo.calcInfo.student.additional125Hours.toString());
+        mLblTxt150Hours.setText(mHoursManager.mInfo.calcInfo.student.additional150Hours.toString());
+        mLblTxt3AndHalfHours.setText(mHoursManager.mInfo.calcInfo.additional3AndHalfHours.toString());
+        mLblTxt6Hours.setText(mHoursManager.mInfo.calcInfo.additional6Hours.toString());
 
     }
 

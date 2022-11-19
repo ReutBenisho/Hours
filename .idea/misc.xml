@@ -66,11 +66,12 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_daily_report.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_gallery.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_home.xml" value="0.12239583333333333" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_monthly_report.xml" value="0.12135416666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_monthly_report.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_no_exit.xml" value="0.35269709543568467" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_settings.xml" value="0.11785297549591599" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_slideshow.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_with_exit.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/monthly_report_daily_item.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/nav_header_main.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/row_add_exit_time.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/row_midday_exit_and_arrival_times.xml" value="0.22" />
