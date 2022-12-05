@@ -1,5 +1,6 @@
 package com.example.hours.fragments;
 
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,14 +18,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hours.R;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
+import com.example.hours.utils.ListenerManager;
 import com.example.hours.utils.Utils;
 
 import java.util.Calendar;
 
-public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment{
+public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment, OnUpdateListener {
 
     private MonthlyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_monthly_summary);
@@ -38,9 +41,7 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
     private TextView mLblTxtGlobalAbsenceHours;
     private TextView mLblTxtUnpaidAbsenceHours;
     private View mView;
-    private int mCurrentMonth;
-    private int mCurrentYear;
-
+    private Cursor mCursor;
 
     public static MonthlySummaryFragment newInstance() {
 
@@ -55,7 +56,6 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
 
 
     private void initialize() {
-        mIsInitialized = true;
         mLblTxtRegularHours = mView.findViewById(R.id.lbl_txt_regular_hours);
         mLblTxtZeroHours = mView.findViewById(R.id.lbl_txt_zero_hours);
         mLblTxtZeroHours.setTextColor(getResources().getColor(R.color.yellow));
@@ -69,6 +69,8 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
         mLblTxtGlobalAbsenceHours.setTextColor(getResources().getColor(R.color.red));
         mLblTxtUnpaidAbsenceHours = mView.findViewById(R.id.lbl_txt_unpaid_absence_hours);
         mLblTxtUnpaidAbsenceHours.setTextColor(getResources().getColor(R.color.red));
+
+        mIsInitialized = true;
     }
 
     @Override
@@ -85,22 +87,15 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
 
         mView = inflater.inflate(R.layout.fragment_monthly_summary, container, false);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            mCurrentMonth = bundle.getInt(App.getStr(R.string.arg_current_month), 1);
-            mCurrentYear = bundle.getInt(App.getStr(R.string.arg_current_year), 2000);
-        }
-
         initialize();
-        update();
-
+        ListenerManager.addListener(this, ListenerManager.ListenerType.UPDATED_MONTH_CURSOR);
         return mView;
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
+        update(mCursor);
 
     }
 
@@ -116,7 +111,9 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
         super.onDestroy();
     }
 
-    private void update() {
+    private void update(Cursor cursor) {
+        if(!mIsInitialized)
+            return;
         updateLabels();
         updateVisibility();
     }
@@ -154,7 +151,28 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
     }
 
     @Override
-    public void update(int month, int year) {
-        //TODO: update stuff by month & year
+    public void update(int month, int year, Cursor cursor) {
+        //TODO: use cursor data to load values into labels
+        mCursor = cursor;
+        int count = 0;
+        if(cursor!= null)
+            count = cursor.getCount();
+        update(cursor);
+    }
+
+    @Override
+    public void onUpdateListener(OnUpdateListener listener, Object obj) {
+        if(listener == this){
+            ListenerManager.Data data = (ListenerManager.Data)obj;
+            switch (data.type){
+                case UPDATED_MONTH_CURSOR:{
+                    Cursor cursor = (Cursor) data.obj;
+                    int count = cursor.getCount();
+                    mCursor = cursor;
+                    update(cursor);
+                    break;
+                }
+            }
+        }
     }
 }

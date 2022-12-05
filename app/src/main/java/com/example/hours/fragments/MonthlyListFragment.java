@@ -22,26 +22,25 @@ import com.example.hours.adapters.MonthlyDailyReportRecyclerAdapter;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.decorators.WeekendDecorator;
+import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
 import com.example.hours.utils.App;
+import com.example.hours.utils.ListenerManager;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.util.Calendar;
 
-public class MonthlyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, IMonthlyFragment {
+public class MonthlyListFragment extends Fragment implements IMonthlyFragment, OnUpdateListener {
 
-    private static final int LOADER_MONTHLY_DAILY_REPORTS = 0;
     private MonthlyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_monthly_list);
-    private HoursOpenHelper mDbOpenHelper;
     private RecyclerView mRecycleMonthlyDailyReports;
     private LinearLayoutManager mMonthlyDailyReportsLayoutManager;
     private MonthlyDailyReportRecyclerAdapter mMonthlyDailyReportRecyclerAdapter;
-    private boolean mCreatedLoader;
-    private int mCurrentMonth;
-
+    private boolean mIsInitialized;
+    private Cursor mCursor;
 
     public static MonthlyListFragment newInstance() {
 
@@ -51,8 +50,6 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDbOpenHelper = new HoursOpenHelper(getContext());
-        mCurrentMonth = 0;
     }
 
     @Override
@@ -68,7 +65,14 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
             container.removeAllViews(); // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_monthly_list, container, false);
+        mIsInitialized = false;
+        initialize(view);
 
+        ListenerManager.addListener(this, ListenerManager.ListenerType.UPDATED_MONTH_CURSOR);
+        return view;
+    }
+
+    private void initialize(View view) {
         mRecycleMonthlyDailyReports =  view.findViewById(R.id.list_monthly_daily_reports);
         mMonthlyDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycleMonthlyDailyReports.setLayoutManager(mMonthlyDailyReportsLayoutManager);
@@ -76,15 +80,15 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
         mMonthlyDailyReportRecyclerAdapter = new MonthlyDailyReportRecyclerAdapter(getContext(), null);
         mRecycleMonthlyDailyReports.setAdapter(mMonthlyDailyReportRecyclerAdapter);
 
-        return view;
+        mMonthlyDailyReportRecyclerAdapter.changeCursor(mCursor);
+
+        mIsInitialized = true;
     }
 
     @Override
     public void onResume() {
 
         super.onResume();
-        mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-        getActivity().getSupportLoaderManager().restartLoader(LOADER_MONTHLY_DAILY_REPORTS, null, this);
 
     }
 
@@ -96,56 +100,37 @@ public class MonthlyListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onDestroy() {
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.CHANGED_MONTH);
         super.onDestroy();
     }
 
-    @NonNull
     @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        CursorLoader loader = null;
-        if(id == LOADER_MONTHLY_DAILY_REPORTS){
-            loader = new CursorLoader(getContext()){
-                @Override
-                public Cursor loadInBackground() {
-                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-                    String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
-                    String[] selectionArgs = {String.format("%02d", mCurrentMonth)};
-                    final String[] noteColumns = {
-                            DailyReportEntry._ID,
-                            DailyReportEntry.COLUMN_DATE,
-                            DailyReportEntry.COLUMN_ARRIVAL,
-                            DailyReportEntry.COLUMN_EXIT};
-                    String noteOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
-
-                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                          selection, null, null, null, noteOrderBy);
-
-                }
-            };
-        }
-        mCreatedLoader = true;
-        return loader;
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        if (!mCreatedLoader)
+    public void update(int month, int year, Cursor cursor) {
+        // TODO: upadte list by cursor
+        mCursor = cursor;
+        if(!mIsInitialized)
             return;
-        mCreatedLoader = false;
-        if (loader.getId() == LOADER_MONTHLY_DAILY_REPORTS) {
-            mMonthlyDailyReportRecyclerAdapter.changeCursor(data);
-        }
+        mMonthlyDailyReportRecyclerAdapter.changeCursor(cursor);
+
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        if(loader.getId() == LOADER_MONTHLY_DAILY_REPORTS){
-            mMonthlyDailyReportRecyclerAdapter.changeCursor(null);
+    public void onUpdateListener(OnUpdateListener listener, Object obj) {
+        if(listener == this){
+            ListenerManager.Data data = (ListenerManager.Data)obj;
+            switch (data.type){
+                case UPDATED_MONTH_CURSOR:{
+                    mCursor = (Cursor) data.obj;
+                    int count = mCursor.getCount();
+                    updateList();
+                    mMonthlyDailyReportRecyclerAdapter.changeCursor(mCursor);
+                    break;
+                }
+            }
         }
     }
 
-    @Override
-    public void update(int month, int year) {
-        //TODO: update stuff by month & year
+    private void updateList() {
+
     }
 }
