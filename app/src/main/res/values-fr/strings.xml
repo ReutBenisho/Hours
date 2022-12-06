@@ -35,13 +35,13 @@
     <string name="additional3andhalfHours_colon">Supplémentaire 3.5:</string>
     <string name="additional6hours_colon">Supplémentaire 6:</string>
     <string name="email_subject_issue">Problèmes concernant l\'application Heures</string>
-    <string name="additional125_colon">125% supplémentaires:</string>
-    <string name="additional150_colon">150% supplémentaires:</string>
+    <string name="additional125_colon">125%% supplémentaires:</string>
+    <string name="additional150_colon">150%% supplémentaires:</string>
     <string name="totalTime_colon">Temps total</string>
     <string name="totalZeroHours_colon">Zéro heure:</string>
     <string name="totalAdditionalHours_colon">Supplémentaire:</string>
-    <string name="totalAdditional125hours_colon">125% supplémentaires:</string>
-    <string name="totalAdditional150hours_colon">150% supplémentaires:</string>
+    <string name="totalAdditional125hours_colon">125%% supplémentaires:</string>
+    <string name="totalAdditional150hours_colon">150%% supplémentaires:</string>
     <string name="isFullDay_colon">C\'est toute la journée:</string>
     <string name="totalGlobalAbsence_colon">Absence globale</string>
     <string name="totalUnpaidAbsence_colon">Absence sans solde</string>
