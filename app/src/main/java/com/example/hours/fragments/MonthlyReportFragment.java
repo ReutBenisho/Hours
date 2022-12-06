@@ -2,6 +2,7 @@ package com.example.hours.fragments;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
@@ -271,24 +272,35 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         CursorLoader loader = null;
         if(id == LOADER_MONTHLY_DAILY_REPORTS){
-            loader = new CursorLoader(getContext()){
-                @Override
-                public Cursor loadInBackground() {
-                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-                    String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 1, 4) == '" + mCurrentYear + "'";
-                    selection += " AND substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
-                    final String[] noteColumns = {
-                            DailyReportEntry._ID,
-                            DailyReportEntry.COLUMN_DATE,
-                            DailyReportEntry.COLUMN_ARRIVAL,
-                            DailyReportEntry.COLUMN_EXIT};
-                    String noteOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
-
-                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                            selection, null, null, null, noteOrderBy);
-
-                }
+            Uri uri = Uri.parse("content://com.example.hours.provider");
+            String[] reportsColumns = {
+                DailyReportEntry._ID,
+                DailyReportEntry.COLUMN_DATE,
+                DailyReportEntry.COLUMN_ARRIVAL,
+                DailyReportEntry.COLUMN_EXIT
             };
+            String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 1, 4) == '" + mCurrentYear + "'";
+            selection += " AND substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
+            String reportOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
+            loader = new CursorLoader(getContext(), uri, reportsColumns, selection, null, reportOrderBy);
+//            loader = new CursorLoader(getContext()){
+//                @Override
+//                public Cursor loadInBackground() {
+//                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+//                    String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 1, 4) == '" + mCurrentYear + "'";
+//                    selection += " AND substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
+//                    final String[] noteColumns = {
+//                            DailyReportEntry._ID,
+//                            DailyReportEntry.COLUMN_DATE,
+//                            DailyReportEntry.COLUMN_ARRIVAL,
+//                            DailyReportEntry.COLUMN_EXIT};
+//                    String noteOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
+//
+//                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
+//                            selection, null, null, null, noteOrderBy);
+//
+//                }
+//            };
         }
         mCreatedLoader = true;
         return loader;
