@@ -3,9 +3,11 @@ package com.example.hours.fragments;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -29,7 +31,10 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.example.hours.R;
 import com.example.hours.adapters.DailyReportRecyclerAdapter;
 import com.example.hours.adapters.MonthlyDailyReportRecyclerAdapter;
+import com.example.hours.calcUtils.CustomDate;
 import com.example.hours.calcUtils.HoursManager;
+import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
@@ -47,7 +52,11 @@ import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MonthlyReportFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnUpdateListener {
 
@@ -60,9 +69,9 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     private ImageView mImagePreviousMonth;
     private ImageView mImageNextMonth;
     private IMonthlyFragment mFragment;
-    private Cursor mCursor;
     private boolean mCreatedLoader;
     private HoursOpenHelper mDbOpenHelper;
+    private ArrayList<DailyReport> mDailyReports;
 
 
     public static MonthlyReportFragment newInstance() {
@@ -75,7 +84,8 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         mDbOpenHelper = new HoursOpenHelper(getContext());
         mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;;
-        mCurrentYear = Calendar.getInstance().get(Calendar.YEAR);;
+        mCurrentYear = Calendar.getInstance().get(Calendar.YEAR);
+        mDailyReports = new ArrayList<>();
     }
 
     @Override
@@ -95,8 +105,10 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
         CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked)
+                if(isChecked) {
+                    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     openCalcDayFragment(compoundButton.getId());
+                }
             }
         };
         AppCompatRadioButton rdBtnSummary = view.findViewById(R.id.rdBtn_monthly_summary);
@@ -111,6 +123,9 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
         mImagePreviousMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
                 mCurrentMonth = (mCurrentMonth  + 12 - 1) % 12;
                 mCurrentMonth = (mCurrentMonth == 0) ? 12 : mCurrentMonth;
                 mCurrentYear = (mCurrentMonth == 12) ? mCurrentYear - 1 : mCurrentYear;
@@ -122,6 +137,9 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
         mImageNextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.image_click));
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
                 mCurrentMonth = (mCurrentMonth + 1) % 13;
                 mCurrentMonth = (mCurrentMonth == 0) ? 1 : mCurrentMonth;
                 mCurrentYear = (mCurrentMonth == 1) ? mCurrentYear + 1 : mCurrentYear;
@@ -243,7 +261,8 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
                     .commit();
 
             mFragment = (IMonthlyFragment) fragment;
-            mFragment.update(mCurrentMonth, mCurrentYear, mCursor);
+            //TODO: need to pass list, not curcor
+            mFragment.update(mCurrentMonth, mCurrentYear, mDailyReports);
         }
     }
 
@@ -276,20 +295,35 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         if (!mCreatedLoader)
             return;
         mCreatedLoader = false;
         if (loader.getId() == LOADER_MONTHLY_DAILY_REPORTS) {
-            mCursor = data;
-            ListenerManager.NotifyListeners(ListenerManager.ListenerType.UPDATED_MONTH_CURSOR, mCursor);
+            mDailyReports.clear();
+            while(cursor.moveToNext()){
+                DailyReport report = new DailyReport();
+                int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
+                int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
+                int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+                try {
+                    report.setDate((new SimpleDateFormat("yyyyMMdd")).parse(cursor.getString(datePos)));
+                }
+                catch (ParseException ex){
+                    report.setDate(new Date(2022 - 1900, 1, 1));
+                }
+                report.setArrival(new Timestamp(cursor.getString(arrivalPos)));
+                report.setExit(new Timestamp(cursor.getString(exitPos)));
+                mDailyReports.add(report);
+            }
+            ListenerManager.NotifyListeners(ListenerManager.ListenerType.UPDATED_MONTH_CURSOR, mDailyReports);
         }
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         if(loader.getId() == LOADER_MONTHLY_DAILY_REPORTS){
-            mCursor = null;
+            mDailyReports.clear();
             ListenerManager.NotifyListeners(ListenerManager.ListenerType.UPDATED_MONTH_CURSOR, null);
         }
     }

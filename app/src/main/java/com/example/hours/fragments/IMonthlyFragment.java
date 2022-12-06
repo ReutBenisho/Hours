@@ -1,8 +1,10 @@
 package com.example.hours.fragments;
 
-import android.database.Cursor;
+import com.example.hours.db.DailyReport;
+
+import java.util.ArrayList;
 
 public interface IMonthlyFragment {
-    void update(int month, int year, Cursor cursor);
+    void update(int month, int year, ArrayList<DailyReport> dailyReports);
 
 }

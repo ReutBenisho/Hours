@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hours.R;
+import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.decorators.WeekendDecorator;
 import com.example.hours.interfaces.OnUpdateListener;
@@ -21,6 +22,8 @@ import com.example.hours.utils.ListenerManager;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
+
+import java.util.ArrayList;
 
 public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, OnUpdateListener {
 
@@ -33,6 +36,7 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
     private MaterialCalendarView mCalendarView;
     private int mCurrentYear;
     private boolean mIsInitialized;
+    private ArrayList<DailyReport> mDailyReports;
 
 
     public static MonthlyViewFragment newInstance() {
@@ -109,7 +113,7 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
 
 
     @Override
-    public void update(int month, int year, Cursor cursor) {
+    public void update(int month, int year, ArrayList<DailyReport> list) {
         //TODO: update stuff by cursor
         if(!mIsInitialized)
             return;
@@ -117,7 +121,8 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
         mCurrentYear = year;
         CalendarDay day = CalendarDay.from(year, month, 1);
         mCalendarView.setSelectedDate(day);
-        updateMonthData(cursor);
+        mDailyReports = list;
+        updateMonthData();
     }
 
     @Override
@@ -126,16 +131,15 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
                 case UPDATED_MONTH_CURSOR:{
-                    Cursor cursor = (Cursor) data.obj;
-                    int count = cursor.getCount();
-                    updateMonthData(cursor);
+                    mDailyReports = (ArrayList<DailyReport>) data.obj;
+                    updateMonthData();
                     break;
                 }
             }
         }
     }
 
-    private void updateMonthData(Cursor cursor) {
+    private void updateMonthData() {
 
     }
 }

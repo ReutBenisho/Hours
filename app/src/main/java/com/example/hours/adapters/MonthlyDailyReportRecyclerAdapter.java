@@ -23,45 +23,59 @@ import com.example.hours.calcUtils.HoursInfo;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.calcUtils.UserInfo;
+import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<MonthlyDailyReportRecyclerAdapter.ViewHolder>{
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private Cursor mCursor;
-    private int mIdPos;
-    private int mDatePos;
-    private int mArrivalPos;
-    private int mExitPos;
+//    private Cursor mCursor;
+//    private int mIdPos;
+//    private int mDatePos;
+//    private int mArrivalPos;
+//    private int mExitPos;
+    private ArrayList<DailyReport> mReports;
     private HoursManager mHoursManager;
 
-    public MonthlyDailyReportRecyclerAdapter(Context context, Cursor cursor) {
+    public MonthlyDailyReportRecyclerAdapter(Context context, /*Cursor cursor*/ArrayList<DailyReport> list) {
         mContext = context;
-        mCursor = cursor;
+        //mCursor = cursor;
+        mReports = list;
         mLayoutInflater = LayoutInflater.from(mContext);
-        populateColumnPositions();
+        //populateColumnPositions();
         mHoursManager = HoursManager.getInstance();
     }
 
-    private void populateColumnPositions() {
-        if(mCursor == null)
-            return;
-        mIdPos = mCursor.getColumnIndex(DailyReportEntry._ID);
-        mDatePos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
-        mArrivalPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
-        mExitPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
-    }
+//    private void populateColumnPositions() {
+//        if(mCursor == null)
+//            return;
+//        mIdPos = mCursor.getColumnIndex(DailyReportEntry._ID);
+//        mDatePos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
+//        mArrivalPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
+//        mExitPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+//    }
 
-    public void changeCursor(Cursor cursor){
-        if(mCursor != null)
-            mCursor.close();
-        mCursor = cursor;
-        populateColumnPositions();
+//    public void changeCursor(Cursor cursor){
+//        if(mCursor != null)
+//            mCursor.close();
+//        mCursor = cursor;
+//        populateColumnPositions();
+//        notifyDataSetChanged();
+//    }
+
+    public void changeList(ArrayList<DailyReport> list){
+        if(mReports != null && mReports != list)
+            mReports.clear();
+        mReports = list;
         notifyDataSetChanged();
     }
 
@@ -75,16 +89,21 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
     @SuppressLint("all")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        mCursor.moveToPosition(position);
-        holder.mId = mCursor.getInt(mIdPos);
+        //mCursor.moveToPosition(position);
+        DailyReport report = mReports.get(holder.getAdapterPosition());
+
+        //holder.mId = mCursor.getInt(mIdPos);
+        holder.mId = report.getId();
 
         //Date
-        holder.mLblDate.setText(CustomDate.convertToFormat(mCursor.getString(mDatePos), "yyyyMMdd", "dd.MM"));
+        Date date = report.getDate();
+        String strDate = String.format(new SimpleDateFormat("dd.MM").format(date));
+        holder.mLblDate.setText(strDate);
 
         //Arrival and exit
         UserInfo userInfo = new UserInfo();
-        userInfo.arrivalTime = new Timestamp(mCursor.getString(mArrivalPos));
-        userInfo.exitTime = new Timestamp(mCursor.getString(mExitPos));
+        userInfo.arrivalTime = report.getArrival();
+        userInfo.exitTime = report.getExit();
 
         String arrivalAndExit = "";
         arrivalAndExit += userInfo.arrivalTime.toString();
@@ -104,9 +123,9 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
         else if(totalStr.charAt(0) == '+')
         {
             holder.mLblSignTotalHours.setText("+");
+            // TODO: adjust condition to also match students
             holder.mLblAdditionalOrAbsenceHours.setText(totalStr.substring(1));
             Timestamp total = new Timestamp(totalStr.substring(1));
-            // TODO: adjust condition to also match students
             if(total.equalsOrLessThan(Defaults.getZeroHours())){
                 holder.mLblSignTotalHours.setTextColor(App.getRes().getColor(R.color.yellow));
                 holder.mLblAdditionalOrAbsenceHours.setTextColor(App.getRes().getColor(R.color.yellow));
@@ -128,7 +147,10 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
     @Override
     public int getItemCount() {
 
-        return mCursor == null ? 0 : mCursor.getCount();
+        //return mCursor == null ? 0 : mCursor.getCount();
+        if(mReports == null)
+            return 0;
+        return mReports.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

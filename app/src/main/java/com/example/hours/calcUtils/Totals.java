@@ -15,6 +15,7 @@ public class Totals {
     public Timestamp additional150Hours;
     public Timestamp globalAbsence;
     public Timestamp unpaidAbsence;
+    public Timestamp regularHours;
 
     public Totals(){
         clear();
@@ -34,6 +35,8 @@ public class Totals {
             globalAbsence = new Timestamp();
         if(unpaidAbsence == null)
             unpaidAbsence = new Timestamp();
+        if(regularHours == null)
+            regularHours = new Timestamp();
         total.clear();
         isFullDay = false;
         zeroHours.clear();
@@ -42,6 +45,7 @@ public class Totals {
         additional150Hours.clear();
         globalAbsence.clear();
         unpaidAbsence.clear();
+        regularHours.clear();
     }
 
     @NonNull

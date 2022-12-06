@@ -1,7 +1,5 @@
 package com.example.hours.fragments;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,26 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hours.R;
 import com.example.hours.adapters.MonthlyDailyReportRecyclerAdapter;
-import com.example.hours.db.HoursDbContract.DailyReportEntry;
-import com.example.hours.db.HoursOpenHelper;
-import com.example.hours.decorators.WeekendDecorator;
+import com.example.hours.db.DailyReport;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 
 public class MonthlyListFragment extends Fragment implements IMonthlyFragment, OnUpdateListener {
 
@@ -40,7 +30,7 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
     private LinearLayoutManager mMonthlyDailyReportsLayoutManager;
     private MonthlyDailyReportRecyclerAdapter mMonthlyDailyReportRecyclerAdapter;
     private boolean mIsInitialized;
-    private Cursor mCursor;
+    private ArrayList<DailyReport> mDailyReports;
 
     public static MonthlyListFragment newInstance() {
 
@@ -77,10 +67,8 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
         mMonthlyDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycleMonthlyDailyReports.setLayoutManager(mMonthlyDailyReportsLayoutManager);
 
-        mMonthlyDailyReportRecyclerAdapter = new MonthlyDailyReportRecyclerAdapter(getContext(), null);
+        mMonthlyDailyReportRecyclerAdapter = new MonthlyDailyReportRecyclerAdapter(getContext(), mDailyReports);
         mRecycleMonthlyDailyReports.setAdapter(mMonthlyDailyReportRecyclerAdapter);
-
-        mMonthlyDailyReportRecyclerAdapter.changeCursor(mCursor);
 
         mIsInitialized = true;
     }
@@ -89,7 +77,7 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
     public void onResume() {
 
         super.onResume();
-
+        mMonthlyDailyReportRecyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -105,13 +93,12 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
     }
 
     @Override
-    public void update(int month, int year, Cursor cursor) {
+    public void update(int month, int year, ArrayList<DailyReport> dailyReports) {
         // TODO: upadte list by cursor
-        mCursor = cursor;
+        mDailyReports = dailyReports;
         if(!mIsInitialized)
             return;
-        mMonthlyDailyReportRecyclerAdapter.changeCursor(cursor);
-
+        mMonthlyDailyReportRecyclerAdapter.changeList(dailyReports);
     }
 
     @Override
@@ -120,17 +107,12 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
                 case UPDATED_MONTH_CURSOR:{
-                    mCursor = (Cursor) data.obj;
-                    int count = mCursor.getCount();
-                    updateList();
-                    mMonthlyDailyReportRecyclerAdapter.changeCursor(mCursor);
+                    mDailyReports = (ArrayList<DailyReport>) data.obj;
+                    mMonthlyDailyReportRecyclerAdapter.changeList(mDailyReports);
                     break;
                 }
             }
         }
     }
 
-    private void updateList() {
-
-    }
 }
