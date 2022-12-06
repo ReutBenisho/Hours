@@ -35,7 +35,7 @@ public class DataManager {
                 DailyReportEntry.COLUMN_DATE,
                 DailyReportEntry.COLUMN_ARRIVAL,
                 DailyReportEntry.COLUMN_EXIT};
-        String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
         Cursor cursor = db.query(DailyReportEntry.TABLE_NAME, columns,
                 null, null, null, null, noteOrderBy
         );
@@ -57,7 +57,7 @@ public class DataManager {
             Date date;
             try {
 
-                date = (new SimpleDateFormat("dd-MM-yyyy")).parse(dateStr);
+                date = (new SimpleDateFormat("yyyyMMdd")).parse(dateStr);
             }
             catch (ParseException ex){
                 date = new Date(2022 - 1900, 1, 1);

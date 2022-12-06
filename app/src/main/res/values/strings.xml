@@ -61,6 +61,7 @@
     <string name="newline_additional6hours_colon_space" translatable="false">\n${additional6hours_colon} </string>
     <string name="tag_gallery" translatable="false">GALLERY_TAG</string>
     <string name="tag_daily_report" translatable="false">DAILY_REPORT_TAG</string>
+    <string name="tag_monthly_report" translatable="false">MONTHLY_REPORT_TAG</string>
     <string name="pref_existing_user" translatable="false">pref_existing_user</string>
     <string name="email_subject_issue">Issue regarding the Hours app</string>
     <string name="mailto" translatable="false">mailto:</string>
@@ -174,7 +175,28 @@
     <string name="thursday_abbriviated">Thu</string>
     <string name="friday_abbriviated">Fri</string>
     <string name="daily_report">Daily Report</string>
-
+    <string name="monthly_report">Monthly Report</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+    <string name="regularHours_colon">Regular Hours:</string>
+    <string name="arg_current_month" translatable="false">arg_current_month</string>
+    <string name="arg_current_year" translatable="false">arg_current_year</string>
+    <string name="tag_monthly_list" translatable="false">TAG_MONTHLY_LIST</string>
+    <string name="tag_monthly_summary" translatable="false">MONTHLY_SUMMARY_TAG</string>
+    <string name="tag_monthly_view" translatable="false">MONTHLY_VIEW_TAG</string>
+    <string name="summary">Summary</string>
+    <string name="month">Month</string>
+    <string name="list">List</string>
 
     <!--For testings only-->
     <string name="hidden" translatable="false">Hidden</string>

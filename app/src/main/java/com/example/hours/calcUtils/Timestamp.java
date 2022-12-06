@@ -180,9 +180,23 @@ public class Timestamp {
     public boolean lessThan(Timestamp other) {
         return isBefore(other);
     }
+    public boolean equalsOrLessThan(Timestamp other) {
+        return equals(other) || isBefore(other);
+    }
 
     public Timestamp copy(){
         return new Timestamp(this);
+    }
+
+    public String extractSign(){
+        if(mTime.isNegative()) {
+            Duration positiveDuration = Duration.of(mTime.toMinutes() * -1, ChronoUnit.MINUTES);
+            return "-" + new Timestamp(positiveDuration).toString();
+        }
+        else if(mTime.toMinutes() > 0)
+            return "+" + toString();
+        else
+            return toString();
     }
 
 }

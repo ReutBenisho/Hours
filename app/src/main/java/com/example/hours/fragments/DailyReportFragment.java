@@ -38,7 +38,6 @@ import com.example.hours.utils.SnapOnScrollListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Date;
 
 public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -122,7 +121,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
                 DailyReportEntry.COLUMN_DATE,
                 DailyReportEntry.COLUMN_ARRIVAL,
                 DailyReportEntry.COLUMN_EXIT};
-        String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
         final Cursor noteCursor = db.query(DailyReportEntry.TABLE_NAME, noteColumns,
                 null, null, null, null, noteOrderBy);
         mDailyReportRecyclerAdapter.changeCursor(noteCursor);
@@ -144,13 +143,13 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private void updateHours() {
         if(mHoursManager == null)
             return;
-        mHoursManager.info.clearCalculatedInfo();
+        mHoursManager.mInfo.clearCalculatedInfo();
         int position = mSnapOnScrollListener.getPosition();
         if(position < 0)
             return;
 
-        mHoursManager.info.userInfo.arrivalTime.setTime(mDailyReport.getArrival());
-        mHoursManager.info.userInfo.exitTime.setTime(mDailyReport.getExit());
+        mHoursManager.mInfo.userInfo.arrivalTime.setTime(mDailyReport.getArrival());
+        mHoursManager.mInfo.userInfo.exitTime.setTime(mDailyReport.getExit());
 //
 //        View snapView_og = mDailyReportsLayoutManager.getChildAt(0);
 //        //View snapView = mDailyReports.get(position);
@@ -244,7 +243,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         int id = holder.mId;
         Date date;
         try {
-            date = (new SimpleDateFormat("dd-MM-yyyy")).parse(holder.mLblDate.getText().toString());
+            date = (new SimpleDateFormat("yyyyMMdd")).parse(holder.mLblDate.getText().toString());
         }
         catch (ParseException ex){
             date = new Date(2022 - 1900, 1, 1);
@@ -269,7 +268,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
                             DailyReportEntry.COLUMN_DATE,
                             DailyReportEntry.COLUMN_ARRIVAL,
                             DailyReportEntry.COLUMN_EXIT,};
-                    String noteOrderBy = DailyReportEntry._ID + "," + DailyReportEntry.COLUMN_DATE;
+                    String noteOrderBy = DailyReportEntry.COLUMN_DATE;
                     return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
                             null, null, null, null, noteOrderBy);
 

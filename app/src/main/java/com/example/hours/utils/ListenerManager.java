@@ -12,7 +12,10 @@ public class ListenerManager {
         INFO_LABELS,
         ACTION_BAR_TITLE,
         TIME_PREFERENCE_CHANGE,
-        UPDATE_DAILY_REPORT_IN_DB
+        UPDATE_DAILY_REPORT_IN_DB,
+        CHANGED_MONTH,
+        CHANGED_MONTH_VIA_MONTH_VIEW,
+        UPDATED_MONTH_CURSOR
     }
     public static class Data{
         public final ListenerType type;

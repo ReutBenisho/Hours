@@ -43,4 +43,8 @@
         <item name="textColorAlertDialogListItem">@color/settings_text_primary</item>
     </style>
 
+    <style name="CustomTextAppearance" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/calendar_text_color_selector</item>
+    </style>
+
 </resources>

@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -68,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         // Set up a listener whenever a key changes
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                 .registerOnSharedPreferenceChangeListener(this);
+        LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+
     }
 
     @Override
@@ -119,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //
 //        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
+        LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+
+        getResources().updateConfiguration(getResources().getConfiguration(),
+                getResources().getDisplayMetrics());
+
         mDbOpenHelper = new HoursOpenHelper(this);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        Utils.setupDarkMode(getApplicationContext());
 //        updateViews(SharedPreferencesUtil.getString(getString(R.string.pref_language)));
         mHoursManager = HoursManager.getInstance();
-        mHoursManager.info.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
+        mHoursManager.mInfo.userInfo.isStudent = SharedPreferencesUtil.getBoolean(getString(R.string.pref_student_mode));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -170,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_calc_day,
                 R.id.nav_daily_report,
+                R.id.nav_monthly_report,
                 R.id.nav_gallery,
                 R.id.nav_settings)
                 .setOpenableLayout(mDrawer)
@@ -453,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
                 break;
             case R.string.pref_student_mode:
-                mHoursManager.info.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
+                mHoursManager.mInfo.userInfo.isStudent = sharedPreferences.getBoolean(pref, false);
                 break;
             case R.string.pref_system_language:
             case R.string.pref_language:

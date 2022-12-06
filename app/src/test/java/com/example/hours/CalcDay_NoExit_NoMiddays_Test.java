@@ -38,7 +38,7 @@ public class CalcDay_NoExit_NoMiddays_Test {
     }
     @Test
 public void test1_Arrival_07_30() {
-        mHoursManager.info.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
+        mHoursManager.mInfo.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
         mHoursManager.CalcDayNoExit();
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.userInfo.arrivalTime = new Timestamp(Defaults.getArrival());
@@ -55,12 +55,12 @@ public void test1_Arrival_07_30() {
                         .add(Defaults.getMaxAdditionalHours())
                         .add(Defaults.getEveningDuration());
         expHoursInfo.breaks.tookEveningBreak = true;
-        assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
+        assertEquals(expHoursInfo.toString(), mHoursManager.mInfo.toString());
     }
 
     @Test 
 public void test2_Arrival_07_49() {
-        mHoursManager.info.userInfo.arrivalTime = new Timestamp(7, 49);
+        mHoursManager.mInfo.userInfo.arrivalTime = new Timestamp(7, 49);
         mHoursManager.CalcDayNoExit();
         HoursInfo expHoursInfo = new HoursInfo();
         expHoursInfo.userInfo.arrivalTime = new Timestamp(7, 49);
@@ -70,6 +70,6 @@ public void test2_Arrival_07_49() {
         expHoursInfo.calcInfo.additional3AndHalfHours = new Timestamp(20, 25);
         expHoursInfo.calcInfo.additional6Hours = new Timestamp(22, 55);
         expHoursInfo.breaks.tookEveningBreak = true;
-        assertEquals(expHoursInfo.toString(), mHoursManager.info.toString());
+        assertEquals(expHoursInfo.toString(), mHoursManager.mInfo.toString());
     }
 }
