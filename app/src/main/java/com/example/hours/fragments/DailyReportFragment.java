@@ -1,8 +1,10 @@
 package com.example.hours.fragments;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import com.example.hours.R;
 import com.example.hours.adapters.DailyReportRecyclerAdapter;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
@@ -114,18 +117,18 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         updateHours();
     }
 
-    private void loadDailyReports() {
-        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-        final String[] noteColumns = {
-                DailyReportEntry._ID,
-                DailyReportEntry.COLUMN_DATE,
-                DailyReportEntry.COLUMN_ARRIVAL,
-                DailyReportEntry.COLUMN_EXIT};
-        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
-        final Cursor noteCursor = db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                null, null, null, null, noteOrderBy);
-        mDailyReportRecyclerAdapter.changeCursor(noteCursor);
-    }
+//    private void loadDailyReports() {
+//        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+//        final String[] noteColumns = {
+//                DailyReportEntry._ID,
+//                DailyReportEntry.COLUMN_DATE,
+//                DailyReportEntry.COLUMN_ARRIVAL,
+//                DailyReportEntry.COLUMN_EXIT};
+//        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
+//        final Cursor noteCursor = db.query(DailyReportEntry.TABLE_NAME, noteColumns,
+//                null, null, null, null, noteOrderBy);
+//        mDailyReportRecyclerAdapter.changeCursor(noteCursor);
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -209,9 +212,6 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
 
     private void saveDailyReportToDatabase() {
         // TODO :check why the first value isn't calculated at first
-        final String selection = DailyReportEntry._ID + " = ? ";
-        final String[] selectionArgs = {Integer.toString(mDailyReport.getId())};
-
         final ContentValues values = new ContentValues();
         values.put(DailyReportEntry.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
         values.put(DailyReportEntry.COLUMN_EXIT, mDailyReport.getExit().toString());
@@ -219,8 +219,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
         AsyncTask task = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
-                db.update(DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
+                Uri uri = ContentUris.withAppendedId(HoursProviderContract.DailyReports.CONTENT_URI, mDailyReport.getId());
+                getContext().getContentResolver().update(uri, values, null, null);
                 return null;
             }
         };

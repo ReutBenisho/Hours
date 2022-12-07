@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
 
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.contentProvider.HoursProviderContract;
+import com.example.hours.utils.App;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -31,6 +33,6 @@ public class DatabaseDataWorker {
         values.put(HoursDbContract.DailyReportEntry.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
         values.put(HoursDbContract.DailyReportEntry.COLUMN_EXIT, (new Timestamp(exit)).toString());
 
-        long newRowId = mDb.insert(HoursDbContract.DailyReportEntry.TABLE_NAME, null, values);
+        App.getContext().getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
     }
 }
