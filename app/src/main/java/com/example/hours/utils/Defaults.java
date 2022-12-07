@@ -18,6 +18,7 @@ public class Defaults {
     public static boolean useSystem = true;
 
     public static class System {
+        public static final Timestamp EARLY_ARRIVAL_TIME = new Timestamp(7, 0);
         public static final Timestamp ARRIVAL_TIME = new Timestamp(7, 30);
 
         public static final Timestamp HALF_DAY = new Timestamp(4, 12);
@@ -37,6 +38,7 @@ public class Defaults {
     }
 
     public static class User {
+        public static Timestamp EARLY_ARRIVAL_TIME = System.EARLY_ARRIVAL_TIME.copy();
         public static Timestamp ARRIVAL_TIME = System.ARRIVAL_TIME.copy();
         public static Timestamp EXIT_TIME = System.ARRIVAL_TIME.add(System.HALF_DAY).add(System.HALF_DAY).add(System.LUNCH_BREAK_DURATION);
         public static Timestamp HALF_DAY = System.HALF_DAY.copy();
@@ -55,6 +57,12 @@ public class Defaults {
         public static Timestamp NIGHT_BREAK_DURATION = System.NIGHT_BREAK_DURATION.copy();
 
         public static ArrayList<CustomBreak> CUSTOM_BREAKS_LIST = new ArrayList<>();
+    }
+
+    public static Timestamp getEarlyArrival(){
+        Timestamp temp = User.EARLY_ARRIVAL_TIME;
+        Log.d("Defaults", "early arrival is " + temp.toString());
+        return User.EARLY_ARRIVAL_TIME.copy();
     }
 
     public static Timestamp getArrival(){

@@ -40,6 +40,10 @@
 
         <EditTextPreference
             app:dependency="@string/pref_default_system_time"
+            app:title="שעת הגעה מוקדמת"
+            app:key="@string/pref_default_early_arrival_time"/>
+        <EditTextPreference
+            app:dependency="@string/pref_default_system_time"
             app:title="@string/lunch_break"
             app:key="@string/pref_default_lunch_break_time"/>
         <EditTextPreference

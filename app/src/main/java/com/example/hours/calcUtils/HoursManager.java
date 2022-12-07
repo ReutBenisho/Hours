@@ -20,6 +20,7 @@ public class HoursManager {
     public void CalcDayNoExit() {
         mInfo.clearCalculatedInfo();
         sumAllBreaks();
+        mInfo.userInfo.arrivalTime = Timestamp.getLatest(mInfo.userInfo.arrivalTime, Defaults.getEarlyArrival());
         if(mInfo.userInfo.isFriday)
         {
             if(mInfo.userInfo.isStudent)
@@ -94,6 +95,8 @@ public class HoursManager {
     public HoursInfo CalcDayWithExit() {
         mInfo.clearCalculatedInfo();
         sumAllBreaks();
+        mInfo.userInfo.arrivalTime = Timestamp.getLatest(mInfo.userInfo.arrivalTime, Defaults.getEarlyArrival());
+
         if(mInfo.userInfo.arrivalTime.isAfter(mInfo.userInfo.exitTime))
             return mInfo;
 

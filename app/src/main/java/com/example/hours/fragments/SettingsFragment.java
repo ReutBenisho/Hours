@@ -58,6 +58,7 @@ public class SettingsFragment extends Fragment implements
         map.put(R.string.pref_reminder_time, "String");
         //times
         map.put(R.string.pref_default_system_time, "boolean");
+        map.put(R.string.pref_default_early_arrival_time, "String");
         map.put(R.string.pref_default_arrival_time, "String");
         map.put(R.string.pref_default_exit_time, "String");
         map.put(R.string.pref_custom_breaks, "String");
@@ -259,6 +260,7 @@ public class SettingsFragment extends Fragment implements
 
             setDefaultTime(R.string.pref_default_arrival_time);
             setDefaultTime(R.string.pref_default_exit_time);
+            setDefaultTime(R.string.pref_default_early_arrival_time);
             setDefaultTime(R.string.pref_default_lunch_break_time);
             setDefaultTime(R.string.pref_default_lunch_break_duration);
             setDefaultTime(R.string.pref_default_evening_break_time);

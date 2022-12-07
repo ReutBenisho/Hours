@@ -32,6 +32,7 @@ public class SharedPreferencesUtil {
         Defaults.User.ARRIVAL_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString()));
         Defaults.User.EXIT_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString()));
         Defaults.useSystem = manager.getBoolean(App.getStr(R.string.pref_default_system_time), true);
+        Defaults.User.EARLY_ARRIVAL_TIME.setTime(manager.getString(App.getStr(R.string.pref_default_early_arrival_time), Defaults.getEarlyArrival().toString()));
         Defaults.User.LUNCH_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString()));
         Defaults.User.LUNCH_BREAK_DURATION.setTime(manager.getString(App.getStr(R.string.pref_default_lunch_break_duration), Defaults.getLunchDuration().toString()));
         Defaults.User.EVENING_BREAK_START.setTime(manager.getString(App.getStr(R.string.pref_default_evening_break_time), Defaults.getEveningStart().toString()));
@@ -47,6 +48,8 @@ public class SharedPreferencesUtil {
             editor.putString(App.getStr(R.string.pref_default_arrival_time), Defaults.getArrival().toString());
         if(pref == null || pref == App.getStr(R.string.pref_default_exit_time))
             editor.putString(App.getStr(R.string.pref_default_exit_time), Defaults.getExit().toString());
+        if(pref == null || pref == App.getStr(R.string.pref_default_early_arrival_time))
+            editor.putString(App.getStr(R.string.pref_default_early_arrival_time), Defaults.getEarlyArrival().toString());
         if(pref == null || pref == App.getStr(R.string.pref_default_lunch_break_time))
             editor.putString(App.getStr(R.string.pref_default_lunch_break_time), Defaults.getLunchStart().toString());
         if(pref == null || pref == App.getStr(R.string.pref_default_lunch_break_duration))
@@ -98,6 +101,7 @@ public class SharedPreferencesUtil {
     public static boolean isTimePref(String pref) {
         if(pref == App.getStr(R.string.pref_default_arrival_time)
         || pref == App.getStr(R.string.pref_default_exit_time)
+        || pref == App.getStr(R.string.pref_default_early_arrival_time)
         || pref == App.getStr(R.string.pref_default_lunch_break_time)
         || pref == App.getStr(R.string.pref_default_lunch_break_duration)
         || pref == App.getStr(R.string.pref_default_evening_break_time)
