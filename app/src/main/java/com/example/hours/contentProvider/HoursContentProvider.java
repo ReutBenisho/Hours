@@ -1,6 +1,7 @@
 package com.example.hours.contentProvider;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -21,6 +22,10 @@ public class HoursContentProvider extends ContentProvider {
         sUriMatcher.addURI(HoursProviderContract.AUTHORITY, HoursProviderContract.DailyReports.PATH, DAILY_REPORTS);
         sUriMatcher.addURI(HoursProviderContract.AUTHORITY, HoursProviderContract.DailyReports.PATH + "/#", DAILY_REPORTS_ROW);
     }
+
+    private static final String MIME_VENDOR_TYPE = "vnd." + HoursProviderContract.AUTHORITY + ".";
+
+
     public HoursContentProvider() {
     }
 
@@ -50,9 +55,19 @@ public class HoursContentProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        // TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        String mimeType = null;
+        int uriMatch = sUriMatcher.match(uri);
+        switch(uriMatch){
+            case DAILY_REPORTS:
+                mimeType = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" +
+                        MIME_VENDOR_TYPE + HoursProviderContract.DailyReports.PATH;
+                break;
+            case DAILY_REPORTS_ROW:
+                mimeType = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + MIME_VENDOR_TYPE + HoursProviderContract.DailyReports.PATH;
+                break;
+        }
+        return mimeType;
     }
 
     @Override
