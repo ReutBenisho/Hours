@@ -197,6 +197,7 @@
     <string name="summary">Summary</string>
     <string name="month">Month</string>
     <string name="list">List</string>
+    <string name="pref_default_early_arrival_time" translatable="false">pref_default_early_arrival_time</string>
 
     <!--For testings only-->
     <string name="hidden" translatable="false">Hidden</string>
