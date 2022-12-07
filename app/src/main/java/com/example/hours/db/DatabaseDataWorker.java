@@ -29,9 +29,9 @@ public class DatabaseDataWorker {
 
     private void insertDailyReport(Date date, Duration arrival, Duration exit) {
         ContentValues values = new ContentValues();
-        values.put(HoursDbContract.DailyReportEntry.COLUMN_DATE, new SimpleDateFormat("yyyyMMdd").format(date));
-        values.put(HoursDbContract.DailyReportEntry.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
-        values.put(HoursDbContract.DailyReportEntry.COLUMN_EXIT, (new Timestamp(exit)).toString());
+        values.put(HoursProviderContract.DailyReports.COLUMN_DATE, new SimpleDateFormat("yyyyMMdd").format(date));
+        values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
+        values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, (new Timestamp(exit)).toString());
 
         App.getContext().getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
     }

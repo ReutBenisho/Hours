@@ -1,7 +1,5 @@
 package com.example.hours.db;
 
-import static com.example.hours.db.HoursDbContract.DailyReportEntry;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -35,21 +33,21 @@ public class DataManager {
     public static void loadFromDataBase(HoursOpenHelper dbHelper){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = {
-                DailyReportEntry._ID,
-                DailyReportEntry.COLUMN_DATE,
-                DailyReportEntry.COLUMN_ARRIVAL,
-                DailyReportEntry.COLUMN_EXIT};
-        String orderBy = DailyReportEntry.COLUMN_DATE;
+                HoursProviderContract.DailyReports._ID,
+                HoursProviderContract.DailyReports.COLUMN_DATE,
+                HoursProviderContract.DailyReports.COLUMN_ARRIVAL,
+                HoursProviderContract.DailyReports.COLUMN_EXIT};
+        String orderBy = HoursProviderContract.DailyReports.COLUMN_DATE;
         Cursor cursor = App.getContext().getContentResolver().query(HoursProviderContract.DailyReports.CONTENT_URI,
                 columns, null, null, orderBy);
         loadDailyReportsFromCursor(cursor);
     }
 
     private static void loadDailyReportsFromCursor(Cursor cursor) {
-        int idPos = cursor.getColumnIndex(DailyReportEntry._ID);
-        int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
-        int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
-        int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+        int idPos = cursor.getColumnIndex(HoursProviderContract.DailyReports._ID);
+        int datePos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_DATE);
+        int arrivalPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_ARRIVAL);
+        int exitPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_EXIT);
         DataManager db = getInstance();
         db.mDailyReports.clear();
         while(cursor.moveToNext())

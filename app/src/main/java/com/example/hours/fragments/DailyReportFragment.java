@@ -30,7 +30,6 @@ import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.DailyReportModel;
@@ -213,8 +212,8 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private void saveDailyReportToDatabase() {
         // TODO :check why the first value isn't calculated at first
         final ContentValues values = new ContentValues();
-        values.put(DailyReportEntry.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
-        values.put(DailyReportEntry.COLUMN_EXIT, mDailyReport.getExit().toString());
+        values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
+        values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, mDailyReport.getExit().toString());
 
         AsyncTask task = new AsyncTask() {
             @Override
@@ -258,22 +257,15 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         CursorLoader loader = null;
         if(id == LOADER_DAILY_REPORTS){
-            loader = new CursorLoader(getContext()){
-                @Override
-                public Cursor loadInBackground() {
+            final String[] columns = {
+                    HoursProviderContract.DailyReports._ID,
+                    HoursProviderContract.DailyReports.COLUMN_DATE,
+                    HoursProviderContract.DailyReports.COLUMN_ARRIVAL,
+                    HoursProviderContract.DailyReports.COLUMN_EXIT,};
+            String orderBy = HoursProviderContract.DailyReports.COLUMN_DATE;
 
-                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-                    final String[] noteColumns = {
-                            DailyReportEntry._ID,
-                            DailyReportEntry.COLUMN_DATE,
-                            DailyReportEntry.COLUMN_ARRIVAL,
-                            DailyReportEntry.COLUMN_EXIT,};
-                    String noteOrderBy = DailyReportEntry.COLUMN_DATE;
-                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                            null, null, null, null, noteOrderBy);
-
-                }
-            };
+            loader = new CursorLoader(getContext(), HoursProviderContract.DailyReports.CONTENT_URI,
+                    columns, null, null, orderBy);
         }
         mCreatedLoader = true;
         return loader;
