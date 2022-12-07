@@ -24,7 +24,6 @@ import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.calcUtils.UserInfo;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.TimestampTextWatcher;

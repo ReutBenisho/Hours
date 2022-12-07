@@ -1,17 +1,15 @@
 package com.example.hours.fragments;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,34 +21,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.hours.R;
-import com.example.hours.adapters.DailyReportRecyclerAdapter;
-import com.example.hours.adapters.MonthlyDailyReportRecyclerAdapter;
-import com.example.hours.calcUtils.CustomDate;
-import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursDbContract;
-import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.db.HoursOpenHelper;
-import com.example.hours.decorators.WeekendDecorator;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
-import com.example.hours.utils.OnSnapPositionChangeListener;
-import com.example.hours.utils.SnapOnScrollListener;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.DayViewFacade;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -271,24 +251,17 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         CursorLoader loader = null;
         if(id == LOADER_MONTHLY_DAILY_REPORTS){
-            loader = new CursorLoader(getContext()){
-                @Override
-                public Cursor loadInBackground() {
-                    SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
-                    String selection = "substr(" + DailyReportEntry.COLUMN_DATE + ", 1, 4) == '" + mCurrentYear + "'";
-                    selection += " AND substr(" + DailyReportEntry.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
-                    final String[] noteColumns = {
-                            DailyReportEntry._ID,
-                            DailyReportEntry.COLUMN_DATE,
-                            DailyReportEntry.COLUMN_ARRIVAL,
-                            DailyReportEntry.COLUMN_EXIT};
-                    String noteOrderBy = DailyReportEntry.COLUMN_DATE + " ASC";
-
-                    return db.query(DailyReportEntry.TABLE_NAME, noteColumns,
-                            selection, null, null, null, noteOrderBy);
-
-                }
+            Uri uri = HoursProviderContract.DailyReports.CONTENT_URI;
+            String[] reportsColumns = {
+                HoursProviderContract.DailyReports._ID,
+                HoursProviderContract.DailyReports.COLUMN_DATE,
+                HoursProviderContract.DailyReports.COLUMN_ARRIVAL,
+                HoursProviderContract.DailyReports.COLUMN_EXIT
             };
+            String selection = "substr(" + HoursProviderContract.DailyReports.COLUMN_DATE + ", 1, 4) == '" + mCurrentYear + "'";
+            selection += " AND substr(" + HoursProviderContract.DailyReports.COLUMN_DATE + ", 5, 2) == '" + String.format("%02d", mCurrentMonth) + "'";
+            String reportOrderBy = HoursProviderContract.DailyReports.COLUMN_DATE + " ASC";
+            loader = new CursorLoader(getContext(), uri, reportsColumns, selection, null, reportOrderBy);
         }
         mCreatedLoader = true;
         return loader;
@@ -303,9 +276,9 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
             mDailyReports.clear();
             while(cursor.moveToNext()){
                 DailyReport report = new DailyReport();
-                int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
-                int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
-                int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+                int datePos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_DATE);
+                int arrivalPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_ARRIVAL);
+                int exitPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_EXIT);
                 try {
                     report.setDate((new SimpleDateFormat("yyyyMMdd")).parse(cursor.getString(datePos)));
                 }

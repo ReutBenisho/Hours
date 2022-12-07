@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hours.R;
 import com.example.hours.calcUtils.CustomDate;
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursDbContract.DailyReportEntry;
 import com.example.hours.utils.App;
 import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
@@ -50,10 +50,10 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     private void populateColumnPositions() {
         if(mCursor == null)
             return;
-        mIdPos = mCursor.getColumnIndex(DailyReportEntry._ID);
-        mDatePos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
-        mArrivalPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
-        mExitPos = mCursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+        mIdPos = mCursor.getColumnIndex(HoursProviderContract.DailyReports._ID);
+        mDatePos = mCursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_DATE);
+        mArrivalPos = mCursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_ARRIVAL);
+        mExitPos = mCursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_EXIT);
     }
 
     public void changeCursor(Cursor cursor){

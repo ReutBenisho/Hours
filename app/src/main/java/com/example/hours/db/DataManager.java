@@ -1,11 +1,13 @@
 package com.example.hours.db;
 
-import static com.example.hours.db.HoursDbContract.DailyReportEntry;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.loader.content.CursorLoader;
+
 import com.example.hours.calcUtils.Timestamp;
+import com.example.hours.contentProvider.HoursProviderContract;
+import com.example.hours.utils.App;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,22 +33,21 @@ public class DataManager {
     public static void loadFromDataBase(HoursOpenHelper dbHelper){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] columns = {
-                DailyReportEntry._ID,
-                DailyReportEntry.COLUMN_DATE,
-                DailyReportEntry.COLUMN_ARRIVAL,
-                DailyReportEntry.COLUMN_EXIT};
-        String noteOrderBy = DailyReportEntry.COLUMN_DATE;
-        Cursor cursor = db.query(DailyReportEntry.TABLE_NAME, columns,
-                null, null, null, null, noteOrderBy
-        );
+                HoursProviderContract.DailyReports._ID,
+                HoursProviderContract.DailyReports.COLUMN_DATE,
+                HoursProviderContract.DailyReports.COLUMN_ARRIVAL,
+                HoursProviderContract.DailyReports.COLUMN_EXIT};
+        String orderBy = HoursProviderContract.DailyReports.COLUMN_DATE;
+        Cursor cursor = App.getContext().getContentResolver().query(HoursProviderContract.DailyReports.CONTENT_URI,
+                columns, null, null, orderBy);
         loadDailyReportsFromCursor(cursor);
     }
 
     private static void loadDailyReportsFromCursor(Cursor cursor) {
-        int idPos = cursor.getColumnIndex(DailyReportEntry._ID);
-        int datePos = cursor.getColumnIndex(DailyReportEntry.COLUMN_DATE);
-        int arrivalPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_ARRIVAL);
-        int exitPos = cursor.getColumnIndex(DailyReportEntry.COLUMN_EXIT);
+        int idPos = cursor.getColumnIndex(HoursProviderContract.DailyReports._ID);
+        int datePos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_DATE);
+        int arrivalPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_ARRIVAL);
+        int exitPos = cursor.getColumnIndex(HoursProviderContract.DailyReports.COLUMN_EXIT);
         DataManager db = getInstance();
         db.mDailyReports.clear();
         while(cursor.moveToNext())
