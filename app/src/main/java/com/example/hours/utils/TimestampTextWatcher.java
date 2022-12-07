@@ -12,7 +12,7 @@ import com.google.android.material.textfield.TextInputLayout;
 public class TimestampTextWatcher implements TextWatcher {
     private final EditText mEditText;
     private String current = "";
-    private String hhmm = "HH:MM";
+    private String hhmm = "00:00";
 
     public TimestampTextWatcher(EditText editTextView){
         mEditText = editTextView;
