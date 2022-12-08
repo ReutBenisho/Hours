@@ -52,7 +52,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/additional150_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +66,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/additional125_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -104,7 +104,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +129,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/halfDay_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -169,7 +169,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/fullDay_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -183,7 +183,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -208,7 +208,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/zeroHours_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -222,7 +222,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -246,7 +246,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/additional3andhalfHours_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -260,7 +260,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -285,7 +285,7 @@
                     android:paddingBottom="10dp"
                     android:text="@string/additional6hours_colon"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -299,7 +299,7 @@
                     android:text="@string/midnight_timestamp"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
