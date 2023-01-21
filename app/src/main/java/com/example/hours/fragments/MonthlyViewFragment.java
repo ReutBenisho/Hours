@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hours.R;
-import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.decorators.WeekendDecorator;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;

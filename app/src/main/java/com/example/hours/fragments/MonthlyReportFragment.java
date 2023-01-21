@@ -23,21 +23,12 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import com.example.hours.R;
-import com.example.hours.calcUtils.Timestamp;
-import com.example.hours.contentProvider.HoursProviderContract;
-import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
 import com.example.hours.report.ReportManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class MonthlyReportFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnUpdateListener {
 

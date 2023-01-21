@@ -30,7 +30,6 @@ import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.DailyReportModel;
 import com.example.hours.utils.App;
@@ -56,7 +55,6 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private SnapHelper mSnapHelper;
     private SnapOnScrollListener mSnapOnScrollListener;
     public static final String DAILY_REPORT_ID = "com.example.hours.DAILY_REPORT_ID";
-    private HoursOpenHelper mDbOpenHelper;
     private DailyReport mDailyReport;
     private boolean mCreatedLoader;
     private int mDailyReportPos;
@@ -69,7 +67,6 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDbOpenHelper = new HoursOpenHelper(getContext());
         ListenerManager.addListener(this, ListenerManager.ListenerType.INFO_LABELS);
         ListenerManager.addListener(this, ListenerManager.ListenerType.UPDATE_DAILY_REPORT_IN_DB);
     }

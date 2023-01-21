@@ -21,7 +21,6 @@ import android.view.animation.AnticipateInterpolator;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DataManager;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.fragments.SettingsFragment;
 import com.example.hours.notifications.ReminderManager;
 import com.example.hours.report.ReportManager;
@@ -56,7 +55,6 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private HoursManager mHoursManager;
-    private HoursOpenHelper mDbOpenHelper;
     public static String EXTRA_FRAGMENT_TAG = "com.example.hours.extra.EXTRA_FRAGMENT_TAG";
 
     @Override
@@ -132,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         getResources().updateConfiguration(getResources().getConfiguration(),
                 getResources().getDisplayMetrics());
 
-        mDbOpenHelper = new HoursOpenHelper(this);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         ViewModelProvider provider = new ViewModelProvider(
@@ -229,8 +226,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
-        mDbOpenHelper.getWritableDatabase();
-        DataManager.loadFromDataBase(mDbOpenHelper);
+
+        DataManager.loadFromDataBase();
     }
 
     private void sendEmail() {
@@ -344,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     @Override
     protected void onDestroy() {
         ListenerManager.removeListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
-        mDbOpenHelper.close();
+
         super.onDestroy();
     }
 
