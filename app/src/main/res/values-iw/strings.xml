@@ -6,6 +6,7 @@
     <string name="sign_in">התחבר</string>
     <string name="nav_header_title">שלום משתמש</string>
     <string name="menu_gallery">גלריה</string>
+    <string name="menu_home">בית</string>
     <string name="confirm_password_hint">אמת סיסמא</string>
     <string name="sign_in_to_existing_account">התחברות לחשבון קיים</string>
     <string name="enter_time">הזן שעה</string>

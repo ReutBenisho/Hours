@@ -6,6 +6,7 @@
     <string name="sign_in">S\'identifier</string>
     <string name="nav_header_title">Bonjour</string>
     <string name="menu_gallery">Galerie</string>
+    <string name="menu_home">Accueil</string>
     <string name="confirm_password_hint">Confirmez le mot de passe</string>
     <string name="sign_in_to_existing_account">Connectez-vous au compte existant</string>
     <string name="enter_time">Entrez l\'heure</string>

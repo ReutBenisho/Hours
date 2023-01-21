@@ -27,6 +27,7 @@
     <string name="newline_additional3andhalfHours_colon_space" translatable="false">\n${additional3andhalfHours_colon} </string>
     <string name="newline_additional6hours_colon_space" translatable="false">\n${additional6hours_colon} </string>
     <string name="tag_gallery" translatable="false">GALLERY_TAG</string>
+    <string name="tag_home" translatable="false">HOME_TAG</string>
     <string name="tag_daily_report" translatable="false">DAILY_REPORT_TAG</string>
     <string name="tag_monthly_report" translatable="false">MONTHLY_REPORT_TAG</string>
     <string name="pref_existing_user" translatable="false">pref_existing_user</string>
@@ -82,6 +83,7 @@
     <string name="sign_in">Sign In</string>
     <string name="nav_header_title">Hello username</string>
     <string name="menu_gallery">Gallery</string>
+    <string name="menu_home">Home</string>
     <string name="confirm_password_hint">Confirm password</string>
     <string name="sign_in_to_existing_account">Sign in existing account</string>
     <string name="enter_time">Enter Time</string>
@@ -206,5 +208,8 @@
     <string name="simple_options" translatable="false">Simple options</string>
     <string name="sample_date" translatable="false">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date" translatable="false">Result, formatted date</string>
+    <string name="text_home">בית</string>
+    <string name="hello">Hello</string>
+    <string name="exclamation">!</string>
 
 </resources>
