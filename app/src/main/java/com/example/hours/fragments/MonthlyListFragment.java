@@ -17,6 +17,7 @@ import com.example.hours.adapters.MonthlyDailyReportRecyclerAdapter;
 import com.example.hours.db.DailyReport;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
+import com.example.hours.report.ReportManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 
@@ -30,7 +31,6 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
     private LinearLayoutManager mMonthlyDailyReportsLayoutManager;
     private MonthlyDailyReportRecyclerAdapter mMonthlyDailyReportRecyclerAdapter;
     private boolean mIsInitialized;
-    private ArrayList<DailyReport> mDailyReports;
 
     public static MonthlyListFragment newInstance() {
 
@@ -67,7 +67,7 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
         mMonthlyDailyReportsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycleMonthlyDailyReports.setLayoutManager(mMonthlyDailyReportsLayoutManager);
 
-        mMonthlyDailyReportRecyclerAdapter = new MonthlyDailyReportRecyclerAdapter(getContext(), mDailyReports);
+        mMonthlyDailyReportRecyclerAdapter = new MonthlyDailyReportRecyclerAdapter(getContext(), ReportManager.getReports());
         mRecycleMonthlyDailyReports.setAdapter(mMonthlyDailyReportRecyclerAdapter);
 
         mIsInitialized = true;
@@ -88,17 +88,15 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
 
     @Override
     public void onDestroy() {
-        ListenerManager.removeListener(this, ListenerManager.ListenerType.CHANGED_MONTH);
+        ListenerManager.removeListener(this, ListenerManager.ListenerType.UPDATED_MONTH_CURSOR);
         super.onDestroy();
     }
 
     @Override
-    public void update(int month, int year, ArrayList<DailyReport> dailyReports) {
-        // TODO: upadte list by cursor
-        mDailyReports = dailyReports;
+    public void update() {
         if(!mIsInitialized)
             return;
-        mMonthlyDailyReportRecyclerAdapter.changeList(dailyReports);
+        mMonthlyDailyReportRecyclerAdapter.changeList(ReportManager.getReports());
     }
 
     @Override
@@ -107,8 +105,7 @@ public class MonthlyListFragment extends Fragment implements IMonthlyFragment, O
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
                 case UPDATED_MONTH_CURSOR:{
-                    mDailyReports = (ArrayList<DailyReport>) data.obj;
-                    mMonthlyDailyReportRecyclerAdapter.changeList(mDailyReports);
+                    mMonthlyDailyReportRecyclerAdapter.changeList(ReportManager.getReports());
                     break;
                 }
             }

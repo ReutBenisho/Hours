@@ -26,6 +26,7 @@ import com.example.hours.calcUtils.UserInfo;
 import com.example.hours.db.DailyReport;
 import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
+import com.example.hours.utils.SharedPreferencesUtil;
 import com.example.hours.utils.TimestampTextWatcher;
 import com.example.hours.utils.Utils;
 
@@ -88,6 +89,8 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
     @SuppressLint("all")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // TODO :check why the first value isn't calculated at first
+
         //mCursor.moveToPosition(position);
         DailyReport report = mReports.get(holder.getAdapterPosition());
 
@@ -113,7 +116,7 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
         // Total additional or absence
         HoursInfo info = mHoursManager.CalcDayWithExit(userInfo);
         String totalStr = mHoursManager.getTotalAdditionalOrAbsenceHours(info);
-        if(totalStr.charAt(0) == '-'){
+        if(totalStr.charAt(0) == '-' && !SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_student_mode))){
             holder.mLblSignTotalHours.setText("-");
             holder.mLblSignTotalHours.setTextColor(App.getRes().getColor(R.color.red));
             holder.mLblAdditionalOrAbsenceHours.setText(totalStr.substring(1));
@@ -122,10 +125,9 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
         else if(totalStr.charAt(0) == '+')
         {
             holder.mLblSignTotalHours.setText("+");
-            // TODO: adjust condition to also match students
             holder.mLblAdditionalOrAbsenceHours.setText(totalStr.substring(1));
             Timestamp total = new Timestamp(totalStr.substring(1));
-            if(total.equalsOrLessThan(Defaults.getZeroHours())){
+            if(total.equalsOrLessThan(Defaults.getZeroHours()) && !SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_student_mode))){
                 holder.mLblSignTotalHours.setTextColor(App.getRes().getColor(R.color.yellow));
                 holder.mLblAdditionalOrAbsenceHours.setTextColor(App.getRes().getColor(R.color.yellow));
             }
@@ -138,7 +140,7 @@ public class MonthlyDailyReportRecyclerAdapter extends RecyclerView.Adapter<Mont
         else
         {
             holder.mLblSignTotalHours.setText("");
-            holder.mLblAdditionalOrAbsenceHours.setText(totalStr);
+            holder.mLblAdditionalOrAbsenceHours.setText("00:00");
             holder.mLblAdditionalOrAbsenceHours.setTextColor(App.getRes().getColor(R.color.white));
         }
     }

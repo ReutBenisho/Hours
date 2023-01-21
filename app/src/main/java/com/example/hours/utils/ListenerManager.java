@@ -13,7 +13,6 @@ public class ListenerManager {
         ACTION_BAR_TITLE,
         TIME_PREFERENCE_CHANGE,
         UPDATE_DAILY_REPORT_IN_DB,
-        CHANGED_MONTH,
         CHANGED_MONTH_VIA_MONTH_VIEW,
         UPDATED_MONTH_CURSOR
     }

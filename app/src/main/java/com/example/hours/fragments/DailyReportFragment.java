@@ -210,7 +210,6 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     }
 
     private void saveDailyReportToDatabase() {
-        // TODO :check why the first value isn't calculated at first
         final ContentValues values = new ContentValues();
         values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, mDailyReport.getArrival().toString());
         values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, mDailyReport.getExit().toString());

@@ -14,6 +14,12 @@ import java.util.Locale;
 public class App extends Application {
     private static Context mContext;
     private Locale mLocale = null;
+    private static Locale sLocale = null;
+
+    public static Locale getLocale() {
+        return sLocale;
+    }
+
 
 
     @Override
@@ -31,9 +37,11 @@ public class App extends Application {
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        //TODO: check if needs this function
         super.onConfigurationChanged(newConfig);
         if (mLocale != null)
         {
+            sLocale = mLocale;
             newConfig.locale = mLocale;
             Locale.setDefault(mLocale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
