@@ -1,6 +1,7 @@
 package com.example.hours.db;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.format.Time;
 
@@ -32,7 +33,7 @@ public class DatabaseDataWorker {
         values.put(HoursProviderContract.DailyReports.COLUMN_DATE, new SimpleDateFormat("yyyyMMdd").format(date));
         values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
         values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, (new Timestamp(exit)).toString());
-
-        App.getContext().getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
+        Context context = App.getContext();
+        context.getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
     }
 }

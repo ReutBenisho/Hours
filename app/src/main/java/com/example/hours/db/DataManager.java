@@ -1,18 +1,12 @@
 package com.example.hours.db;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import androidx.loader.content.CursorLoader;
-
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.contentProvider.HoursProviderContract;
 import com.example.hours.utils.App;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +24,7 @@ public class DataManager {
         return ourInstance;
     }
 
-    public static void loadFromDataBase(HoursOpenHelper dbHelper){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+    public static void loadFromDataBase(){
         String[] columns = {
                 HoursProviderContract.DailyReports._ID,
                 HoursProviderContract.DailyReports.COLUMN_DATE,

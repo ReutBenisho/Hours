@@ -30,6 +30,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ReportManager extends BroadcastReceiver {
     private static Totals sMonthTotals;
@@ -50,7 +51,10 @@ public class ReportManager extends BroadcastReceiver {
 
     public static String getCurrentMonthText(){
         // TODO: fix function to return string in the correct language
-        String month = new DateFormatSymbols().getInstance(App.getLocale()).getMonths()[sCurrentMonth-1];
+        Locale loc = App.getLocale();
+        DateFormatSymbols dfs = new DateFormatSymbols().getInstance(loc);
+        String[] months = dfs.getMonths();
+        String month = months[sCurrentMonth-1];
         return month + " " + sCurrentYear;
     }
 
@@ -215,6 +219,8 @@ public class ReportManager extends BroadcastReceiver {
     }
 
     public static void updateTotals(Cursor cursor) {
+        if(sDailyReports == null)
+            sDailyReports = new ArrayList<>();
         sDailyReports.clear();
         while(cursor.moveToNext()){
             DailyReport report = new DailyReport();

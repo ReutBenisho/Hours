@@ -167,8 +167,8 @@ public class ReminderManager {
     }
 
     public static void updateAll(Context context){
-
-        Timestamp reminderTime = new Timestamp(SharedPreferencesUtil.getString(App.getStr(R.string.default_reminder_time_in_minutes)));
+        int reminderMinutes = Integer.parseInt(SharedPreferencesUtil.getString(App.getStr(R.string.pref_reminder_time)));
+        Timestamp reminderTime = new Timestamp(0, reminderMinutes);
         Timestamp time;
         long minutes;
         long alarmTime;
@@ -193,28 +193,28 @@ public class ReminderManager {
         //TODO: need to send in extradata the amount of zero hours remining for usage
 
         //Mothers transport Notification
-        time = new Timestamp(SharedPreferencesUtil.getString(App.getStr(R.string.pref_notify_mothers_transportation)));// TODO: change to correct preference - create new prefernce in default time
+        time = new Timestamp("15:24");// TODO: change to correct preference - create new prefernce in default time
         minutes = time.sub(reminderTime).getDuration().toMinutes();
         alarmTime = minutes * 60 * 1000;
         isActive = SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_notify_mothers_transportation));
         updateNotification(context, ReminderType_e.MOTHERS_TRANSPORT, "", alarmTime, isActive);
 
         //Afternoon transport Notification
-        time = new Timestamp(SharedPreferencesUtil.getString(App.getStr(R.string.pref_default_exit_time)));// TODO: change to correct preference - create new prefernce in default time
+        time = new Timestamp("16:24");// TODO: change to correct preference - create new prefernce in default time
         minutes = time.sub(reminderTime).getDuration().toMinutes();
         alarmTime = minutes * 60 * 1000;
         isActive = SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_notify_afternoon_transportation));
         updateNotification(context, ReminderType_e.AFTERNOON_TRANSPORT, "", alarmTime, isActive);
 
         //Evening transport Notification
-        time = new Timestamp(SharedPreferencesUtil.getString(App.getStr(R.string.pref_default_evening_break_time)));// TODO: change to correct preference - create new prefernce in default time
+        time = new Timestamp("19:30");// TODO: change to correct preference - create new prefernce in default time
         minutes = time.sub(reminderTime).getDuration().toMinutes();
         alarmTime = minutes * 60 * 1000;
         isActive = SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_notify_evening_transportation));
         updateNotification(context, ReminderType_e.EVENING_TRANSPORT, "", alarmTime, isActive);
 
         //Night transport Notification
-        time = new Timestamp(SharedPreferencesUtil.getString(App.getStr(R.string.pref_default_night_break_time)));// TODO: change to correct preference - create new prefernce in default time
+        time = new Timestamp("22:30");// TODO: change to correct preference - create new prefernce in default time
         minutes = time.sub(reminderTime).getDuration().toMinutes();
         alarmTime = minutes * 60 * 1000;
         isActive = SharedPreferencesUtil.getBoolean(App.getStr(R.string.pref_notify_night_transportation));

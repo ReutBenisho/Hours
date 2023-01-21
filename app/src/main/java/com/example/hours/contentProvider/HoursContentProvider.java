@@ -24,6 +24,7 @@ public class HoursContentProvider extends ContentProvider {
     }
 
     private static final String MIME_VENDOR_TYPE = "vnd." + HoursProviderContract.AUTHORITY + ".";
+    private SQLiteDatabase mDatabase;
 
 
     public HoursContentProvider() {
@@ -35,18 +36,20 @@ public class HoursContentProvider extends ContentProvider {
         String rowSelection = null;
         String[] rowSelectionArgs = null;
         int nRows = -1;
-        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
+
+        if(mDatabase == null)
+            mDatabase = mDbOpenHelper.getWritableDatabase();
 
         int uriMatch = sUriMatcher.match(uri);
         switch(uriMatch) {
             case DAILY_REPORTS:
-                nRows = db.delete(HoursDbContract.DailyReportEntry.TABLE_NAME, selection, selectionArgs);
+                nRows = mDatabase.delete(HoursDbContract.DailyReportEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             case DAILY_REPORTS_ROW:
                 rowId = ContentUris.parseId(uri);
                 rowSelection = HoursDbContract.DailyReportEntry._ID + " = ?";
                 rowSelectionArgs = new String[]{Long.toString(rowId)};
-                nRows = db.delete(HoursDbContract.DailyReportEntry.TABLE_NAME, rowSelection, rowSelectionArgs);
+                nRows = mDatabase.delete(HoursDbContract.DailyReportEntry.TABLE_NAME, rowSelection, rowSelectionArgs);
                 break;
         }
 
@@ -57,6 +60,7 @@ public class HoursContentProvider extends ContentProvider {
     public String getType(Uri uri) {
 
         String mimeType = null;
+
         int uriMatch = sUriMatcher.match(uri);
         switch(uriMatch){
             case DAILY_REPORTS:
@@ -72,13 +76,16 @@ public class HoursContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
         long rowId = -1;
         Uri rowUri = null;
         int uriMatch = sUriMatcher.match(uri);
+
+        if(mDatabase == null)
+            mDatabase = mDbOpenHelper.getWritableDatabase();
+
         switch (uriMatch){
             case DAILY_REPORTS:
-                rowId = db.insert(HoursDbContract.DailyReportEntry.TABLE_NAME, null, values);
+                rowId = mDatabase.insert(HoursDbContract.DailyReportEntry.TABLE_NAME, null, values);
                 // content://com.example.hours.provider/notes/1
                 rowUri = ContentUris.withAppendedId(uri, rowId);
                 break;
@@ -89,6 +96,7 @@ public class HoursContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mDbOpenHelper = new HoursOpenHelper(getContext());
+        mDbOpenHelper.getReadableDatabase();
         return false;
     }
 
@@ -96,21 +104,24 @@ public class HoursContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Cursor cursor = null;
-        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
         long rowId = -1;
         String rowSelection = null;
         String[] rowSelectionArgs = null;
         int uriMatch = sUriMatcher.match(uri);
+
+        if(mDatabase == null)
+            mDatabase = mDbOpenHelper.getWritableDatabase();
+
         switch (uriMatch){
             case DAILY_REPORTS:
-                cursor = db.query(HoursDbContract.DailyReportEntry.TABLE_NAME,
+                cursor = mDatabase.query(HoursDbContract.DailyReportEntry.TABLE_NAME,
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case DAILY_REPORTS_ROW:
                 rowId = ContentUris.parseId(uri);
                 rowSelection = HoursDbContract.DailyReportEntry._ID + " = ?";
                 rowSelectionArgs  = new String[] {Long.toString(rowId)};
-                cursor = db.query(HoursDbContract.DailyReportEntry.TABLE_NAME, projection, rowSelection, rowSelectionArgs, null, null, null);
+                cursor = mDatabase.query(HoursDbContract.DailyReportEntry.TABLE_NAME, projection, rowSelection, rowSelectionArgs, null, null, null);
                 break;
         }
         return cursor;
@@ -123,18 +134,20 @@ public class HoursContentProvider extends ContentProvider {
         String rowSelection = null;
         String[] rowSelectionArgs = null;
         int nRows = -1;
-        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
+
+        if(mDatabase == null)
+            mDatabase = mDbOpenHelper.getWritableDatabase();
 
         int uriMatch = sUriMatcher.match(uri);
         switch(uriMatch) {
             case DAILY_REPORTS:
-                nRows = db.update(HoursDbContract.DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
+                nRows = mDatabase.update(HoursDbContract.DailyReportEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case DAILY_REPORTS_ROW:
                 rowId = ContentUris.parseId(uri);
                 rowSelection = HoursDbContract.DailyReportEntry._ID + " = ?";
                 rowSelectionArgs = new String[]{Long.toString(rowId)};
-                nRows = db.update(HoursDbContract.DailyReportEntry.TABLE_NAME, values, rowSelection, rowSelectionArgs);
+                nRows = mDatabase.update(HoursDbContract.DailyReportEntry.TABLE_NAME, values, rowSelection, rowSelectionArgs);
                 break;
         }
 

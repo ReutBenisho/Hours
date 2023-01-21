@@ -31,8 +31,9 @@ public class App extends Application {
         Utils.setupDarkMode(getApplicationContext());
         Configuration config = getBaseContext().getResources().getConfiguration();
 
-        LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
-
+        String language = SharedPreferencesUtil.getString(getString(R.string.pref_language));
+        LocaleHelper.setLocale(this, language);
+        sLocale = new Locale(language);
     }
 
     @Override
