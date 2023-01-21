@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,9 @@ import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DataManager;
 import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.fragments.SettingsFragment;
+import com.example.hours.notifications.ReminderManager;
+import com.example.hours.report.ReportManager;
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 
     private HoursManager mHoursManager;
     private HoursOpenHelper mDbOpenHelper;
+    public static String EXTRA_FRAGMENT_TAG = "com.example.hours.extra.EXTRA_FRAGMENT_TAG";
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -119,7 +124,10 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //
 //        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
+        ReportManager.init();
         LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+        ReminderManager.init((AlarmManager) getSystemService(ALARM_SERVICE));
+        ReminderManager.updateAll(App.getContext());
 
         getResources().updateConfiguration(getResources().getConfiguration(),
                 getResources().getDisplayMetrics());
@@ -497,7 +505,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 Defaults.User.EXIT_TIME.setTime(s2);
                 break;
             case R.string.pref_custom_breaks:
-                //TODO: do stuff
+                //TODO: add custom breaks support
                 break;
             case R.string.pref_default_system_time:
                 Defaults.useSystem = sharedPreferences.getBoolean(pref, true);

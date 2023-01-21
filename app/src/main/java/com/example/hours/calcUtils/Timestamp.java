@@ -199,4 +199,7 @@ public class Timestamp {
             return toString();
     }
 
+    public boolean greaterThanZero() {
+        return !mTime.isZero() && !mTime.isNegative();
+    }
 }
