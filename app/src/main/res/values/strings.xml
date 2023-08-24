@@ -208,8 +208,8 @@
     <string name="simple_options" translatable="false">Simple options</string>
     <string name="sample_date" translatable="false">Sample date (in yyyy-MM-dd format)</string>
     <string name="result_formatted_date" translatable="false">Result, formatted date</string>
-    <string name="text_home">בית</string>
+    <string name="text_home">Home</string>
     <string name="hello">Hello</string>
-    <string name="exclamation">!</string>
+    <string name="exclamation" translatable="false">!</string>
 
 </resources>

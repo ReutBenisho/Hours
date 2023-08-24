@@ -13,6 +13,8 @@
     <string name="biometric_authentication">Authentification biométrique</string>
     <string name="login_using_fingerprint">Connexion à l\'aide de l\'empreinte digitale</string>
     <string name="enter_password_instead">Entrer le mot de passe</string>
+    <string name="text_home">Maison</string>
+    <string name="hello">Bonjour</string>
 
     <!-- Messages Preferences -->
     <string name="signature_title">Signature personnalisée</string>
