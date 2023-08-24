@@ -29,6 +29,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_edit.xml" value="0.1245" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_email.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_google.xml" value="0.1" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_home.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_hours_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/drawable/ic_left_arrow.xml" value="0.1" />
@@ -67,7 +68,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_calculation_by_arrival.xml" value="0.12239583333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_daily_report.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_gallery.xml" value="0.12239583333333333" />
-        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_home.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_home.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_monthly_list.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_monthly_report.xml" value="0.22" />
         <entry key="..\:/Users/user/AndroidStudioProjects/Hours/app/src/main/res/layout/fragment_monthly_summary.xml" value="0.17864583333333334" />

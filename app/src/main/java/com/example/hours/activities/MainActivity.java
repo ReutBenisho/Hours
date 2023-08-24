@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,8 +21,10 @@ import android.view.animation.AnticipateInterpolator;
 import com.example.hours.calcUtils.HoursManager;
 import com.example.hours.calcUtils.Timestamp;
 import com.example.hours.db.DataManager;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.fragments.SettingsFragment;
+import com.example.hours.notifications.ReminderManager;
+import com.example.hours.report.ReportManager;
+import com.example.hours.utils.App;
 import com.example.hours.utils.Defaults;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.models.MainActivityViewModel;
@@ -52,7 +55,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements OnUpdateListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private HoursManager mHoursManager;
-    private HoursOpenHelper mDbOpenHelper;
+    public static String EXTRA_FRAGMENT_TAG = "com.example.hours.extra.EXTRA_FRAGMENT_TAG";
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -119,12 +122,14 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //
 //        newBase.createConfigurationContext(overrideConfiguration);
         super.onCreate(savedInstanceState);
+        ReportManager.init();
         LocaleHelper.setLocale(this, SharedPreferencesUtil.getString(getString(R.string.pref_language)));
+        ReminderManager.init((AlarmManager) getSystemService(ALARM_SERVICE));
+        ReminderManager.updateAll(App.getContext());
 
         getResources().updateConfiguration(getResources().getConfiguration(),
                 getResources().getDisplayMetrics());
 
-        mDbOpenHelper = new HoursOpenHelper(this);
         //setting the whole application right-to-left
         //getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         ViewModelProvider provider = new ViewModelProvider(
@@ -173,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_home,
                 R.id.nav_calc_day,
                 R.id.nav_daily_report,
                 R.id.nav_monthly_report,
@@ -221,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
 //        });
         ListenerManager.addListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
         ListenerManager.NotifyListeners(ListenerManager.ListenerType.ACTION_BAR_TITLE, R.string.empty);
-        mDbOpenHelper.getWritableDatabase();
-        DataManager.loadFromDataBase(mDbOpenHelper);
+
+        DataManager.loadFromDataBase();
     }
 
     private void sendEmail() {
@@ -336,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
     @Override
     protected void onDestroy() {
         ListenerManager.removeListener(this, ListenerManager.ListenerType.ACTION_BAR_TITLE);
-        mDbOpenHelper.close();
+
         super.onDestroy();
     }
 
@@ -497,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements OnUpdateListener,
                 Defaults.User.EXIT_TIME.setTime(s2);
                 break;
             case R.string.pref_custom_breaks:
-                //TODO: do stuff
+                //TODO: add custom breaks support
                 break;
             case R.string.pref_default_system_time:
                 Defaults.useSystem = sharedPreferences.getBoolean(pref, true);

@@ -5,6 +5,6 @@ import com.example.hours.db.DailyReport;
 import java.util.ArrayList;
 
 public interface IMonthlyFragment {
-    void update(int month, int year, ArrayList<DailyReport> dailyReports);
+    void update();
 
 }

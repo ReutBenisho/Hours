@@ -12,11 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hours.R;
-import com.example.hours.db.DailyReport;
-import com.example.hours.db.HoursOpenHelper;
 import com.example.hours.decorators.WeekendDecorator;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
+import com.example.hours.report.ReportManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -27,17 +26,10 @@ import java.util.ArrayList;
 
 public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, OnUpdateListener {
 
-    private static final int LOADER_MONTHLY_DAILY_REPORTS = 0;
     private MonthlyReportModel mViewModel;
     public static final String TAG = App.getStr(R.string.tag_monthly_view);
-    private HoursOpenHelper mDbOpenHelper;
-    private boolean mCreatedLoader;
-    private int mCurrentMonth;
     private MaterialCalendarView mCalendarView;
-    private int mCurrentYear;
     private boolean mIsInitialized;
-    private ArrayList<DailyReport> mDailyReports;
-
 
     public static MonthlyViewFragment newInstance() {
 
@@ -47,9 +39,6 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDbOpenHelper = new HoursOpenHelper(getContext());
-        mCurrentMonth = 0;
-        mCurrentYear = 0;
     }
 
     @Override
@@ -82,6 +71,7 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
         mCalendarView.setSelectionColor(App.getRes().getColor(R.color.calendar_cell_selected));
         mCalendarView.setTopbarVisible(false);
         mCalendarView.setPagingEnabled(false);
+        mCalendarView.setAllowClickDaysOutsideCurrentMonth(false);
         mCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
@@ -113,15 +103,12 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
 
 
     @Override
-    public void update(int month, int year, ArrayList<DailyReport> list) {
+    public void update() {
         //TODO: update stuff by cursor
         if(!mIsInitialized)
             return;
-        mCurrentMonth = month;
-        mCurrentYear = year;
-        CalendarDay day = CalendarDay.from(year, month, 1);
+        CalendarDay day = CalendarDay.from(ReportManager.getYear(), ReportManager.getMonth(), 1);
         mCalendarView.setSelectedDate(day);
-        mDailyReports = list;
         updateMonthData();
     }
 
@@ -131,7 +118,6 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
             ListenerManager.Data data = (ListenerManager.Data)obj;
             switch (data.type){
                 case UPDATED_MONTH_CURSOR:{
-                    mDailyReports = (ArrayList<DailyReport>) data.obj;
                     updateMonthData();
                     break;
                 }
@@ -140,6 +126,7 @@ public class MonthlyViewFragment extends Fragment implements IMonthlyFragment, O
     }
 
     private void updateMonthData() {
-
+        //TODO: implement function to show a colored dot in every day of the month according the report
     }
+
 }

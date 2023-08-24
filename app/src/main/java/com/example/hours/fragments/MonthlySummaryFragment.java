@@ -23,6 +23,7 @@ import com.example.hours.db.DailyReport;
 import com.example.hours.db.HoursDbContract;
 import com.example.hours.interfaces.OnUpdateListener;
 import com.example.hours.models.MonthlyReportModel;
+import com.example.hours.report.ReportManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 import com.example.hours.utils.Utils;
@@ -44,7 +45,6 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
     private TextView mLblTxtUnpaidAbsenceHours;
     private View mView;
     private ArrayList<DailyReport> mDailyReports;
-    private Totals mMonthTotals;
 
     public static MonthlySummaryFragment newInstance() {
 
@@ -72,13 +72,6 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
         mLblTxtGlobalAbsenceHours.setTextColor(getResources().getColor(R.color.red));
         mLblTxtUnpaidAbsenceHours = mView.findViewById(R.id.lbl_txt_unpaid_absence_hours);
         mLblTxtUnpaidAbsenceHours.setTextColor(getResources().getColor(R.color.red));
-
-        mMonthTotals = new Totals();
-        mMonthTotals.regularHours = new Timestamp(186, 20);
-        mMonthTotals.zeroHours = new Timestamp(2, 13);
-        mMonthTotals.additionalHours = new Timestamp(52, 14);
-        mMonthTotals.additional125Hours = new Timestamp(10, 42);
-        mMonthTotals.unpaidAbsence = new Timestamp(4, 13);
 
         mHoursManager = HoursManager.getInstance();
 
@@ -116,30 +109,14 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
         AsyncTask task = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                mMonthTotals.clear();
-                if(mDailyReports != null)
-                {
-                    for (DailyReport report: mDailyReports) {
-                        UserInfo userInfo = new UserInfo();
-                        userInfo.arrivalTime = report.getArrival();
-                        userInfo.exitTime = report.getExit();
-                        CalcInfo calcInfo = mHoursManager.CalcDayWithExit(userInfo).calcInfo;
-                        mMonthTotals.zeroHours = mMonthTotals.zeroHours.add(calcInfo.totalTime.zeroHours);
-                        mMonthTotals.additionalHours = mMonthTotals.additionalHours.add(calcInfo.totalTime.additionalHours);
-                        mMonthTotals.additional125Hours = mMonthTotals.additional125Hours.add(calcInfo.totalTime.additional125Hours);
-                        mMonthTotals.additional150Hours = mMonthTotals.additional150Hours.add(calcInfo.totalTime.additional150Hours);
-                        mMonthTotals.unpaidAbsence = mMonthTotals.unpaidAbsence.add(calcInfo.totalTime.unpaidAbsence);
-                        mMonthTotals.globalAbsence = mMonthTotals.globalAbsence.add(calcInfo.totalTime.globalAbsence);
-                        mMonthTotals.regularHours = mMonthTotals.regularHours.add(calcInfo.totalTime.total);
-                    }
-                }
+                ReportManager.updateTotals(mDailyReports);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
-                update();
+                updateGUI();
             }
         };
         task.execute();
@@ -157,7 +134,7 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
         super.onDestroy();
     }
 
-    private void update() {
+    private void updateGUI() {
         if(!mIsInitialized)
             return;
         updateLabels();
@@ -166,13 +143,14 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
 
 
     private void updateLabels() {
-        mLblTxtRegularHours.setText(mMonthTotals.regularHours.toString());
-        mLblTxtZeroHours.setText(mMonthTotals.zeroHours.toString());
-        mLblTxtAdditionalHours.setText(mMonthTotals.additionalHours.toString());
-        mLblTxtAdditional125Hours.setText(mMonthTotals.additional125Hours.toString());
-        mLblTxtAdditional150Hours.setText(mMonthTotals.additional150Hours.toString());
-        mLblTxtGlobalAbsenceHours.setText(mMonthTotals.globalAbsence.toString());
-        mLblTxtUnpaidAbsenceHours.setText(mMonthTotals.unpaidAbsence.toString());
+        mLblTxtRegularHours.setText(ReportManager.getRegularHours());
+        mLblTxtZeroHours.setText(ReportManager.getZeroHours());
+        mLblTxtAdditionalHours.setText(ReportManager.getAdditionalHours());
+        mLblTxtAdditional125Hours.setText(ReportManager.getAdditional125Hours());
+        mLblTxtAdditional150Hours.setText(ReportManager.getAdditional150Hours());
+        mLblTxtGlobalAbsenceHours.setText(ReportManager.getGlobalAbsence());
+        mLblTxtUnpaidAbsenceHours.setText(ReportManager.getUnpaidAbsence());
+        //TODO: add labels for remaining time of zero / additional / absence
     }
 
     private void updateVisibility() {
@@ -186,8 +164,7 @@ public class MonthlySummaryFragment extends Fragment implements IMonthlyFragment
     }
 
     @Override
-    public void update(int month, int year, ArrayList<DailyReport> dailyReports) {
-        mDailyReports = dailyReports;
+    public void update() {
         calcSummaryInBackground();
     }
 
