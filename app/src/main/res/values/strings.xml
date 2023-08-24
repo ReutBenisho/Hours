@@ -211,5 +211,7 @@
     <string name="text_home">Home</string>
     <string name="hello">Hello</string>
     <string name="exclamation" translatable="false">!</string>
+    <string name="button" translatable="false">Button</string>
+    <string name="textview" translatable="false">TextView</string>
 
 </resources>

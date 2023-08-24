@@ -15,10 +15,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class DatabaseDataWorker {
+    private final Context m_Context;
     private SQLiteDatabase mDb;
 
-    public DatabaseDataWorker(SQLiteDatabase db) {
+    public DatabaseDataWorker(SQLiteDatabase db, Context context) {
         mDb = db;
+        m_Context = context;
     }
 
     public void insertDailyReports() {
@@ -33,7 +35,6 @@ public class DatabaseDataWorker {
         values.put(HoursProviderContract.DailyReports.COLUMN_DATE, new SimpleDateFormat("yyyyMMdd").format(date));
         values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
         values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, (new Timestamp(exit)).toString());
-        Context context = App.getContext();
-        context.getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
+        m_Context.getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
     }
 }

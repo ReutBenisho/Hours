@@ -17,9 +17,9 @@ public class HoursOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(HoursDbContract.DailyReportEntry.SQL_CREATE_TABLE);
         sqLiteDatabase.execSQL(HoursDbContract.DailyReportEntry.SQL_CREATE_INDEX1);
-//
-//        DatabaseDataWorker worker = new DatabaseDataWorker(sqLiteDatabase);
-//        worker.insertDailyReports();
+
+        //DatabaseDataWorker worker = new DatabaseDataWorker(sqLiteDatabase, m_Context);
+        //worker.insertDailyReports();
     }
 
     @Override
