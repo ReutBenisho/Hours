@@ -29,6 +29,8 @@ import com.example.hours.report.ReportManager;
 import com.example.hours.utils.App;
 import com.example.hours.utils.ListenerManager;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class MonthlyReportFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, OnUpdateListener {
 
@@ -40,6 +42,7 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
     private ImageView mImageNextMonth;
     private IMonthlyFragment mFragment;
     private boolean mCreatedLoader;
+    private GifImageView mClockLoadingGif;
 
     public static MonthlyReportFragment newInstance() {
 
@@ -74,6 +77,8 @@ public class MonthlyReportFragment extends Fragment implements LoaderManager.Loa
                 }
             }
         };
+        mClockLoadingGif = view.findViewById(R.id.month_report_clock_loading_gif);
+        mClockLoadingGif.setVisibility(View.GONE);
         AppCompatRadioButton rdBtnSummary = view.findViewById(R.id.rdBtn_monthly_summary);
         rdBtnSummary.setOnCheckedChangeListener(listener);
         AppCompatRadioButton rdBtnView = view.findViewById(R.id.rdBtn_monthly_view);

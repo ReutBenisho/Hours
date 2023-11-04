@@ -130,6 +130,16 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <pl.droidsonroids.gif.GifImageView
+                    android:id="@+id/month_report_clock_loading_gif"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/clock_loading"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_month_navigation"
+                    />
+
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/nav_host_fragment_monthly_report"
                     android:name="androidx.navigation.fragment.NavHostFragment"
