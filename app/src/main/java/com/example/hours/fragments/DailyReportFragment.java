@@ -41,6 +41,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class DailyReportFragment extends Fragment implements OnUpdateListener, OnSnapPositionChangeListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_DAILY_REPORTS = 0;
@@ -58,6 +60,7 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
     private DailyReport mDailyReport;
     private boolean mCreatedLoader;
     private int mDailyReportPos;
+    private GifImageView mClockLoadingGif;
 
 
     public static DailyReportFragment newInstance() {
@@ -83,6 +86,9 @@ public class DailyReportFragment extends Fragment implements OnUpdateListener, O
             container.removeAllViews(); // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_daily_report, container, false);
+
+        mClockLoadingGif = view.findViewById(R.id.daily_report_clock_loading_gif);
+        mClockLoadingGif.setVisibility(View.GONE);
 
         mHoursManager = HoursManager.getInstance();
         mRecycleDailyReports =  view.findViewById(R.id.list_daily_reports);
