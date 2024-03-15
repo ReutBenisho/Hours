@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.hours.R;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = App.getStr(R.string.tag_home);
     private FragmentHomeBinding binding;
+    private IMonthlyFragment mFragment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment {
                 lblNumOfRows.setText(String.valueOf(count));
             }
         });
+        openMonthlySummaryFragment();
         return view;
     }
 
@@ -87,10 +90,10 @@ public class HomeFragment extends Fragment {
     }
 
     public void insertDailyReports() {
-        insertDailyReport(new Date(2022 - 1900, 10, 30), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
-        insertDailyReport(new Date(2022 - 1900, 10, 31), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 25, ChronoUnit.MINUTES));
-        insertDailyReport(new Date(2022 - 1900, 11, 1), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
-        insertDailyReport(new Date(2022 - 1900, 11, 2), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
+        insertDailyReport(new Date(2023 - 1900, 10, 6), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 24, ChronoUnit.MINUTES));
+        insertDailyReport(new Date(2023 - 1900, 10, 7), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 25, ChronoUnit.MINUTES));
+        insertDailyReport(new Date(2023 - 1900, 10, 8), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(17 * 60 + 30, ChronoUnit.MINUTES));
+        insertDailyReport(new Date(2023 - 1900, 10, 9), Duration.of(7 * 60 + 30, ChronoUnit.MINUTES), Duration.of(16 * 60 + 0, ChronoUnit.MINUTES));
     }
 
     private void insertDailyReport(Date date, Duration arrival, Duration exit) {
@@ -99,5 +102,33 @@ public class HomeFragment extends Fragment {
         values.put(HoursProviderContract.DailyReports.COLUMN_ARRIVAL, (new Timestamp(arrival)).toString());
         values.put(HoursProviderContract.DailyReports.COLUMN_EXIT, (new Timestamp(exit)).toString());
         App.getContext().getContentResolver().insert(HoursProviderContract.DailyReports.CONTENT_URI, values);
+    }
+
+
+    private void openMonthlySummaryFragment() {
+        Fragment fragment = null;
+        Class fragmentClass;
+        String tag;
+
+        fragmentClass = MonthlySummaryFragment.class;
+        tag = MonthlySummaryFragment.TAG;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // set MyFragment Arguments
+        if(fragment != null) {
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getChildFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_home, fragment, tag)
+                    .commit();
+
+            mFragment = (IMonthlyFragment) fragment;
+        }
     }
 }

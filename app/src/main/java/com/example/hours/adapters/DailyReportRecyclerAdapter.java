@@ -76,7 +76,7 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         mCursor.moveToPosition(position);
         holder.mId = mCursor.getInt(mIdPos);
-        holder.mLblDate.setText(CustomDate.convertToFormat(mCursor.getString(mDatePos), "yyyyMMdd", "dd.MM"));
+        holder.mLblDate.setText(CustomDate.convertToFormat(mCursor.getString(mDatePos), "yyyyMMdd", "dd.MM.yyyy"));
         holder.mTxtArrival.setText(new Timestamp(mCursor.getString(mArrivalPos)).toString());
         holder.mTxtExit.setText(new Timestamp(mCursor.getString(mExitPos)).toString());
     }
