@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextWatcher;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,7 @@ public class DailyReportRecyclerAdapter extends RecyclerView.Adapter<DailyReport
             mBtnAddMiddayRow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mBtnAddMiddayRow.performHapticFeedback(HapticFeedbackConstants.CONFIRM);
                     Utils.addMiddayRowToLayout(mLayoutInflater, mLayoutMiddayTimes, App.getContext());
                 }
             });
